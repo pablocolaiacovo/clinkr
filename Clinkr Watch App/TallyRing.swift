@@ -25,12 +25,13 @@ struct TallyRing: View {
         return min(1, Double(waters) / Double(drinks))
     }
 
-    /// The part of the circle a slot draws, from 0 to 1. On a ring with many slots the gaps leave no room for an arc,
-    /// so it stays a sliver that its round caps turn into a dot: an arc of no length wouldn't be drawn at all.
+    /// The part of the circle a slot draws, from 0 to 1. When the gaps leave no room for an arc it stays a sliver, which
+    /// its round caps turn into a dot: an arc of no length wouldn't be drawn at all.
     static func arc(forSlot slot: Int, slots: Int, inset: Double) -> ClosedRange<Double> {
-        let start = Double(slot) / Double(slots)
-        let from = start + inset
-        return from...max(from + 0.0001, start + 1 / Double(slots) - inset)
+        let slotLength = 1 / Double(slots)
+        let center = (Double(slot) + 0.5) * slotLength
+        let halfLength = max(0.00005, slotLength / 2 - inset)
+        return (center - halfLength)...(center + halfLength)
     }
 
     /// The width of the outer and inner rings together, so a screen can fit its content inside them.

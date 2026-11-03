@@ -363,6 +363,30 @@ final class NightStoreTests {
         #expect(!store.saveFailed)
     }
 
+    @Test func aFailedSaveIsRetriedWithoutANewChange() throws {
+        try Data().write(to: folderURL)
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(60))
+        #expect(store.saveFailed)
+
+        try FileManager.default.removeItem(at: folderURL)
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        store.retrySaveIfFailed()
+
+        #expect(!store.saveFailed)
+        #expect(relaunch().pendingNights == store.pendingNights)
+    }
+
+    @Test func aRetryDoesNothingAfterAGoodSave() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        try FileManager.default.removeItem(at: fileURL)
+
+        store.retrySaveIfFailed()
+        #expect(!FileManager.default.fileExists(atPath: fileURL.path()))
+    }
+
     @Test func failedSaveIsReported() throws {
         // A file where the folder should be, so nothing can be written inside it.
         try Data().write(to: folderURL)

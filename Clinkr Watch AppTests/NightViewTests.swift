@@ -17,9 +17,18 @@ struct NightViewTests {
         )
     }
 
-    @Test func theSavedMessageNeverClaimsAFailedSaveWorked() {
-        #expect(NightSavedView.message(saved: true).key == "Night saved. Get home safe.")
-        #expect(NightSavedView.message(saved: false).key == "Not saved. Get home safe.")
+    private func spanishSavedMessage(saveFailed: Bool) -> String {
+        var message = NightSavedView.message(saveFailed: saveFailed)
+        message.locale = Locale(identifier: "es_AR")
+        return String(localized: message)
+    }
+
+    @Test func aSavedNightSaysSo() {
+        #expect(spanishSavedMessage(saveFailed: false) == "Noche guardada. Volvé bien.")
+    }
+
+    @Test func aFailedSaveNeverClaimsTheNightIsSaved() {
+        #expect(spanishSavedMessage(saveFailed: true) == "Sin guardar. Volvé bien.")
     }
 
     @Test func aNormalNightShowsOnlyTimes() {

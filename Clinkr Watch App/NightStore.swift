@@ -118,12 +118,18 @@ final class NightStore {
         return true
     }
 
-    /// When the active night really ended, if `date` is so long after its last entry that it was forgotten.
     private func endOfForgottenNight(at date: Date) -> Date? {
         guard let last = activeNight?.entries.last?.timestamp,
             date.timeIntervalSince(last) >= Self.staleNightGap
         else { return nil }
         return last
+    }
+
+    /// Tries a failed save again, for when nothing else would: End night is often the last change of the night.
+    func retrySaveIfFailed() {
+        guard saveFailed else { return }
+        retryLoadIfNeeded()
+        save()
     }
 
     private func finishActiveNight(at date: Date) {

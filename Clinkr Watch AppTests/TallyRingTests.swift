@@ -9,12 +9,12 @@ struct TallyRingTests {
         #expect(TallyRing.slotCount(forDrinks: drinks) == slots)
     }
 
-    /// 0.03 is about the gap on a small Watch, wider than a slot on a 24-slot ring.
-    @Test(arguments: [8, 16, 24, 32, 64])
+    @Test(arguments: [8, 16, 24, 32, 64, 200])
     func everySlotAlwaysDraws(slots: Int) {
         for slot in 0..<slots {
             let arc = TallyRing.arc(forSlot: slot, slots: slots, inset: 0.03)
             #expect(arc.upperBound > arc.lowerBound)
+            #expect(arc.lowerBound >= 0 && arc.upperBound <= 1)
         }
     }
 
@@ -30,11 +30,27 @@ struct TallyRingTests {
 }
 
 struct TonightCaptionTests {
+    private func spanish(_ text: LocalizedStringResource) -> String {
+        var text = text
+        text.locale = Locale(identifier: "es_AR")
+        return String(localized: text)
+    }
+
+    @Test func aFailedSaveReplacesTheCaption() {
+        let caption = TonightView.caption(forNightStartingAt: .now, saveFailed: true)
+        #expect(spanish(caption) == "Sin guardar")
+    }
+
+    @Test func aFailedSaveReplacesTheEmptyMessage() {
+        #expect(spanish(TonightView.emptyMessage(saveFailed: true)) == "Sin guardar")
+        #expect(spanish(TonightView.emptyMessage(saveFailed: false)) == "Deslizá para arrancar la noche")
+    }
+
     private func caption(atHour hour: Int) -> String {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .gmt
         let start = calendar.date(from: DateComponents(year: 2026, month: 10, day: 30, hour: hour))!
-        return TonightView.caption(forNightStartingAt: start, calendar: calendar).key
+        return TonightView.caption(forNightStartingAt: start, saveFailed: false, calendar: calendar).key
     }
 
     @Test(arguments: [5, 12, 16])

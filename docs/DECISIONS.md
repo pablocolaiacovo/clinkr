@@ -8,7 +8,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 
 ## 2026-11-03 · A UI test for the Watch's main flow
 
-- **Decision:** `Clinkr Watch AppUITests` runs one test on the real screens: add, Undo, the water nudge, End night and its Undo. It needs no test-only code in the app: it ends any night left over from an earlier run instead.
+- **Decision:** `Clinkr Watch AppUITests` runs one test on the real screens: add, Undo, the water nudge, End night and its Undo. It needs no test-only code in the app: it ends any night left over from an earlier run instead, which leaves one more finished night in the simulator's file each run.
 - **Why:** The timing of the toast, the nudge and End night's Undo lives in `ContentView`, where unit tests can't reach it, so breaking it failed no test.
 - **Instead of:** Moving that timing out of the view only to test it. The test adds about a minute to CI.
 - **PR:** [#72](https://github.com/pablocolaiacovo/clinkr/pull/72)
@@ -16,7 +16,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 ## 2026-11-03 · A failed save shows on screen
 
 - **Decision:** While the last save has failed, Tonight says "Not saved" in place of its caption, and End night says "Not saved. Get home safe."
-- **Why:** The screen looked normal after a failed save, and even said "Night saved", while those drinks would be lost if the app closed. The next change tries the save again, so there's nothing for the user to do.
+- **Why:** The screen looked normal after a failed save, and even said "Night saved", while those drinks would be lost if the app closed. The save is tried again on the next change and whenever the app opens or closes, so there's nothing for the user to do.
 - **Instead of:** An alert, which interrupts a night out for something the user can't fix.
 - **PR:** [#72](https://github.com/pablocolaiacovo/clinkr/pull/72)
 

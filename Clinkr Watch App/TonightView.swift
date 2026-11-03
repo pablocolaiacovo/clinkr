@@ -40,7 +40,7 @@ struct TonightView: View {
         if let night {
             details(night)
         } else {
-            Text(nightStore.saveFailed ? Self.notSaved : "Swipe up to start the night")
+            Text(Self.emptyMessage(saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
                 .multilineTextAlignment(.center)
@@ -57,7 +57,7 @@ struct TonightView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
                 .accessibilityLabel(Text("\(night.drinkCount) drinks"))
-            Text(nightStore.saveFailed ? Self.notSaved : Self.caption(forNightStartingAt: night.startTime))
+            Text(Self.caption(forNightStartingAt: night.startTime, saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
                 .lineLimit(1)
@@ -68,14 +68,26 @@ struct TonightView: View {
         }
     }
 
-    /// Takes the caption's place while the last save failed, since the drinks would be lost if the app closed now.
-    static let notSaved = LocalizedStringResource("Not saved", comment: "Tonight screen, when saving the night failed")
+    private static let notSaved = LocalizedStringResource(
+        "Not saved",
+        comment: "Tonight screen, when saving the night failed"
+    )
+
+    static func emptyMessage(saveFailed: Bool) -> LocalizedStringResource {
+        saveFailed
+            ? notSaved
+            : LocalizedStringResource("Swipe up to start the night", comment: "Tonight screen before a night")
+    }
 
     /// "Today" for a night that started in the daytime, like a lunch, otherwise "Tonight".
     static func caption(
         forNightStartingAt start: Date,
+        saveFailed: Bool,
         calendar: Calendar = .current
     ) -> LocalizedStringResource {
+        if saveFailed {
+            return notSaved
+        }
         let hour = calendar.component(.hour, from: start)
         if (5..<17).contains(hour) {
             return LocalizedStringResource("Today", comment: "Tonight screen caption for a night that started by day")

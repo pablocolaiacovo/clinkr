@@ -13,57 +13,63 @@ final class ClinkrWatchAppUITests: XCTestCase {
         app.launch()
         endAnyNightLeftOver()
 
-        goToPage(with: app.buttons["Beer"])
-        app.buttons["Beer"].tap()
-        tapUndo()
-        XCTAssertFalse(app.buttons["Undo"].exists, "Undo closes the toast")
+        swipeUp(to: app.buttons["Beer"])
+        tapOnceStill(app.buttons["Beer"])
+        tapOnceStill(app.buttons["Undo"])
+        XCTAssertTrue(waitToDisappear(app.buttons["Undo"]), "Undo closes the toast")
 
         for _ in 1...4 {
             app.buttons["Beer"].tap()
         }
         XCTAssertFalse(app.staticTexts["Water break?"].exists, "The nudge waits for the toast's 5 seconds")
         XCTAssertTrue(app.staticTexts["Water break?"].waitForExistence(timeout: 10))
-        // A tap while it's still sliding in lands where the button was.
-        Thread.sleep(forTimeInterval: 1)
-        app.buttons["Had one"].tap()
+        tapOnceStill(app.buttons["Had one"])
         XCTAssertTrue(waitToDisappear(app.staticTexts["Water break?"]))
 
-        goToPage(with: app.buttons["End night"])
-        app.buttons["End night"].tap()
+        swipeUp(to: app.buttons["End night"])
+        tapOnceStill(app.buttons["End night"])
         XCTAssertTrue(nightSaved.waitForExistence(timeout: 5))
-        tapUndo()
-        XCTAssertTrue(app.buttons["End night"].waitForExistence(timeout: 5), "Undo brings the night back")
+        tapOnceStill(app.buttons["Undo"])
+        XCTAssertTrue(waitToDisappear(nightSaved), "Undo closes the message")
 
-        app.buttons["End night"].tap()
+        tapOnceStill(app.buttons["End night"])
         XCTAssertTrue(nightSaved.waitForExistence(timeout: 5))
         XCTAssertTrue(waitToDisappear(nightSaved), "The message closes by itself")
     }
 
     /// The simulator keeps saved nights between runs, so each run starts from an empty Tonight.
     private func endAnyNightLeftOver() {
-        guard goToPage(with: app.buttons["End night"], attempts: 2) else { return }
-        app.buttons["End night"].tap()
+        let emptyTonight = app.descendants(matching: .any)["Swipe up to start the night"]
+        guard !emptyTonight.waitForExistence(timeout: 3) else { return }
+        swipeUp(to: app.buttons["End night"])
+        tapOnceStill(app.buttons["End night"])
         XCTAssertTrue(nightSaved.waitForExistence(timeout: 5))
         XCTAssertTrue(waitToDisappear(nightSaved))
+        // Swiping here scrolled Add's list, leaving Beer under the clock, so start again from the top.
+        app.terminate()
+        app.launch()
     }
 
-    @discardableResult
-    private func goToPage(with element: XCUIElement, attempts: Int = 3) -> Bool {
-        for _ in 0..<attempts where !element.isHittable {
+    /// The pages run Tonight, Add, Night, so going forward is always up.
+    private func swipeUp(to element: XCUIElement) {
+        for _ in 0..<3 where !element.isHittable {
             app.swipeUp()
             _ = element.waitForExistence(timeout: 1)
         }
-        if element.isHittable { return true }
-        for _ in 0..<attempts where !element.isHittable {
-            app.swipeDown()
-            _ = element.waitForExistence(timeout: 1)
-        }
-        return element.isHittable
+        XCTAssertTrue(element.isHittable)
     }
 
-    private func tapUndo() {
-        XCTAssertTrue(app.buttons["Undo"].waitForExistence(timeout: 5))
-        app.buttons["Undo"].tap()
+    /// A tap while a screen is still sliding in lands where the button was.
+    private func tapOnceStill(_ element: XCUIElement) {
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
+        var lastFrame = element.frame
+        for _ in 0..<20 {
+            Thread.sleep(forTimeInterval: 0.25)
+            let frame = element.frame
+            if frame == lastFrame && element.isHittable { break }
+            lastFrame = frame
+        }
+        element.tap()
     }
 
     private func waitToDisappear(_ element: XCUIElement) -> Bool {
