@@ -26,13 +26,11 @@ The argument is the PR number. If none is given, use the PR for the current bran
 Work on the PR's exact commit, `headRefOid`:
 
 - If `git rev-parse HEAD` already matches it, use the current checkout.
-- Otherwise don't switch this checkout's branch: the PR branch is often open in another worktree, and git refuses to check it out twice. Add a temporary worktree at that commit instead, work there, and remove it at the end:
+- Otherwise don't switch this checkout's branch: the PR branch is often open in another worktree, and git refuses to check it out twice. Add a temporary worktree at that commit instead, and work there through step 3, which removes it:
 
   ```bash
   git fetch origin "pull/<PR#>/head"
   git worktree add --detach <scratch>/verify-pr-<PR#> <headRefOid>
-  # ... checks ...
-  git worktree remove <scratch>/verify-pr-<PR#>
   ```
 
 Give each criterion one verdict, with evidence:
@@ -59,14 +57,22 @@ Don't mark something Met because the PR description says so. Check it yourself.
 
 ## 3. Review the code
 
-Run the `ponytail:ponytail-review` skill (from the ponytail plugin) on the PR, from the checkout at `headRefOid`, so it reads the code as the PR has it. It lists findings and changes no code, so don't fix anything here. If the skill isn't available, say the review didn't run and end with **Not ready**.
+Run the `ponytail:ponytail-review` skill (from the ponytail plugin) on the PR. If step 2 added a temporary worktree, give the skill its absolute path and tell it to read all code from there, so callers and tests match `headRefOid`. It lists findings and changes no code, so don't fix anything here. If the skill isn't available, say the review didn't run and end with **Not ready**.
+
+A new review doesn't know about earlier notes, so check them yourself with `gh pr view <PR#> --json body,comments`, ignoring this skill's own result comment. If the PR explains why a Must fix finding doesn't apply, report it as **Doesn't apply** and link the note. It no longer blocks the PR.
+
+Then remove the temporary worktree, if step 2 added one:
+
+```bash
+git worktree remove <scratch>/verify-pr-<PR#>
+```
 
 ## 4. Report and record
 
 While the PR is open, record the result on the PR only. The issue's boxes change after merging, so they never claim work that isn't on `main`.
 
-1. Show the user a table: criterion, verdict, evidence. Put Not met and Can't verify first. List any Details bullets the diff contradicts after it. Then give the review's findings in full. They stay in this conversation: the PR comment below covers the criteria only.
-2. Keep one result comment on the PR. Start it with `## Acceptance criteria check` and the commit it checked (`headRefOid`). If an earlier one exists, replace its body rather than adding another:
+1. Show the user a table: criterion, verdict, evidence. Put Not met and Can't verify first. List any Details bullets the diff contradicts after it. Then give the review's findings in full.
+2. Keep one result comment on the PR. Start it with `## Acceptance criteria check` and the commit it checked (`headRefOid`). End it with a `### Code review` section: whether the review ran, each finding's number, title and group, any marked **Doesn't apply**, and the closing line below. If an earlier one exists, replace its body rather than adding another:
 
    ```bash
    id=$(gh api "repos/{owner}/{repo}/issues/<PR#>/comments" \
@@ -79,11 +85,11 @@ While the PR is open, record the result on the PR only. The issue's boxes change
 4. For each **Deferred** criterion whose target issue doesn't list it yet, add it there as a new checkbox under "Done when", with "(from #N)" at the end.
 5. If the PR says `Closes #N` but any criterion of #N is Deferred or Not met, the issue would close with work left. Tell the user and suggest changing the PR body to `Part of #N`.
 
-End with one line:
+End with one line, the first of these that fits:
 
-- **Ready**: every criterion is Met or Deferred, and the review has no Must fix findings.
-- **Not ready**: list what's Not met and the Must fix findings.
+- **Not ready**: list what's Not met, the Must fix findings that still apply, or that the review didn't run. Also list any Can't verify items.
 - **Needs a manual check**: list the Can't verify items.
+- **Ready**: every criterion is Met or Deferred, and no Must fix finding still applies.
 
 ## After merging
 
