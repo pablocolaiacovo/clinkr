@@ -21,6 +21,8 @@ Keep branches small and merge them within a few days. Merge with **Squash and me
 
 `main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
 
+Pull requests also run the CodeQL security scan (**Analyze**). The Swift scan can take about 30 minutes and isn't required for merging, but look at any alert it raises.
+
 ## Pull requests
 
 Every pull request goes through the same steps:
