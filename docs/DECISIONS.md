@@ -10,6 +10,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 
 - **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and any Must fix finding makes the result **Not ready**. The findings stay in the conversation; the PR comment covers the criteria only. `/code-review` is still required on every PR.
 - **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
+- **PR:** [#70](https://github.com/pablocolaiacovo/clinkr/pull/70)
 
 ## 2026-10-30 · End night has no confirmation
 
