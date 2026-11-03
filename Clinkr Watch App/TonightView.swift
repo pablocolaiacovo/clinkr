@@ -40,7 +40,7 @@ struct TonightView: View {
         if let night {
             details(night)
         } else {
-            Text("Swipe up to start the night")
+            Text(nightStore.saveFailed ? Self.notSaved : "Swipe up to start the night")
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
                 .multilineTextAlignment(.center)
@@ -57,7 +57,7 @@ struct TonightView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
                 .accessibilityLabel(Text("\(night.drinkCount) drinks"))
-            Text(Self.caption(forNightStartingAt: night.startTime))
+            Text(nightStore.saveFailed ? Self.notSaved : Self.caption(forNightStartingAt: night.startTime))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
                 .lineLimit(1)
@@ -67,6 +67,9 @@ struct TonightView: View {
                 .layoutPriority(1)
         }
     }
+
+    /// Takes the caption's place while the last save failed, since the drinks would be lost if the app closed now.
+    static let notSaved = LocalizedStringResource("Not saved", comment: "Tonight screen, when saving the night failed")
 
     /// "Today" for a night that started in the daytime, like a lunch, otherwise "Tonight".
     static func caption(

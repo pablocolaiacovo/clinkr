@@ -17,6 +17,11 @@ struct NightViewTests {
         )
     }
 
+    @Test func theSavedMessageNeverClaimsAFailedSaveWorked() {
+        #expect(NightSavedView.message(saved: true).key == "Night saved. Get home safe.")
+        #expect(NightSavedView.message(saved: false).key == "Not saved. Get home safe.")
+    }
+
     @Test func aNormalNightShowsOnlyTimes() {
         #expect(NightView.timeFormat(for: night(lastEntryAfter: 6)) == .dateTime.hour().minute())
     }

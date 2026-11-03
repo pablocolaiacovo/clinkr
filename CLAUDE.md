@@ -13,6 +13,7 @@ An iPhone app with a companion Apple Watch app, written in SwiftUI. It's a hobby
 | `ClinkrTests/` | ClinkrTests | iPhone unit tests (Swift Testing) |
 | `ClinkrUITests/` | ClinkrUITests | iPhone UI tests (XCTest) |
 | `Clinkr Watch AppTests/` | Clinkr Watch AppTests | Watch unit tests (Swift Testing) |
+| `Clinkr Watch AppUITests/` | Clinkr Watch AppUITests | Watch UI tests (XCTest) |
 | `scripts/test.sh` | | Lint and tests, used by CI too |
 | `docs/ARCHITECTURE.md` | | Mermaid diagrams of how the apps fit together |
 | `docs/DECISIONS.md` | | Decisions and the reasons behind them, newest first. Read it before changing something that looks deliberate |
@@ -25,8 +26,8 @@ Swift 6 language mode, so strict concurrency checking is on.
 scripts/test.sh          # lint + iPhone tests + Watch tests
 scripts/test.sh lint     # swift-format lint only
 scripts/test.sh ios      # iPhone unit + UI tests
-scripts/test.sh watch    # Watch unit tests
-xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests"
+scripts/test.sh watch    # Watch unit + UI tests
+xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests" "Clinkr Watch AppUITests"
 ```
 
 Run `scripts/test.sh` before calling a change done. Build output goes to `build/` (gitignored).

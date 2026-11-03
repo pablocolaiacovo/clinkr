@@ -9,6 +9,15 @@ struct TallyRingTests {
         #expect(TallyRing.slotCount(forDrinks: drinks) == slots)
     }
 
+    /// 0.03 is about the gap on a small Watch, wider than a slot on a 24-slot ring.
+    @Test(arguments: [8, 16, 24, 32, 64])
+    func everySlotAlwaysDraws(slots: Int) {
+        for slot in 0..<slots {
+            let arc = TallyRing.arc(forSlot: slot, slots: slots, inset: 0.03)
+            #expect(arc.upperBound > arc.lowerBound)
+        }
+    }
+
     @Test func waterRingFillsWithWatersAgainstDrinks() {
         #expect(TallyRing.waterFraction(waters: 0, drinks: 4) == 0)
         #expect(TallyRing.waterFraction(waters: 1, drinks: 4) == 0.25)

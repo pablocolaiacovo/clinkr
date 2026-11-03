@@ -48,6 +48,17 @@
                ReferencedContainer = "container:Clinkr.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "51E6049AF31B01653089C7BC"
+               BuildableName = "Clinkr Watch AppUITests.xctest"
+               BlueprintName = "Clinkr Watch AppUITests"
+               ReferencedContainer = "container:Clinkr.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

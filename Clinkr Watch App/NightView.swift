@@ -90,12 +90,22 @@ private struct EntryRow: View {
 /// Shown for a moment after ending the night, over a Tonight that's already reset for the next one. Undo takes the
 /// end back.
 struct NightSavedView: View {
+    /// False when saving failed, so the screen never claims a night is safe when it isn't.
+    let saved: Bool
     let onUndo: () -> Void
     let onDismiss: () -> Void
 
+    static func message(saved: Bool) -> LocalizedStringResource {
+        if saved {
+            LocalizedStringResource("Night saved. Get home safe.", comment: "Shown after ending the night")
+        } else {
+            LocalizedStringResource("Not saved. Get home safe.", comment: "Shown after End night when saving failed")
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            Text("Night saved. Get home safe.")
+            Text(Self.message(saved: saved))
                 .typeStyle(.watchTitle)
                 .foregroundStyle(.ink)
                 .multilineTextAlignment(.center)
@@ -138,5 +148,9 @@ struct NightSavedView: View {
 }
 
 #Preview("Saved") {
-    NightSavedView(onUndo: {}, onDismiss: {})
+    NightSavedView(saved: true, onUndo: {}, onDismiss: {})
+}
+
+#Preview("Not saved") {
+    NightSavedView(saved: false, onUndo: {}, onDismiss: {})
 }

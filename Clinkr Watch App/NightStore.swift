@@ -62,10 +62,8 @@ final class NightStore {
     /// Logs a drink (or water). The first one starts tonight's night, and so does the first one after a long gap.
     func add(_ type: DrinkType, at date: Date = .now) {
         retryLoadIfNeeded()
-        if let lastEntry = activeNight?.entries.last,
-            date.timeIntervalSince(lastEntry.timestamp) >= Self.staleNightGap
-        {
-            finishActiveNight(at: lastEntry.timestamp)
+        if let forgottenEnd = endOfForgottenNight(at: date) {
+            finishActiveNight(at: forgottenEnd)
         }
         if activeNight == nil {
             activeNight = Night(name: Self.defaultName(for: date), startTime: date)
@@ -97,11 +95,12 @@ final class NightStore {
         save()
     }
 
-    /// Ends tonight's night and queues it for the iPhone. Does nothing when no night is active.
+    /// Ends tonight's night and queues it for the iPhone. A night ended long after its last entry was forgotten, so it
+    /// ends at that entry instead. Does nothing when no night is active.
     func endNight(at date: Date = .now) {
         retryLoadIfNeeded()
         guard activeNight != nil else { return }
-        finishActiveNight(at: date)
+        finishActiveNight(at: endOfForgottenNight(at: date) ?? date)
         save()
     }
 
@@ -117,6 +116,14 @@ final class NightStore {
         activeNight = night
         save()
         return true
+    }
+
+    /// When the active night really ended, if `date` is so long after its last entry that it was forgotten.
+    private func endOfForgottenNight(at date: Date) -> Date? {
+        guard let last = activeNight?.entries.last?.timestamp,
+            date.timeIntervalSince(last) >= Self.staleNightGap
+        else { return nil }
+        return last
     }
 
     private func finishActiveNight(at date: Date) {

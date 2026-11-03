@@ -67,6 +67,7 @@ struct ContentView: View {
         .overlay {
             if let endedNight {
                 NightSavedView(
+                    saved: !nightStore.saveFailed,
                     onUndo: { reopenNight(endedNight) },
                     onDismiss: closeNightSaved
                 )
@@ -113,7 +114,7 @@ struct ContentView: View {
             } catch {
                 return
             }
-            guard nightStore.lastAdded?.id == pendingNudge else { return }
+            guard nightStore.lastAdded?.id == pendingNudge, nudgeIsDue else { return }
             showWaterNudge()
         }
         .task(id: undoable?.entry.id) {
