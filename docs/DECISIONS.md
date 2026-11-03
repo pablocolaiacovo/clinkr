@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-03 · The repo stays public
+
+- **Decision:** The repo is public, with GitHub's free code scanning, secret scanning and push protection on. A "Protect main" ruleset blocks force-pushes and deleting `main`, with no bypass, and sits beside the "CI must pass" ruleset, which admins can bypass.
+- **Why:** On a private repo under a personal plan, GitHub stops enforcing rulesets, turns off scanning and charges for macOS CI, and the free allowance only covers about 20 to 25 runs a month. The security products can't be bought without a Team or Enterprise plan. The rule is separate so direct pushes to `main` stay possible while force-pushes never are.
+- **Instead of:** Private on GitHub Pro, which brings the rulesets back but not the scanning, and still runs out of CI minutes in a busy week.
+- **PR:** [#PRNUM](https://github.com/pablocolaiacovo/clinkr/pull/PRNUM)
+
 ## 2026-10-30 · End night has no confirmation
 
 - **Decision:** The Night screen is the third Watch page. "End night" sits at the top in `fizz` and ends the night on one tap, with the `.success` haptic and "Night saved. Get home safe." with an Undo for 5 seconds, then Tonight is empty. Rows are removed with a swipe and a tap on the trash (no full swipe, since a removal has no Undo).
