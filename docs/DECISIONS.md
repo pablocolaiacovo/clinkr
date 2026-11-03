@@ -6,6 +6,11 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
+
+- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and any Must fix finding makes the result **Not ready**. The findings stay in the conversation; the PR comment covers the criteria only. `/code-review` is still required on every PR.
+- **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
+
 ## 2026-10-30 · End night has no confirmation
 
 - **Decision:** The Night screen is the third Watch page. "End night" sits at the top in `fizz` and ends the night on one tap, with the `.success` haptic and "Night saved. Get home safe." with an Undo for 5 seconds, then Tonight is empty. Rows are removed with a swipe and a tap on the trash (no full swipe, since a removal has no Undo).

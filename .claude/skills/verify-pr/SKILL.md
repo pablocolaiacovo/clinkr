@@ -1,11 +1,11 @@
 ---
 name: verify-pr
-description: Check a Clinkr pull request against the acceptance criteria of the issue it closes, record the result on the PR, and tick the met criteria in the issue once it's merged. Use when asked to verify a PR, check it against its issue, or run /verify-pr <PR#>.
+description: Check a Clinkr pull request against the acceptance criteria of the issue it closes, review its code with ponytail-review, record the result on the PR, and tick the met criteria in the issue once it's merged. Use when asked to verify a PR, check it against its issue, or run /verify-pr <PR#>.
 ---
 
 # Verify a pull request against its issue
 
-`/code-review` checks the code for bugs. This skill checks the change does what the issue asked for. Run it on every PR that closes or is part of an issue, after `/code-review`, and once more after merging.
+`/code-review` checks the code for bugs. This skill checks the change does what the issue asked for, and adds a `/ponytail-review` for logic, safety, tests and unneeded code. Run it on every PR that closes or is part of an issue, after `/code-review`, and once more after merging.
 
 The argument is the PR number. If none is given, use the PR for the current branch (`gh pr view --json number`).
 
@@ -40,7 +40,7 @@ Give each criterion one verdict, with evidence:
 | Verdict | When |
 |---|---|
 | **Met** | A test asserts it (name the test), or you saw it working in the simulator (say what you did and saw) |
-| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 3 adds it |
+| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 4 adds it |
 | **Not met** | The diff doesn't do it, or it does something else, or it's deferred to an issue that's closed or doesn't exist |
 | **Can't verify** | Neither a test nor the simulator can show it. Say what the user should check by hand |
 
@@ -57,11 +57,15 @@ How to gather the evidence:
 
 Don't mark something Met because the PR description says so. Check it yourself.
 
-## 3. Report and record
+## 3. Review the code
+
+Run the `ponytail:ponytail-review` skill (from the ponytail plugin) on the PR, from the checkout at `headRefOid`, so it reads the code as the PR has it. It lists findings and changes no code, so don't fix anything here. If the skill isn't available, say the review didn't run and end with **Not ready**.
+
+## 4. Report and record
 
 While the PR is open, record the result on the PR only. The issue's boxes change after merging, so they never claim work that isn't on `main`.
 
-1. Show the user a table: criterion, verdict, evidence. Put Not met and Can't verify first. List any Details bullets the diff contradicts after it.
+1. Show the user a table: criterion, verdict, evidence. Put Not met and Can't verify first. List any Details bullets the diff contradicts after it. Then give the review's findings in full. They stay in this conversation: the PR comment below covers the criteria only.
 2. Keep one result comment on the PR. Start it with `## Acceptance criteria check` and the commit it checked (`headRefOid`). If an earlier one exists, replace its body rather than adding another:
 
    ```bash
@@ -77,8 +81,8 @@ While the PR is open, record the result on the PR only. The issue's boxes change
 
 End with one line:
 
-- **Ready**: every criterion is Met or Deferred.
-- **Not ready**: list what's Not met.
+- **Ready**: every criterion is Met or Deferred, and the review has no Must fix findings.
+- **Not ready**: list what's Not met and the Must fix findings.
 - **Needs a manual check**: list the Can't verify items.
 
 ## After merging
