@@ -8,7 +8,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 
 ## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
 
-- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required on every PR.
+- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required once on every PR, and a re-run after larger fixes on a PR linked to an issue only needs `/verify-pr`.
 - **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
 - **PR:** [#70](https://github.com/pablocolaiacovo/clinkr/pull/70)
 
