@@ -26,6 +26,12 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Why:** Ending at the time of the tap made a night that ended at 1 am last until 11 am, which understates its pace for good.
 - **PR:** [#72](https://github.com/pablocolaiacovo/clinkr/pull/72)
 
+## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
+
+- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required once on every PR, and a re-run after larger fixes on a PR linked to an issue only needs `/verify-pr`.
+- **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
+- **PR:** [#70](https://github.com/pablocolaiacovo/clinkr/pull/70)
+
 ## 2026-11-03 · The repo stays public
 
 - **Decision:** The repo is public, with GitHub's free code scanning, secret scanning and push protection on. A "Protect main" ruleset blocks force-pushes and deleting `main`, with no bypass, and sits beside the "CI must pass" ruleset, which admins can bypass.
