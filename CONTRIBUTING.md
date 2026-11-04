@@ -19,7 +19,7 @@ Branch names start with what kind of change it is:
 
 Keep branches small and merge them within a few days. Merge with **Squash and merge**, so each pull request becomes one commit on `main`. GitHub deletes the branch after the merge.
 
-`main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
+`main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes and every review conversation is resolved. No approvals are required. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
 
 Pull requests also run the CodeQL security scan (**Analyze**). The Swift scan can take about 30 minutes and isn't required for merging, but look at any alert it raises.
 
@@ -34,7 +34,7 @@ Every pull request goes through the same steps:
 3. Once it's open, run `/code-review` on it in Claude Code, passing the PR number (e.g. `/code-review 48`). This is required for every pull request, however small.
 4. If the PR closes or is part of an issue, also run `/verify-pr` with the PR number. It checks each acceptance criterion with tests and the simulators, reviews the code with `/ponytail-review` (from the ponytail plugin), posts the result on the PR, and ticks the met criteria in the PR's checklist.
 5. Fix what the review and the check find, or note in the pull request why a finding doesn't apply. Push the fixes. If they're more than small tweaks, run `/verify-pr` again, or `/code-review` if the PR has no linked issue.
-6. When the review is addressed, every criterion is met or deferred to an open issue, and **Build and test** passes, squash and merge.
+6. When the review is addressed, every conversation is resolved, every criterion is met or deferred to an open issue, and **Build and test** passes, squash and merge.
 7. After merging, run `/verify-pr` once more. It ticks the met criteria in the issue, now that they're on `main`.
 
 GitHub doesn't enforce the review and verify steps, so it's up to you to do them before merging.

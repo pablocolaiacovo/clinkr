@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-04 · Resolve review conversations before merging
+
+- **Decision:** A pull request can't merge while a review conversation is open. The rule is a pull request rule with no required approvals, in the "CI must pass" ruleset.
+- **Why:** A review comment shouldn't get lost by merging past it.
+- **Instead of:** Adding it to "Protect main", which has no bypass and would block the direct pushes to `main` that small changes use. The cost is that admins can bypass this rule too, so for the repo's owner it's a guard against forgetting, not a hard stop. People without admin access must now use a pull request to change `main`.
+- **PR:** [#74](https://github.com/pablocolaiacovo/clinkr/pull/74)
+
 ## 2026-11-03 · Counts are friendly facts, not praise
 
 - **Decision:** A count acknowledges a tap and states a number, in the same tone at 1 or at 12. "Cheers! That's 4." stays. This replaces the design system's "Counting is celebration first".
