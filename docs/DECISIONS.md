@@ -13,6 +13,20 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Instead of:** Adding it to "Protect main", which has no bypass and would block the direct pushes to `main` that small changes use. The cost is that admins can bypass this rule too, so for the repo's owner it's a guard against forgetting, not a hard stop. People without admin access must now use a pull request to change `main`.
 - **PR:** [#74](https://github.com/pablocolaiacovo/clinkr/pull/74)
 
+## 2026-11-03 · Counts are friendly facts, not praise
+
+- **Decision:** A count acknowledges a tap and states a number, in the same tone at 1 or at 12. "Cheers! That's 4." stays. This replaces the design system's "Counting is celebration first".
+- **Why:** Celebrating the count conflicts with "Self-care, never drink counts", while a flat, neutral count would lose the friend-at-the-bar voice.
+- **Instead of:** Dropping "Cheers" next to a number, or keeping "celebration first" as written.
+- **PR:** [#73](https://github.com/pablocolaiacovo/clinkr/pull/73)
+
+## 2026-11-03 · Product and design context live in `PRODUCT.md` and `DESIGN.md`
+
+- **Decision:** `PRODUCT.md` records who Clinkr is for and why, and `DESIGN.md` records the look as built, with the iPhone's sticker look marked provisional until a real screen proves it. Both were written with the Impeccable plugin, which also generates `.impeccable/design.json` from `DESIGN.md`.
+- **Why:** Design work, by people or agents, needs one place to read the product's purpose and visual rules, instead of piecing them together from issues, the decision log and the code.
+- **Instead of:** Relying on the design system artifact alone, which sits outside the repo. The cost is more copies of the tokens: `DESIGN.md` and its sidecar, beside `Shared/` and the design system. `scripts/test.sh` fails if the colors in the two new files differ from `Shared/Palette.swift`. The design system sits outside the repo, so nothing can check it, and updating it is a step in `CONTRIBUTING.md`, like `/code-review`. Its README links back to the repo.
+- **PR:** [#73](https://github.com/pablocolaiacovo/clinkr/pull/73)
+
 ## 2026-11-03 · A UI test for the Watch's main flow
 
 - **Decision:** `Clinkr Watch AppUITests` runs one test on the real screens: add, Undo, the water nudge, End night and its Undo. Two more check that removing a drink calls off a waiting nudge, and that a failed save shows on screen. The app reads two settings only a test passes: `UNDO_SECONDS` makes Undo last longer, and `NIGHTS_FILE` names another file, which lets a test make saving fail. Each run ends any night left over from an earlier one, which leaves more finished nights in the simulator's file.
