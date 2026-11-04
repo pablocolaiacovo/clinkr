@@ -29,6 +29,8 @@ test_scheme() {
         exit 1
     fi
     echo "==> Test $scheme on $device ($id)"
+    # Boots it if needed and waits until it's ready: a Watch still starting up refuses to launch the test runner.
+    xcrun simctl bootstatus "$id" -b > /dev/null
     xcodebuild test -project Clinkr.xcodeproj -scheme "$scheme" -destination "id=$id" \
         -derivedDataPath "$DERIVED_DATA" CODE_SIGNING_ALLOWED=NO -quiet
 }

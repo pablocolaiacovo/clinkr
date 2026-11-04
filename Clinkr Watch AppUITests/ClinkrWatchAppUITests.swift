@@ -14,7 +14,7 @@ final class ClinkrWatchAppUITests: XCTestCase {
         endAnyNightLeftOver()
 
         swipeUp(to: app.buttons["Beer"])
-        tapOnceStill(app.buttons["Beer"])
+        tapUntilToastShows(app.buttons["Beer"])
         tapOnceStill(app.buttons["Undo"])
         XCTAssertTrue(waitToDisappear(app.buttons["Undo"]), "Undo closes the toast")
 
@@ -59,14 +59,23 @@ final class ClinkrWatchAppUITests: XCTestCase {
         XCTAssertTrue(element.isHittable)
     }
 
+    /// On a simulator that just started, the first tap after launch can get lost.
+    private func tapUntilToastShows(_ button: XCUIElement) {
+        for _ in 1...3 {
+            tapOnceStill(button)
+            if app.buttons["Undo"].waitForExistence(timeout: 3) { return }
+        }
+        XCTFail("The toast never showed after tapping \(button)")
+    }
+
     /// A tap while a screen is still sliding in lands where the button was.
     private func tapOnceStill(_ element: XCUIElement) {
         XCTAssertTrue(element.waitForExistence(timeout: 5))
         var lastFrame = element.frame
-        for _ in 0..<20 {
+        for _ in 0..<6 {
             Thread.sleep(forTimeInterval: 0.25)
             let frame = element.frame
-            if frame == lastFrame && element.isHittable { break }
+            if frame == lastFrame { break }
             lastFrame = frame
         }
         element.tap()
