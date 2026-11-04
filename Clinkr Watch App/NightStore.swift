@@ -35,9 +35,13 @@ final class NightStore {
         var pendingNights: [Night]
     }
 
-    /// The file in Application Support where the Watch app keeps its nights.
+    /// The file in Application Support where the Watch app keeps its nights. A UI test can name another, to make saving
+    /// fail.
     nonisolated static var defaultFileURL: URL {
-        URL.applicationSupportDirectory.appending(path: "nights.json")
+        if let path = ProcessInfo.processInfo.environment["NIGHTS_FILE"] {
+            return URL(filePath: path)
+        }
+        return URL.applicationSupportDirectory.appending(path: "nights.json")
     }
 
     /// An empty store in a new temporary file, for previews, so taps in one preview never show up in the next.
@@ -62,10 +66,8 @@ final class NightStore {
     /// Logs a drink (or water). The first one starts tonight's night, and so does the first one after a long gap.
     func add(_ type: DrinkType, at date: Date = .now) {
         retryLoadIfNeeded()
-        if let lastEntry = activeNight?.entries.last,
-            date.timeIntervalSince(lastEntry.timestamp) >= Self.staleNightGap
-        {
-            finishActiveNight(at: lastEntry.timestamp)
+        if let forgottenEnd = endOfForgottenNight(at: date) {
+            finishActiveNight(at: forgottenEnd)
         }
         if activeNight == nil {
             activeNight = Night(name: Self.defaultName(for: date), startTime: date)
@@ -97,11 +99,12 @@ final class NightStore {
         save()
     }
 
-    /// Ends tonight's night and queues it for the iPhone. Does nothing when no night is active.
+    /// Ends tonight's night and queues it for the iPhone. A night ended long after its last entry was forgotten, so it
+    /// ends at that entry instead. Does nothing when no night is active.
     func endNight(at date: Date = .now) {
         retryLoadIfNeeded()
         guard activeNight != nil else { return }
-        finishActiveNight(at: date)
+        finishActiveNight(at: endOfForgottenNight(at: date) ?? date)
         save()
     }
 
@@ -119,6 +122,20 @@ final class NightStore {
         return true
     }
 
+    private func endOfForgottenNight(at date: Date) -> Date? {
+        guard let last = activeNight?.entries.last?.timestamp,
+            date.timeIntervalSince(last) >= Self.staleNightGap
+        else { return nil }
+        return last
+    }
+
+    /// Tries a failed save again, for when nothing else would: End night is often the last change of the night.
+    func retrySaveIfFailed() {
+        guard saveFailed else { return }
+        retryLoadIfNeeded()
+        save()
+    }
+
     private func finishActiveNight(at date: Date) {
         guard var night = activeNight else { return }
         night.end(at: date)
@@ -133,8 +150,11 @@ final class NightStore {
     }
 
     private func retryLoadIfNeeded() {
-        if needsLoad {
-            load()
+        guard needsLoad else { return }
+        load()
+        // The saved nights replace what was logged meanwhile, so its Undo goes with it.
+        if activeNight?.entries.contains(where: { $0.id == lastAdded?.id }) != true {
+            lastAdded = nil
         }
     }
 

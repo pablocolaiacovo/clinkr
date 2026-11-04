@@ -8,6 +8,7 @@ struct ContentView: View {
     @Environment(NightStore.self) private var nightStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+    @Environment(\.scenePhase) private var scenePhase
     @State private var undoable: Undoable?
     @State private var waterNudge = WaterNudge()
     @State private var showsWaterNudge = false
@@ -67,6 +68,7 @@ struct ContentView: View {
         .overlay {
             if let endedNight {
                 NightSavedView(
+                    saveFailed: nightStore.saveFailed,
                     onUndo: { reopenNight(endedNight) },
                     onDismiss: closeNightSaved
                 )
@@ -82,6 +84,9 @@ struct ContentView: View {
                 return
             }
             closeNightSaved()
+        }
+        .onChange(of: scenePhase) {
+            nightStore.retrySaveIfFailed()
         }
         .onChange(of: nightStore.lastAdded) { _, entry in
             // An undo or a water clears it, and another drink takes its place.
@@ -113,7 +118,7 @@ struct ContentView: View {
             } catch {
                 return
             }
-            guard nightStore.lastAdded?.id == pendingNudge else { return }
+            guard nightStore.lastAdded?.id == pendingNudge, nudgeIsDue else { return }
             showWaterNudge()
         }
         .task(id: undoable?.entry.id) {

@@ -3,10 +3,20 @@ import Testing
 
 @testable import Clinkr_Watch_App
 
+@MainActor
 struct TallyRingTests {
     @Test(arguments: [(0, 8), (1, 8), (8, 8), (9, 16), (16, 16), (17, 24)])
     func ringGrowsEightSlotsAtATime(drinks: Int, slots: Int) {
         #expect(TallyRing.slotCount(forDrinks: drinks) == slots)
+    }
+
+    @Test(arguments: [8, 16, 24, 32, 64, 200])
+    func everySlotAlwaysDraws(slots: Int) {
+        for slot in 0..<slots {
+            let arc = TallyRing.arc(forSlot: slot, slots: slots, inset: 0.03)
+            #expect(arc.upperBound > arc.lowerBound)
+            #expect(arc.lowerBound >= 0 && arc.upperBound <= 1)
+        }
     }
 
     @Test func waterRingFillsWithWatersAgainstDrinks() {
@@ -20,12 +30,24 @@ struct TallyRingTests {
     }
 }
 
+@MainActor
 struct TonightCaptionTests {
+    private func spanish(_ text: LocalizedStringResource) -> String {
+        var text = text
+        text.locale = Locale(identifier: "es_AR")
+        return String(localized: text)
+    }
+
+    @Test func aFailedSaveReplacesTheCaption() {
+        let caption = TonightView.caption(forNightStartingAt: .now, saveFailed: true)
+        #expect(spanish(caption) == "Sin guardar")
+    }
+
     private func caption(atHour hour: Int) -> String {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .gmt
         let start = calendar.date(from: DateComponents(year: 2026, month: 10, day: 30, hour: hour))!
-        return TonightView.caption(forNightStartingAt: start, calendar: calendar).key
+        return TonightView.caption(forNightStartingAt: start, saveFailed: false, calendar: calendar).key
     }
 
     @Test(arguments: [5, 12, 16])

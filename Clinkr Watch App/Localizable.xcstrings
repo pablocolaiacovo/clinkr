@@ -205,6 +205,28 @@
         }
       }
     },
+    "Not saved" : {
+      "comment" : "Tonight screen, when saving the night failed",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin guardar"
+          }
+        }
+      }
+    },
+    "Not saved. Get home safe." : {
+      "comment" : "Shown after End night when saving failed",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin guardar. Volvé bien."
+          }
+        }
+      }
+    },
     "Remove" : {
       "comment" : "Swipe action on a Night screen row that removes that drink",
       "localizations" : {

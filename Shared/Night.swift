@@ -105,10 +105,6 @@ struct Night: Identifiable, Codable, Hashable, Sendable {
         }
     }
 
-    mutating func removeEntry(id: DrinkEntry.ID) {
-        entries.removeAll { $0.id == id }
-    }
-
     /// Makes an ended night active again, like taking back End night.
     mutating func reopen() {
         endTime = nil
