@@ -3,6 +3,7 @@ import Testing
 
 @testable import Clinkr_Watch_App
 
+@MainActor
 struct UndoToastTests {
     private func spanish(_ type: DrinkType, count: Int) -> String {
         var message = UndoToast.message(for: type, count: count)

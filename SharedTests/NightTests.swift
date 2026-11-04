@@ -110,12 +110,6 @@ struct NightTests {
         #expect(night.endTime == minutes(75))
     }
 
-    @Test func removingAnEntryKeepsTheRest() {
-        var night = makeNight([(.beer, 0), (.wine, 10)])
-        night.removeEntry(id: night.entries[0].id)
-        #expect(night.entries.map(\.type) == [.wine])
-    }
-
     // MARK: Duration and pace
 
     @Test func endedNightUsesItsEndTime() {

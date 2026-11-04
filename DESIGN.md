@@ -262,7 +262,7 @@ The ring grows 8 slots at a time, so it's never shown as full or over. Tapping i
 A `surface-raised` capsule with a `watch-body` message and the Undo pill, shown for 5 seconds after every add. With VoiceOver on, it stays until the next add or an undo.
 
 ### Night Saved Message
-A full-screen message on `bg` after End night, fading in with a success haptic: a centered `watch-title` line above the Undo pill. Undo lasts 5 seconds, or until the message is closed with VoiceOver on. Tapping the message closes it, and a tap that just misses Undo does nothing, so a near miss doesn't throw the undo away.
+A full-screen message on `bg` after End night, fading in with a success haptic: a centered `watch-title` line above the Undo pill. Undo lasts 5 seconds, or until the message is closed with VoiceOver on. Tapping the message closes it, and a tap that just misses Undo does nothing, so a near miss doesn't throw the undo away. If the last save failed, the line reads "Not saved. Get home safe.", and Tonight's caption reads "Not saved" in `ink-muted`.
 
 ### Water Break Nudge
 A full-screen takeover on `bg`, not a banner: the water glyph and a `watch-title` headline, then tonight's totals in `ink` within a line of `ink-muted`, then the nudge and ghost pills. It arrives with a notification haptic and never plays sound. The opt-in pace alert is planned as the same layout in `careful`, with its alert glyph, stating facts such as "3 in 40 min".

@@ -40,11 +40,16 @@ struct TonightView: View {
         if let night {
             details(night)
         } else {
-            Text("Swipe up to start the night")
-                .typeStyle(.watchCaption)
-                .foregroundStyle(.inkMuted)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.8)
+            VStack(spacing: Space.s1) {
+                if nightStore.saveFailed {
+                    Text(Self.notSaved)
+                }
+                Text("Swipe up to start the night", comment: "Tonight screen before the first drink")
+            }
+            .typeStyle(.watchCaption)
+            .foregroundStyle(.inkMuted)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.8)
         }
     }
 
@@ -57,7 +62,7 @@ struct TonightView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
                 .accessibilityLabel(Text("\(night.drinkCount) drinks"))
-            Text(Self.caption(forNightStartingAt: night.startTime))
+            Text(Self.caption(forNightStartingAt: night.startTime, saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
                 .lineLimit(1)
@@ -68,11 +73,20 @@ struct TonightView: View {
         }
     }
 
+    private static let notSaved = LocalizedStringResource(
+        "Not saved",
+        comment: "Tonight screen, when saving the night failed"
+    )
+
     /// "Today" for a night that started in the daytime, like a lunch, otherwise "Tonight".
     static func caption(
         forNightStartingAt start: Date,
+        saveFailed: Bool,
         calendar: Calendar = .current
     ) -> LocalizedStringResource {
+        if saveFailed {
+            return notSaved
+        }
         let hour = calendar.component(.hour, from: start)
         if (5..<17).contains(hour) {
             return LocalizedStringResource("Today", comment: "Tonight screen caption for a night that started by day")

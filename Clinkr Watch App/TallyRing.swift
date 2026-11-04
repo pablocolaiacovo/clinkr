@@ -25,6 +25,15 @@ struct TallyRing: View {
         return min(1, Double(waters) / Double(drinks))
     }
 
+    /// The part of the circle a slot draws, from 0 to 1. When the gaps leave no room for an arc it stays a sliver, which
+    /// its round caps turn into a dot: an arc of no length wouldn't be drawn at all.
+    static func arc(forSlot slot: Int, slots: Int, inset: Double) -> ClosedRange<Double> {
+        let slotLength = 1 / Double(slots)
+        let center = (Double(slot) + 0.5) * slotLength
+        let halfLength = max(0.00005, slotLength / 2 - inset)
+        return (center - halfLength)...(center + halfLength)
+    }
+
     /// The width of the outer and inner rings together, so a screen can fit its content inside them.
     static let thickness = Size.ringStroke + Space.s2 + Size.waterRingStroke
 
@@ -47,13 +56,12 @@ struct TallyRing: View {
         // Round caps reach half a stroke past each end, so each end pulls back by that much plus half the gap.
         let circumference = .pi * (diameter - Size.ringStroke)
         let inset = circumference > 0 ? (Size.ringStroke + Space.s1) / 2 / circumference : 0
-        let slotLength = 1 / Double(slots)
         return ZStack {
             ForEach(0..<slots, id: \.self) { slot in
-                let start = Double(slot) * slotLength
+                let arc = Self.arc(forSlot: slot, slots: slots, inset: inset)
                 Circle()
                     .inset(by: Size.ringStroke / 2)
-                    .trim(from: start + inset, to: max(start + inset, start + slotLength - inset))
+                    .trim(from: arc.lowerBound, to: arc.upperBound)
                     .stroke(color(forSlot: slot), style: StrokeStyle(lineWidth: Size.ringStroke, lineCap: .round))
             }
         }

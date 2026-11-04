@@ -3,6 +3,7 @@ import Testing
 
 @testable import Clinkr_Watch_App
 
+@MainActor
 struct NightViewTests {
     private let start = Date(timeIntervalSinceReferenceDate: 0)
 
@@ -15,6 +16,20 @@ struct NightViewTests {
                 DrinkEntry(type: .wine, timestamp: start.addingTimeInterval(hours * 3600)),
             ]
         )
+    }
+
+    private func spanishSavedMessage(saveFailed: Bool) -> String {
+        var message = NightSavedView.message(saveFailed: saveFailed)
+        message.locale = Locale(identifier: "es_AR")
+        return String(localized: message)
+    }
+
+    @Test func aSavedNightSaysSo() {
+        #expect(spanishSavedMessage(saveFailed: false) == "Noche guardada. Volvé bien.")
+    }
+
+    @Test func aFailedSaveNeverClaimsTheNightIsSaved() {
+        #expect(spanishSavedMessage(saveFailed: true) == "Sin guardar. Volvé bien.")
     }
 
     @Test func aNormalNightShowsOnlyTimes() {

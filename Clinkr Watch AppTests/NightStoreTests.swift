@@ -237,6 +237,24 @@ final class NightStoreTests {
         #expect(store.activeNight?.entries.map(\.type) == [.shot])
     }
 
+    @Test func endingLongAfterTheLastDrinkEndsAtThatDrink() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.add(.water, at: minutes(30))
+        store.endNight(at: minutes(30) + NightStore.staleNightGap)
+
+        #expect(try #require(store.pendingNights.first).endTime == minutes(30))
+    }
+
+    @Test func endingJustBeforeTheGapEndsNow() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        let end = minutes(0) + NightStore.staleNightGap - 60
+        store.endNight(at: end)
+
+        #expect(try #require(store.pendingNights.first).endTime == end)
+    }
+
     @Test func drinkJustBeforeTheGapJoinsTheNight() {
         let store = NightStore(fileURL: fileURL)
         store.add(.beer, at: minutes(0))
@@ -272,6 +290,44 @@ final class NightStoreTests {
         #expect(reopened.pendingNights == store.pendingNights)
     }
 
+    /// A file as today's app writes it, spelled out by hand. If this fails, a change has stopped the app reading what
+    /// users already have saved, and they'd lose their nights.
+    @Test func filesSavedByEarlierVersionsStillLoad() throws {
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        let saved = """
+            {
+              "activeNight": {
+                "id": "6F9619FF-8B86-D011-B42D-00C04FC964FF",
+                "name": "Oct 30",
+                "startTime": 0,
+                "entries": [
+                  { "id": "7F9619FF-8B86-D011-B42D-00C04FC964FF", "type": "beer", "timestamp": 0 }
+                ]
+              },
+              "pendingNights": [
+                {
+                  "id": "8F9619FF-8B86-D011-B42D-00C04FC964FF",
+                  "name": "Oct 29",
+                  "startTime": -86400,
+                  "endTime": -82800,
+                  "entries": [
+                    { "id": "9F9619FF-8B86-D011-B42D-00C04FC964FF", "type": "water", "timestamp": -86400 }
+                  ]
+                }
+              ]
+            }
+            """
+        try Data(saved.utf8).write(to: fileURL)
+
+        let store = NightStore(fileURL: fileURL)
+        #expect(store.activeNight?.name == "Oct 30")
+        #expect(store.activeNight?.entries.map(\.type) == [.beer])
+        let pending = try #require(store.pendingNights.first)
+        #expect(pending.endTime == minutes(-23 * 60))
+        #expect(pending.entries.map(\.type) == [.water])
+        #expect(!FileManager.default.fileExists(atPath: fileURL.appendingPathExtension("corrupt").path()))
+    }
+
     @Test func undecodableFileStartsEmptyAndIsKept() throws {
         try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
         try Data("not json".utf8).write(to: fileURL)
@@ -304,6 +360,45 @@ final class NightStoreTests {
         try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: fileURL.path())
         store.add(.wine, at: minutes(10))
         #expect(store.activeNight?.entries.map(\.type) == [.beer, .wine])
+        #expect(!store.saveFailed)
+    }
+
+    @Test func aFailedSaveIsRetriedWithoutANewChange() throws {
+        try Data().write(to: folderURL)
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(60))
+        #expect(store.saveFailed)
+
+        try FileManager.default.removeItem(at: folderURL)
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        store.retrySaveIfFailed()
+
+        #expect(!store.saveFailed)
+        #expect(relaunch().pendingNights == store.pendingNights)
+    }
+
+    @Test func aRetryDoesNothingAfterAGoodSave() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        try FileManager.default.removeItem(at: fileURL)
+
+        store.retrySaveIfFailed()
+        #expect(!FileManager.default.fileExists(atPath: fileURL.path()))
+    }
+
+    @Test func aRetryOnceReadableLoadsTheSavedNightsAndForgetsTheUndo() throws {
+        NightStore(fileURL: fileURL).add(.beer, at: minutes(0))
+        try FileManager.default.setAttributes([.posixPermissions: 0o000], ofItemAtPath: fileURL.path())
+        let store = relaunch()
+        store.add(.wine, at: minutes(10))
+        #expect(store.lastAdded?.type == .wine)
+
+        try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: fileURL.path())
+        store.retrySaveIfFailed()
+
+        #expect(store.activeNight?.entries.map(\.type) == [.beer])
+        #expect(store.lastAdded == nil)
         #expect(!store.saveFailed)
     }
 
