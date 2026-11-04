@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T02:49:05Z",
+  "generatedAt": "2026-11-04T02:56:27Z",
   "title": "Design System: Clinkr",
   "extensions": {
     "colorMeta": {
@@ -442,13 +442,13 @@
   ],
   "narrative": {
     "northStar": "The Clink",
-    "overview": "Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a short spring and a haptic. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.\n\nThe Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.\n\nThe iPhone is not built yet. Its light theme, with warm cream and a sticker look, is specified but provisional, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.",
+    "overview": "Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a haptic. A tap on a drink button also clinks, with a short spring. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.\n\nThe Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.\n\nThe iPhone is not built yet. Its light theme, with warm cream and a sticker look, is specified but provisional, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.",
     "keyCharacteristics": [
       "Solid, saturated fills on black, with no outlines or gradients on the Watch",
       "Round everywhere: pills, large-radius cards, round-capped ring segments",
       "SF Pro Rounded at heavy weights, with nothing on the Watch lighter than semibold",
       "Flat on the Watch, with depth from tone alone",
-      "Motion under 400ms, always paired with a haptic, and skipped under Reduce Motion"
+      "Motion under 400ms and reduced under Reduce Motion, with a haptic on every add"
     ],
     "rules": [
       {
@@ -488,7 +488,7 @@
       },
       {
         "name": "The Flat Wrist Rule",
-        "body": "No shadows on the Watch, ever. The `shadow-sticker` modifier draws nothing in dark mode, so it can't appear there.",
+        "body": "No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there.",
         "section": "elevation"
       }
     ],

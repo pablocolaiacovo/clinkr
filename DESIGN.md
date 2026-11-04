@@ -126,7 +126,7 @@ components:
 
 **Creative North Star: "The Clink"**
 
-Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a short spring and a haptic. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.
+Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a haptic. A tap on a drink button also clinks, with a short spring. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.
 
 The Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.
 
@@ -137,7 +137,7 @@ The iPhone is not built yet. Its light theme, with warm cream and a sticker look
 - Round everywhere: pills, large-radius cards, round-capped ring segments
 - SF Pro Rounded at heavy weights, with nothing on the Watch lighter than semibold
 - Flat on the Watch, with depth from tone alone
-- Motion under 400ms, always paired with a haptic, and skipped under Reduce Motion
+- Motion under 400ms and reduced under Reduce Motion, with a haptic on every add
 
 ## Colors
 
@@ -220,7 +220,7 @@ The iPhone plan is provisional: an `s4` screen gutter and card padding, `s6` bet
 
 ## Elevation & Depth
 
-The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, then `surface`, then `surface-raised`. Overlays such as the nudge replace the screen rather than float above it.
+The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, then `surface`, then `surface-raised`. The nudge and the Night saved message replace the screen rather than float above it. The Undo toast is the one exception, sitting over the lower part of the ring on Tonight.
 
 ### Shadow Vocabulary
 
@@ -228,7 +228,7 @@ The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, t
 
 ### Named Rules
 
-**The Flat Wrist Rule.** No shadows on the Watch, ever. The `shadow-sticker` modifier draws nothing in dark mode, so it can't appear there.
+**The Flat Wrist Rule.** No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there.
 
 ## Shapes
 
@@ -245,7 +245,7 @@ Chunky and tactile throughout: big, solid fills you could hit with a thumb in th
 - **Primary:** a `fizz` pill, 48pt tall, with `on-pop` text. End night is the example, at the top of the Night screen.
 - **Nudge action:** the same pill in `water`, for "Had one".
 - **Ghost:** a `surface-raised` pill, 40pt tall in a 44pt tap area, for "Later".
-- **Undo:** an `ink` pill with `bg` text, 44pt tall. It's the highest contrast on the Watch, so a mistap is easy to take back. It drops to its SF Symbol when space runs out.
+- **Undo:** an `ink` pill with `bg` text, 44pt tall. It's the only `ink`-filled control on the Watch, so a mistap is easy to take back. It drops to its SF Symbol when space runs out.
 - **States:** there are no hover or focus treatments on the Watch. Feedback is the spring and the haptic.
 
 ### Drink Button
@@ -260,6 +260,9 @@ The ring grows 8 slots at a time, so it's never shown as full or over. Tapping i
 
 ### Undo Toast
 A `surface-raised` capsule with a `watch-body` message and the Undo pill, shown for 5 seconds after every add. With VoiceOver on, it stays until the next add or an undo.
+
+### Night Saved Message
+A full-screen message on `bg` after End night, fading in with a success haptic: a centered `watch-title` line above the Undo pill. Undo lasts 5 seconds, or until the message is closed with VoiceOver on. Tapping the message closes it, and a tap that just misses Undo does nothing, so a near miss doesn't throw the undo away.
 
 ### Water Break Nudge
 A full-screen takeover on `bg`, not a banner: the water glyph and a `watch-title` headline, then tonight's totals in `ink` within a line of `ink-muted`, then the nudge and ghost pills. It arrives with a notification haptic and never plays sound. The opt-in pace alert is planned as the same layout in `careful`, with its alert glyph, stating facts such as "3 in 40 min".

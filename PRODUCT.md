@@ -47,7 +47,7 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 **Constraints:**
 - iOS 26+ and watchOS 26+, in SwiftUI.
 - Apple's App Store Review Guideline 1.4.3 rejects apps that encourage excessive drinking.
-- Watch copy must fit one line, including in Spanish, which runs longer than English. Cut words, not size.
+- Watch button labels and toast messages must fit one line, including in Spanish, which runs longer than English. Cut words before cutting size. Longer messages, like the water break nudge, may wrap.
 
 **Undecided:**
 - The privacy position. Today's data lives on the Watch, and there is no account or backend, but iCloud backup (#34) and Apple Health (#35) are open ideas. Don't claim anything about privacy yet.

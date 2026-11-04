@@ -31,7 +31,7 @@ To run on your own devices, select each target, open **Signing & Capabilities**,
 scripts/test.sh
 ```
 
-This checks the code style with swift-format, then runs the iPhone unit and UI tests and the Watch unit tests on the newest simulators. In Xcode, press ⌘U to run the tests for the selected scheme. GitHub Actions runs the same script on every pull request and push to `main`.
+This checks the code style with swift-format and `DESIGN.md`'s colors against `Shared/Palette.swift`, then runs the iPhone unit and UI tests and the Watch unit tests on the newest simulators. In Xcode, press ⌘U to run the tests for the selected scheme. GitHub Actions runs the same script on every pull request and push to `main`.
 
 ## Workflow
 

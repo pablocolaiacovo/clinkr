@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Lints, then builds and tests the iPhone and Watch apps on the newest available simulators.
+# Lints, checks DESIGN.md and its sidecar against Palette.swift, then builds and tests the iPhone and Watch apps on the newest available simulators.
 # Usage: scripts/test.sh [lint|ios|watch|all]   (default: all)
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -19,6 +19,27 @@ simulator_id() {
 lint() {
     echo "==> Lint"
     xcrun swift-format lint --strict --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests"
+    design_tokens
+}
+
+# Prints Palette.swift's colors as "slug #HEX" lines, using the slugs in DESIGN.md.
+palette_colors() {
+    sed -nE 's/^ *static let ([A-Za-z]+) = ThemeColor\((light: )?0x([0-9A-F]{6})(, dark: 0x([0-9A-F]{6}))?\)$/\1 \3 \5/p' Shared/Palette.swift |
+        while read -r name first dark; do
+            slug="$(sed -E 's/([A-Z])/-\1/g' <<<"$name" | tr '[:upper:]' '[:lower:]')"
+            if [[ -n "$dark" ]]; then
+                echo "$slug #$dark"
+                echo "$slug-light #$first"
+            else
+                echo "$slug #$first"
+            fi
+        done | sort
+}
+
+design_tokens() {
+    echo "==> Design tokens"
+    diff <(palette_colors) <(sed -nE 's/^  ([a-z-]+): "(#[0-9A-F]{6})"$/\1 \2/p' DESIGN.md | sort)
+    diff <(palette_colors) <(jq -r '.extensions.colorMeta | to_entries[] | "\(.key) \(.value.canonical)"' .impeccable/design.json | sort)
 }
 
 test_scheme() {
