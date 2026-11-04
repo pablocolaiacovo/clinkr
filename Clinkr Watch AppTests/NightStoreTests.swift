@@ -387,6 +387,21 @@ final class NightStoreTests {
         #expect(!FileManager.default.fileExists(atPath: fileURL.path()))
     }
 
+    @Test func aRetryOnceReadableLoadsTheSavedNightsAndForgetsTheUndo() throws {
+        NightStore(fileURL: fileURL).add(.beer, at: minutes(0))
+        try FileManager.default.setAttributes([.posixPermissions: 0o000], ofItemAtPath: fileURL.path())
+        let store = relaunch()
+        store.add(.wine, at: minutes(10))
+        #expect(store.lastAdded?.type == .wine)
+
+        try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: fileURL.path())
+        store.retrySaveIfFailed()
+
+        #expect(store.activeNight?.entries.map(\.type) == [.beer])
+        #expect(store.lastAdded == nil)
+        #expect(!store.saveFailed)
+    }
+
     @Test func failedSaveIsReported() throws {
         // A file where the folder should be, so nothing can be written inside it.
         try Data().write(to: folderURL)

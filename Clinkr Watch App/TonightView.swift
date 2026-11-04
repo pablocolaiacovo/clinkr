@@ -40,11 +40,16 @@ struct TonightView: View {
         if let night {
             details(night)
         } else {
-            Text(Self.emptyMessage(saveFailed: nightStore.saveFailed))
-                .typeStyle(.watchCaption)
-                .foregroundStyle(.inkMuted)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.8)
+            VStack(spacing: Space.s1) {
+                if nightStore.saveFailed {
+                    Text(Self.notSaved)
+                }
+                Text("Swipe up to start the night", comment: "Tonight screen before the first drink")
+            }
+            .typeStyle(.watchCaption)
+            .foregroundStyle(.inkMuted)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.8)
         }
     }
 
@@ -72,12 +77,6 @@ struct TonightView: View {
         "Not saved",
         comment: "Tonight screen, when saving the night failed"
     )
-
-    static func emptyMessage(saveFailed: Bool) -> LocalizedStringResource {
-        saveFailed
-            ? notSaved
-            : LocalizedStringResource("Swipe up to start the night", comment: "Tonight screen before a night")
-    }
 
     /// "Today" for a night that started in the daytime, like a lunch, otherwise "Tonight".
     static func caption(

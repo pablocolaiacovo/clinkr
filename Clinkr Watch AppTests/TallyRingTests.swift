@@ -3,6 +3,7 @@ import Testing
 
 @testable import Clinkr_Watch_App
 
+@MainActor
 struct TallyRingTests {
     @Test(arguments: [(0, 8), (1, 8), (8, 8), (9, 16), (16, 16), (17, 24)])
     func ringGrowsEightSlotsAtATime(drinks: Int, slots: Int) {
@@ -29,6 +30,7 @@ struct TallyRingTests {
     }
 }
 
+@MainActor
 struct TonightCaptionTests {
     private func spanish(_ text: LocalizedStringResource) -> String {
         var text = text
@@ -39,11 +41,6 @@ struct TonightCaptionTests {
     @Test func aFailedSaveReplacesTheCaption() {
         let caption = TonightView.caption(forNightStartingAt: .now, saveFailed: true)
         #expect(spanish(caption) == "Sin guardar")
-    }
-
-    @Test func aFailedSaveReplacesTheEmptyMessage() {
-        #expect(spanish(TonightView.emptyMessage(saveFailed: true)) == "Sin guardar")
-        #expect(spanish(TonightView.emptyMessage(saveFailed: false)) == "Deslizá para arrancar la noche")
     }
 
     private func caption(atHour hour: Int) -> String {

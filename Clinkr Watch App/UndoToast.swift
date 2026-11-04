@@ -3,7 +3,8 @@ import SwiftUI
 /// The bar that shows for a few seconds after every add, so a mistap in the dark is one tap to take back. No
 /// confirmation: Undo removes the entry straight away.
 struct UndoToast: View {
-    static let duration: Duration = .seconds(5)
+    /// UI tests ask for longer: on a slow test machine, finding Undo and tapping it can take more than 5 seconds.
+    static let duration: Duration = .seconds(ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
     static let animation = Motion.standard
 
     let type: DrinkType

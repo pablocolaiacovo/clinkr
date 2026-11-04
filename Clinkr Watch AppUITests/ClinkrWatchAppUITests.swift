@@ -1,16 +1,15 @@
 import XCTest
 
-/// The main flow on the real screens, covering the timing that lives in `ContentView`, which unit tests can't reach.
+/// The main flows on the real screens, covering the timing that lives in `ContentView`, which unit tests can't reach.
 @MainActor
 final class ClinkrWatchAppUITests: XCTestCase {
     private let app = XCUIApplication()
     /// It's also the button that closes the message, so it isn't found as plain text.
     private var nightSaved: XCUIElement { app.buttons["Night saved. Get home safe."] }
+    private var waterBreak: XCUIElement { app.staticTexts["Water break?"] }
 
     func testAddUndoNudgeAndEndNight() throws {
-        continueAfterFailure = false
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launch()
+        launch()
         endAnyNightLeftOver()
 
         swipeUp(to: app.buttons["Beer"])
@@ -21,10 +20,10 @@ final class ClinkrWatchAppUITests: XCTestCase {
         for _ in 1...4 {
             app.buttons["Beer"].tap()
         }
-        XCTAssertFalse(app.staticTexts["Water break?"].exists, "The nudge waits for the toast's 5 seconds")
-        XCTAssertTrue(app.staticTexts["Water break?"].waitForExistence(timeout: 10))
+        XCTAssertFalse(waterBreak.exists, "The nudge waits for the toast")
+        XCTAssertTrue(waterBreak.waitForExistence(timeout: toastWait))
         tapOnceStill(app.buttons["Had one"])
-        XCTAssertTrue(waitToDisappear(app.staticTexts["Water break?"]))
+        XCTAssertTrue(waitToDisappear(waterBreak))
 
         swipeUp(to: app.buttons["End night"])
         tapOnceStill(app.buttons["End night"])
@@ -37,14 +36,64 @@ final class ClinkrWatchAppUITests: XCTestCase {
         XCTAssertTrue(waitToDisappear(nightSaved), "The message closes by itself")
     }
 
+    func testRemovingADrinkCallsOffTheWaitingNudge() throws {
+        launch()
+        endAnyNightLeftOver()
+
+        swipeUp(to: app.buttons["Beer"])
+        tapUntilToastShows(app.buttons["Beer"])
+        for _ in 1...3 {
+            app.buttons["Beer"].tap()
+        }
+        swipeUp(to: app.buttons["End night"])
+        // The second row, so the newest stays the one Undo would take back.
+        let rows = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Beer,'"))
+        rows.element(boundBy: 1).swipeLeft()
+        tapOnceStill(app.buttons["Remove"])
+
+        XCTAssertFalse(waterBreak.waitForExistence(timeout: toastWait), "Three drinks no longer call for water")
+    }
+
+    func testAFailedSaveShowsOnScreen() throws {
+        // Nothing can be written under /dev/null, so every save fails.
+        launch(nightsFile: "/dev/null/nights.json")
+        let notSaved = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS 'Not saved'"))
+
+        swipeUp(to: app.buttons["Beer"])
+        tapUntilToastShows(app.buttons["Beer"])
+        app.swipeDown()
+        XCTAssertTrue(notSaved.firstMatch.waitForExistence(timeout: 5), "Tonight's caption says so")
+
+        swipeUp(to: app.buttons["End night"])
+        tapOnceStill(app.buttons["End night"])
+        let failedMessage = app.buttons["Not saved. Get home safe."]
+        XCTAssertTrue(failedMessage.waitForExistence(timeout: 5))
+        XCTAssertFalse(nightSaved.exists)
+        tapOnceStill(failedMessage)
+        XCTAssertTrue(waitToDisappear(failedMessage), "Tapping the message closes it")
+
+        let emptyTonight = notSaved.matching(NSPredicate(format: "label CONTAINS 'Swipe up to start the night'"))
+        XCTAssertTrue(emptyTonight.firstMatch.waitForExistence(timeout: 5), "The empty Tonight keeps its hint")
+    }
+
+    /// Long enough for any wait on the toast to end, even on a slow test machine.
+    private let toastWait: TimeInterval = 30
+
+    private func launch(nightsFile: String? = nil) {
+        continueAfterFailure = false
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["UNDO_SECONDS"] = "15"
+        app.launchEnvironment["NIGHTS_FILE"] = nightsFile
+        app.launch()
+    }
+
     /// The simulator keeps saved nights between runs, so each run starts from an empty Tonight.
     private func endAnyNightLeftOver() {
         let emptyTonight = app.descendants(matching: .any)["Swipe up to start the night"]
-        guard !emptyTonight.waitForExistence(timeout: 3) else { return }
+        guard !emptyTonight.waitForExistence(timeout: 10) else { return }
         swipeUp(to: app.buttons["End night"])
         tapOnceStill(app.buttons["End night"])
         XCTAssertTrue(nightSaved.waitForExistence(timeout: 5))
-        XCTAssertTrue(waitToDisappear(nightSaved))
         // Swiping here scrolled Add's list, leaving Beer under the clock, so start again from the top.
         app.terminate()
         app.launch()
@@ -52,7 +101,7 @@ final class ClinkrWatchAppUITests: XCTestCase {
 
     /// The pages run Tonight, Add, Night, so going forward is always up.
     private func swipeUp(to element: XCUIElement) {
-        for _ in 0..<3 where !element.isHittable {
+        for _ in 0..<4 where !element.isHittable {
             app.swipeUp()
             _ = element.waitForExistence(timeout: 1)
         }
@@ -63,7 +112,7 @@ final class ClinkrWatchAppUITests: XCTestCase {
     private func tapUntilToastShows(_ button: XCUIElement) {
         for _ in 1...3 {
             tapOnceStill(button)
-            if app.buttons["Undo"].waitForExistence(timeout: 3) { return }
+            if app.buttons["Undo"].waitForExistence(timeout: 8) { return }
         }
         XCTFail("The toast never showed after tapping \(button)")
     }
@@ -83,6 +132,6 @@ final class ClinkrWatchAppUITests: XCTestCase {
 
     private func waitToDisappear(_ element: XCUIElement) -> Bool {
         let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: element)
-        return XCTWaiter.wait(for: [gone], timeout: 10) == .completed
+        return XCTWaiter.wait(for: [gone], timeout: toastWait) == .completed
     }
 }

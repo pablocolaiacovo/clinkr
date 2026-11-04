@@ -35,9 +35,13 @@ final class NightStore {
         var pendingNights: [Night]
     }
 
-    /// The file in Application Support where the Watch app keeps its nights.
+    /// The file in Application Support where the Watch app keeps its nights. A UI test can name another, to make saving
+    /// fail.
     nonisolated static var defaultFileURL: URL {
-        URL.applicationSupportDirectory.appending(path: "nights.json")
+        if let path = ProcessInfo.processInfo.environment["NIGHTS_FILE"] {
+            return URL(filePath: path)
+        }
+        return URL.applicationSupportDirectory.appending(path: "nights.json")
     }
 
     /// An empty store in a new temporary file, for previews, so taps in one preview never show up in the next.
@@ -146,8 +150,11 @@ final class NightStore {
     }
 
     private func retryLoadIfNeeded() {
-        if needsLoad {
-            load()
+        guard needsLoad else { return }
+        load()
+        // The saved nights replace what was logged meanwhile, so its Undo goes with it.
+        if activeNight?.entries.contains(where: { $0.id == lastAdded?.id }) != true {
+            lastAdded = nil
         }
     }
 

@@ -3,6 +3,7 @@ import Testing
 
 @testable import Clinkr_Watch_App
 
+@MainActor
 struct NightViewTests {
     private let start = Date(timeIntervalSinceReferenceDate: 0)
 
