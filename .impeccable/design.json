@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T02:49:05Z",
+  "title": "Design System: Clinkr",
+  "extensions": {
+    "colorMeta": {
+      "fizz": {
+        "role": "primary",
+        "displayName": "Fizz",
+        "canonical": "#FF5C39",
+        "tonalRamp": [
+          "#1D0100",
+          "#480B01",
+          "#7A1801",
+          "#AE2804",
+          "#E2401A",
+          "#FE7658",
+          "#FDB5A4",
+          "#FEE9E4"
+        ]
+      },
+      "beer": {
+        "role": "secondary",
+        "displayName": "Beer",
+        "canonical": "#FFB81C",
+        "tonalRamp": [
+          "#120900",
+          "#332201",
+          "#573C02",
+          "#7F5907",
+          "#A9780E",
+          "#D69806",
+          "#E8C387",
+          "#F8EDDB"
+        ]
+      },
+      "wine": {
+        "role": "secondary",
+        "displayName": "Wine",
+        "canonical": "#E8478F",
+        "tonalRamp": [
+          "#1D000B",
+          "#480226",
+          "#7A0443",
+          "#AE0C62",
+          "#DA3984",
+          "#FB6CA6",
+          "#FEAFCA",
+          "#FFE7EF"
+        ]
+      },
+      "cocktail": {
+        "role": "secondary",
+        "displayName": "Cocktail",
+        "canonical": "#C6F432",
+        "tonalRamp": [
+          "#080D00",
+          "#1F2A01",
+          "#394901",
+          "#556B05",
+          "#728F0C",
+          "#91B502",
+          "#BCD584",
+          "#EAF3DA"
+        ]
+      },
+      "shot": {
+        "role": "secondary",
+        "displayName": "Shot",
+        "canonical": "#B98CFF",
+        "tonalRamp": [
+          "#120027",
+          "#32005D",
+          "#521E8A",
+          "#7243AF",
+          "#9366D5",
+          "#B48DF3",
+          "#D2BDFA",
+          "#F1EBFE"
+        ]
+      },
+      "water": {
+        "role": "secondary",
+        "displayName": "Water",
+        "canonical": "#4FD8FF",
+        "tonalRamp": [
+          "#000E13",
+          "#012A35",
+          "#004A5B",
+          "#036C84",
+          "#0991B0",
+          "#3DB5D7",
+          "#98D4E8",
+          "#E0F2F8"
+        ]
+      },
+      "careful": {
+        "role": "tertiary",
+        "displayName": "Careful",
+        "canonical": "#FF6B81",
+        "tonalRamp": [
+          "#1E0004",
+          "#4A0316",
+          "#7D0629",
+          "#B01B41",
+          "#D84761",
+          "#F87586",
+          "#FEB1B8",
+          "#FFE8E9"
+        ]
+      },
+      "careful-light": {
+        "role": "tertiary",
+        "displayName": "Careful (light)",
+        "canonical": "#C4123A",
+        "tonalRamp": [
+          "#1F0003",
+          "#4B0210",
+          "#7E0421",
+          "#B50B34",
+          "#E23A51",
+          "#FE717B",
+          "#FDB3B3",
+          "#FEE9E8"
+        ]
+      },
+      "on-pop": {
+        "role": "neutral",
+        "displayName": "On Pop",
+        "canonical": "#1A1220",
+        "tonalRamp": [
+          "#0D0910",
+          "#29222E",
+          "#473E4E",
+          "#665D6E",
+          "#887E90",
+          "#AAA1B2",
+          "#CCC6D1",
+          "#EFEEF1"
+        ]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Background",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "bg-light": {
+        "role": "neutral",
+        "displayName": "Background (light)",
+        "canonical": "#FFF6EA",
+        "tonalRamp": [
+          "#0D0B07",
+          "#2A241D",
+          "#484137",
+          "#686056",
+          "#898176",
+          "#ABA49A",
+          "#CDC8C2",
+          "#F0EEEC"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#1C1A24",
+        "tonalRamp": [
+          "#0B0A0F",
+          "#25242C",
+          "#42404C",
+          "#615F6B",
+          "#83808D",
+          "#A5A3AF",
+          "#C9C8CF",
+          "#EEEEF0"
+        ]
+      },
+      "surface-light": {
+        "role": "neutral",
+        "displayName": "Surface (light)",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Surface Raised",
+        "canonical": "#2A2735",
+        "tonalRamp": [
+          "#0B0A10",
+          "#26232F",
+          "#433F4F",
+          "#625F6F",
+          "#838091",
+          "#A6A3B2",
+          "#C9C8D1",
+          "#EEEEF1"
+        ]
+      },
+      "surface-raised-light": {
+        "role": "neutral",
+        "displayName": "Surface Raised (light)",
+        "canonical": "#FFEEDD",
+        "tonalRamp": [
+          "#0F0A06",
+          "#2D2318",
+          "#4D3F31",
+          "#6D5E50",
+          "#8F7F70",
+          "#B0A294",
+          "#D0C7BF",
+          "#F1EEEB"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#FFF7EC",
+        "tonalRamp": [
+          "#0D0B08",
+          "#29241D",
+          "#474138",
+          "#676057",
+          "#888177",
+          "#ABA49B",
+          "#CCC8C3",
+          "#EFEEEC"
+        ]
+      },
+      "ink-light": {
+        "role": "neutral",
+        "displayName": "Ink (light)",
+        "canonical": "#1A1220",
+        "tonalRamp": [
+          "#0D0910",
+          "#29222E",
+          "#473E4E",
+          "#665D6E",
+          "#887E90",
+          "#AAA1B2",
+          "#CCC6D1",
+          "#EFEEF1"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "canonical": "#A89CAE",
+        "tonalRamp": [
+          "#0D090F",
+          "#2A222D",
+          "#483E4D",
+          "#675C6D",
+          "#897D8F",
+          "#ABA0B1",
+          "#CDC6D0",
+          "#F0EDF1"
+        ]
+      },
+      "ink-muted-light": {
+        "role": "neutral",
+        "displayName": "Ink Muted (light)",
+        "canonical": "#6B5D70",
+        "tonalRamp": [
+          "#0E0910",
+          "#2B212E",
+          "#4A3C4E",
+          "#695B6E",
+          "#8B7C90",
+          "#AD9FB2",
+          "#CEC6D1",
+          "#F0EDF1"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#3A3646",
+        "tonalRamp": [
+          "#0C0A10",
+          "#26232F",
+          "#433F4F",
+          "#625E70",
+          "#847F92",
+          "#A6A2B3",
+          "#CAC7D2",
+          "#EFEEF1"
+        ]
+      },
+      "hairline-light": {
+        "role": "neutral",
+        "displayName": "Hairline (light)",
+        "canonical": "#1A1220",
+        "tonalRamp": [
+          "#0D0910",
+          "#29222E",
+          "#473E4E",
+          "#665D6E",
+          "#887E90",
+          "#AAA1B2",
+          "#CCC6D1",
+          "#EFEEF1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "count-hero": {
+        "displayName": "Count hero",
+        "purpose": "The night's drink count in the center of the ring."
+      },
+      "watch-title": {
+        "displayName": "Watch title",
+        "purpose": "Screen titles and the nudge headline."
+      },
+      "watch-body": {
+        "displayName": "Watch body",
+        "purpose": "Button labels, list rows and one-line messages."
+      },
+      "watch-caption": {
+        "displayName": "Watch caption",
+        "purpose": "Timestamps, units and counters, in ink-muted."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "iPhone, provisional: once per screen."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "iPhone, provisional: night names, card titles, section headers."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "iPhone, provisional: paragraphs and recap copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "iPhone, provisional: dates and chip labels, in uppercase."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sticker",
+        "value": "0 4px 0 0 #1A1220",
+        "purpose": "Provisional. iPhone cards and primary buttons in light mode only. Never on the Watch."
+      }
+    ],
+    "motion": [
+      {
+        "name": "standard",
+        "value": "snappy, 0.3s (SwiftUI .snappy(duration: 0.3))",
+        "purpose": "Toasts, overlays, page changes and the ring filling."
+      },
+      {
+        "name": "clink",
+        "value": "scale 1 → 0.92 → 1.06 → 1 over 380ms",
+        "purpose": "Every tap on a drink button. Skipped under Reduce Motion."
+      }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Drink Button",
+      "kind": "custom",
+      "refersTo": "drink-button",
+      "description": "A solid tile in the drink's color. One tap adds one drink, with the clink.",
+      "html": "<button class=\"ds-drink\"><svg class=\"ds-glyph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"currentColor\"><circle cx=\"6.5\" cy=\"7\" r=\"2.5\"/><circle cx=\"10.5\" cy=\"5.5\" r=\"3\"/><circle cx=\"14\" cy=\"7\" r=\"2.5\"/><path d=\"M4.5 8h11v11a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2z\"/><path d=\"M15.5 10h2a3 3 0 0 1 3 3v1.5a3 3 0 0 1-3 3h-2v-2.2h2a.9.9 0 0 0 .9-.9V13a.9.9 0 0 0-.9-.9h-2z\"/></svg><span>Beer</span></button>",
+      "css": ".ds-drink{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;display:flex;flex-direction:column;align-items:center;gap:4px;width:88px;min-height:44px;padding:12px 4px;border:none;border-radius:22px;background:#FFB81C;color:#1A1220;cursor:pointer;transition:transform .08s}.ds-drink .ds-glyph{width:30px;height:30px}.ds-drink:hover{filter:brightness(1.06)}.ds-drink:active{transform:scale(.92)}.ds-drink:focus-visible{outline:2px solid #FFF7EC;outline-offset:2px}"
+    },
+    {
+      "name": "Water Button",
+      "kind": "custom",
+      "refersTo": "water-button",
+      "description": "Full-width pill for water, set apart from the drink tiles.",
+      "html": "<button class=\"ds-water\"><svg class=\"ds-glyph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M12 2.5c4.3 5.2 6.5 8.4 6.5 11.5a6.5 6.5 0 0 1-13 0c0-3.1 2.2-6.3 6.5-11.5zM8.6 13.6a.9.9 0 0 1 1.8.1c0 1.5.9 2.6 2.3 3a.9.9 0 0 1-.5 1.7c-2.1-.6-3.6-2.4-3.6-4.8z\"/></svg><span>Water</span></button>",
+      "css": ".ds-water{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;display:flex;align-items:center;justify-content:center;gap:4px;width:184px;min-height:44px;padding:12px 4px;background:#4FD8FF;color:#1A1220}.ds-water .ds-glyph{width:30px;height:30px}.ds-water:hover{filter:brightness(1.06)}.ds-water:active{transform:scale(.92)}.ds-water:focus-visible{outline:2px solid #FFF7EC;outline-offset:2px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one fizz action on a screen, such as End night.",
+      "html": "<button class=\"ds-btn-primary\">End night</button>",
+      "css": ".ds-btn-primary{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;background:#FF5C39;color:#1A1220;min-height:48px;width:160px;}.ds-btn-primary:hover{filter:brightness(1.06)}.ds-btn-primary:active{transform:scale(.92)}.ds-btn-primary:focus-visible{outline:2px solid #FFF7EC;outline-offset:2px}"
+    },
+    {
+      "name": "Nudge Button",
+      "kind": "button",
+      "refersTo": "button-nudge",
+      "description": "The water break nudge's main action.",
+      "html": "<button class=\"ds-btn-nudge\">Had one</button>",
+      "css": ".ds-btn-nudge{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;background:#4FD8FF;color:#1A1220;min-height:48px;width:160px;}.ds-btn-nudge:hover{filter:brightness(1.06)}.ds-btn-nudge:active{transform:scale(.92)}.ds-btn-nudge:focus-visible{outline:2px solid #FFF7EC;outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The quiet second action, in a 44pt tap area.",
+      "html": "<button class=\"ds-btn-ghost\">Later</button>",
+      "css": ".ds-btn-ghost{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;background:#2A2735;color:#FFF7EC;min-height:40px;width:160px;}.ds-btn-ghost:hover{filter:brightness(1.06)}.ds-btn-ghost:active{transform:scale(.92)}.ds-btn-ghost:focus-visible{outline:2px solid #FFF7EC;outline-offset:2px}"
+    },
+    {
+      "name": "Undo Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "Shown for 5 seconds after every add, with one-tap Undo.",
+      "html": "<div class=\"ds-toast\"><span>Cheers! That's 4.</span><button class=\"ds-undo\">Undo</button></div>",
+      "css": ".ds-toast{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:8px;padding:4px 4px 4px 12px;border-radius:999px;background:#2A2735;color:#FFF7EC}.ds-undo{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;min-height:44px;padding:0 12px;background:#FFF7EC;color:#000000}.ds-undo:hover{filter:brightness(.92)}.ds-undo:active{transform:scale(.92)}.ds-undo:focus-visible{outline:2px solid #4FD8FF;outline-offset:2px}"
+    },
+    {
+      "name": "Tally Ring",
+      "kind": "custom",
+      "description": "One segment per drink in its color, with a thin inner water ring. It grows 8 slots at a time.",
+      "html": "<div class=\"ds-ring\"><svg viewBox=\"0 0 144 144\" width=\"144\" height=\"144\" aria-hidden=\"true\"><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#FFB81C\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-10.00\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#FFB81C\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-53.98\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#E8478F\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-97.96\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#B98CFF\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-141.95\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#2A2735\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-185.93\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#2A2735\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-229.91\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#2A2735\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-273.89\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"56\" fill=\"none\" stroke=\"#2A2735\" stroke-width=\"16\" stroke-linecap=\"round\" stroke-dasharray=\"23.98 351.86\" stroke-dashoffset=\"-317.88\" transform=\"rotate(-90 72 72)\"/><circle cx=\"72\" cy=\"72\" r=\"37.5\" fill=\"none\" stroke=\"#2A2735\" stroke-width=\"5\"/><circle cx=\"72\" cy=\"72\" r=\"37.5\" fill=\"none\" stroke=\"#4FD8FF\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-dasharray=\"117.81 235.62\" transform=\"rotate(-90 72 72)\"/></svg><span class=\"ds-ring-count\">4</span></div>",
+      "css": ".ds-ring{position:relative;display:inline-block;width:144px;height:144px;background:#000000;border-radius:50%}.ds-ring-count{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;font-weight:700;font-size:40px;font-variant-numeric:tabular-nums;color:#FFF7EC}"
+    },
+    {
+      "name": "Night Row",
+      "kind": "card",
+      "refersTo": "list-row",
+      "description": "A logged entry on the Night screen, with its glyph, name and time.",
+      "html": "<div class=\"ds-row\"><svg class=\"ds-glyph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M6.8 2.5h10.4c.8 5.2-.9 9.6-4 10.4v5.5h3.3a1.3 1.3 0 0 1 0 2.6H7.5a1.3 1.3 0 0 1 0-2.6h3.3v-5.5c-3.1-.8-4.8-5.2-4-10.4zM8.3 4h7.4c.1.9.1 1.7 0 2.5H8.3c-.1-.8-.1-1.6 0-2.5z\"/></svg><span class=\"ds-row-name\">Wine</span><span class=\"ds-row-time\">9:14 pm</span></div>",
+      "css": ".ds-row{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;width:184px;min-height:44px;padding:0 12px;border-radius:22px;background:#1C1A24;color:#FFF7EC}.ds-row .ds-glyph{width:20px;height:20px;color:#E8478F}.ds-row-name{flex:1}.ds-row-time{font-size:13px;font-weight:700;color:#A89CAE;font-variant-numeric:tabular-nums}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clink",
+    "overview": "Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a short spring and a haptic. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.\n\nThe Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.\n\nThe iPhone is not built yet. Its light theme, with warm cream and a sticker look, is specified but provisional, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.",
+    "keyCharacteristics": [
+      "Solid, saturated fills on black, with no outlines or gradients on the Watch",
+      "Round everywhere: pills, large-radius cards, round-capped ring segments",
+      "SF Pro Rounded at heavy weights, with nothing on the Watch lighter than semibold",
+      "Flat on the Watch, with depth from tone alone",
+      "Motion under 400ms, always paired with a haptic, and skipped under Reduce Motion"
+    ],
+    "rules": [
+      {
+        "name": "The One Fizz Rule",
+        "body": "One `fizz` element per screen. Its rarity is what makes it the primary action.",
+        "section": "colors"
+      },
+      {
+        "name": "The Fill, Not Text Rule",
+        "body": "Pop colors are fills, never text. Anything on them uses `on-pop`, never white. A glyph may stand alone in its drink color on a dark `bg`, but never on cream.",
+        "section": "colors"
+      },
+      {
+        "name": "The Careful Alone Rule",
+        "body": "`careful` always comes with an icon and words, and never shares a screen with a `fizz` fill, because the two sit close in hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Friendly Nudge Rule",
+        "body": "The water break nudge is drawn in `water`. A suggestion never borrows the look of an alert.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hero Shrinks First Rule",
+        "body": "When space runs out, on a small Watch or at a large text size, the count shrinks before the caption and waters do. Labels stay readable.",
+        "section": "typography"
+      },
+      {
+        "name": "The Steady Count Rule",
+        "body": "Counts always use tabular figures, so the number doesn't jump as it ticks up.",
+        "section": "typography"
+      },
+      {
+        "name": "The Semibold Floor Rule",
+        "body": "Nothing on the Watch is lighter than semibold.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Wrist Rule",
+        "body": "No shadows on the Watch, ever. The `shadow-sticker` modifier draws nothing in dark mode, so it can't appear there.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use tokens by name, as in `.foregroundStyle(.ink)`, `.typeStyle(.title)`, `Space.s4` and `type.glyph`.",
+      "Do give every add a haptic: click for drinks, a rising tap for water, success for End night.",
+      "Do keep motion under 400ms using `Motion.standard` (a 0.3s snappy curve), and replace slides with fades under Reduce Motion.",
+      "Do tell drinks apart with glyphs and labels as well as color.",
+      "Do check Watch screens in Spanish on the smallest Watch, and cut words before cutting size.",
+      "Do keep tap targets at 44pt or more, even when the visual is smaller."
+    ],
+    "donts": [
+      "Don't use raw colors, sizes or emoji on a screen.",
+      "Don't use more than one `fizz` element on a screen.",
+      "Don't put white on a pop color, or set text in a pop color.",
+      "Don't add shadows, outlines or gradients on the Watch.",
+      "Don't show the ring as full or over, or put a big night's count in red.",
+      "Don't use confirmation dialogs. Offer Undo instead.",
+      "Don't auto-play sound."
+    ]
+  }
+}

@@ -6,6 +6,20 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-03 · Counts are friendly facts, not praise
+
+- **Decision:** A count acknowledges a tap and states a number, in the same tone at 1 or at 12. "Cheers! That's 4." stays. This replaces the design system's "Counting is celebration first".
+- **Why:** Celebrating the count conflicts with "Self-care, never drink counts", while a flat, neutral count would lose the friend-at-the-bar voice.
+- **Instead of:** Dropping "Cheers" next to a number, or keeping "celebration first" as written.
+- **PR:** [#PR_NUMBER](https://github.com/pablocolaiacovo/clinkr/pull/PR_NUMBER)
+
+## 2026-11-03 · Product and design context live in `PRODUCT.md` and `DESIGN.md`
+
+- **Decision:** `PRODUCT.md` records who Clinkr is for and why, and `DESIGN.md` records the look as built, with the iPhone's sticker look marked provisional until a real screen proves it. Both were written with the Impeccable plugin, which also generates `.impeccable/design.json` from `DESIGN.md`.
+- **Why:** Design work, by people or agents, needs one place to read the product's purpose and visual rules, instead of piecing them together from issues, the decision log and the code.
+- **Instead of:** Relying on the design system artifact alone, which sits outside the repo. The cost is a third copy of the tokens, so a visual change updates `Shared/`, `DESIGN.md` and the design system in the same pull request, and the design system's README links back to the repo. Nothing enforces this, so it's a step in `CONTRIBUTING.md`, like `/code-review`.
+- **PR:** [#PR_NUMBER](https://github.com/pablocolaiacovo/clinkr/pull/PR_NUMBER)
+
 ## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
 
 - **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required once on every PR, and a re-run after larger fixes on a PR linked to an issue only needs `/verify-pr`.
