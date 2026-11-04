@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-04 · Resolve review conversations before merging
+
+- **Decision:** A pull request can't merge while a review conversation is open. The rule is a pull request rule with no required approvals, in the "CI must pass" ruleset.
+- **Why:** A review comment shouldn't get lost by merging past it.
+- **Instead of:** Adding it to "Protect main", which has no bypass and would block the direct pushes to `main` that small changes use. The cost is that admins can bypass this rule too, so for the repo's owner it's a guard against forgetting, not a hard stop. People without admin access must now use a pull request to change `main`.
+- **PR:** [#PR_NUMBER](https://github.com/pablocolaiacovo/clinkr/pull/PR_NUMBER)
+
 ## 2026-11-03 · A UI test for the Watch's main flow
 
 - **Decision:** `Clinkr Watch AppUITests` runs one test on the real screens: add, Undo, the water nudge, End night and its Undo. Two more check that removing a drink calls off a waiting nudge, and that a failed save shows on screen. The app reads two settings only a test passes: `UNDO_SECONDS` makes Undo last longer, and `NIGHTS_FILE` names another file, which lets a test make saving fail. Each run ends any night left over from an earlier one, which leaves more finished nights in the simulator's file.
