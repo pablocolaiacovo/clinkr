@@ -1,0 +1,28 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "No nights yet. Start one on your watch." : {
+      "comment" : "Empty state of the list of nights",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no hay noches. Arrancá una en tu reloj."
+          }
+        }
+      }
+    },
+    "Your nights" : {
+      "comment" : "Title of the list of nights",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus noches"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

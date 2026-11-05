@@ -160,6 +160,31 @@ final class NightStoreTests {
         #expect(ended.endTime == minutes(90))
     }
 
+    @Test func theNightThatCanStillBeUndoneIsNotSent() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        store.add(.wine, at: minutes(20))
+        store.endNight(at: minutes(30))
+        let older = try #require(store.pendingNights.first)
+        let newer = try #require(store.pendingNights.last)
+
+        #expect(store.nightsReadyToSend(holdingBack: newer.id) == [older])
+        #expect(store.nightsReadyToSend(holdingBack: nil) == [older, newer])
+    }
+
+    @Test func aDeliveredNightLeavesTheQueueForGood() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        let night = try #require(store.pendingNights.first)
+
+        store.removePendingNight(id: night.id)
+
+        #expect(store.pendingNights.isEmpty)
+        #expect(relaunch().pendingNights.isEmpty)
+    }
+
     @Test func reopeningTakesBackTheEnd() throws {
         let store = NightStore(fileURL: fileURL)
         store.add(.beer, at: minutes(0))

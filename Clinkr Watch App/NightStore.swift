@@ -6,7 +6,7 @@ import os
 /// Watch restarting or the battery running out.
 ///
 /// A night starts with the first drink (or water) logged, and there's at most one active night. Ending it moves it
-/// to `pendingNights`, the queue the iPhone sync (#6) sends and empties.
+/// to `pendingNights`, the queue `NightSender` sends and empties.
 @MainActor
 @Observable
 final class NightStore {
@@ -120,6 +120,19 @@ final class NightStore {
         activeNight = night
         save()
         return true
+    }
+
+    /// The finished nights that can go to the iPhone. The night whose End night can still be undone stays back, so the
+    /// iPhone never keeps a night the user took back.
+    func nightsReadyToSend(holdingBack undoable: Night.ID?) -> [Night] {
+        pendingNights.filter { $0.id != undoable }
+    }
+
+    /// Drops a night the iPhone now has.
+    func removePendingNight(id: Night.ID) {
+        retryLoadIfNeeded()
+        pendingNights.removeAll { $0.id == id }
+        save()
     }
 
     private func endOfForgottenNight(at date: Date) -> Date? {

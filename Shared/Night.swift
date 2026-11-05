@@ -115,3 +115,16 @@ struct Night: Identifiable, Codable, Hashable, Sendable {
         endTime = max(date, entries.last?.timestamp ?? startTime)
     }
 }
+
+// The dictionary WatchConnectivity carries between the apps.
+extension Night {
+    private static let transferKey = "night"
+
+    func transferUserInfo() throws -> [String: Any] {
+        [Self.transferKey: try JSONEncoder().encode(self)]
+    }
+
+    init(transfer userInfo: [String: Any]) throws {
+        self = try JSONDecoder().decode(Night.self, from: userInfo[Self.transferKey] as? Data ?? Data())
+    }
+}

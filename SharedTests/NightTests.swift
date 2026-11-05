@@ -203,4 +203,19 @@ struct NightTests {
         resource.locale = Locale(identifier: language)
         return String(localized: resource)
     }
+
+    @Test func survivesTheTripBetweenTheApps() throws {
+        var night = Night(name: "Oct 29", startTime: minutes(0))
+        night.add(DrinkEntry(type: .beer, timestamp: minutes(5)))
+        night.add(DrinkEntry(type: .water, timestamp: minutes(30)))
+        night.end(at: minutes(90))
+
+        #expect(try Night(transfer: night.transferUserInfo()) == night)
+    }
+
+    @Test func aMessageWithNoNightCantBeRead() {
+        #expect(throws: (any Error).self) {
+            try Night(transfer: ["something": "else"])
+        }
+    }
 }

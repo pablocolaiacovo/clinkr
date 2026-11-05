@@ -6,6 +6,14 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-04 · Nights reach the iPhone once Undo is over
+
+- **Decision:** The Watch sends a finished night with `transferUserInfo` once End night's Undo is over, or as soon as the app goes to the background, and keeps it in `pendingNights` until the system reports it delivered. The iPhone saves it in SwiftData and skips any id it already has, so a resend makes no duplicate and doesn't undo a rename.
+- **Why:** A night sent during Undo could stay on the iPhone after the user took it back. Keeping the night until delivery means a failed transfer is sent again rather than lost.
+- **Instead of:** `@Attribute(.unique)`, which overwrites the saved night on a resend, and which CloudKit doesn't allow, so it would get in the way of the iCloud backup (#34). Without it, only the check in `insertIfNew` stops duplicates, so every insert has to go through it.
+- **Also:** Apple says the Simulator doesn't support `transferUserInfo`, so delivery itself has to be tried on real devices. A resend that arrives after the night was deleted on the iPhone would bring it back. The History screen, which adds deleting, has to handle that (#12).
+- **PR:** TBD
+
 ## 2026-11-04 · Resolve review conversations before merging
 
 - **Decision:** A pull request can't merge while a review conversation is open. The rule is a pull request rule with no required approvals, in the "CI must pass" ruleset.

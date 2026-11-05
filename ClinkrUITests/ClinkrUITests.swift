@@ -8,8 +8,9 @@ final class ClinkrUITests: XCTestCase {
     @MainActor
     func testLaunchShowsTitle() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-AppleLanguages", "(en)"]
         app.launch()
 
-        XCTAssertTrue(app.staticTexts["Clinkr"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.navigationBars["Your nights"].waitForExistence(timeout: 5))
     }
 }
