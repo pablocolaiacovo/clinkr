@@ -144,7 +144,7 @@ The iPhone is not built yet. Its light theme, with warm cream and a sticker look
 Six loud pop colors do the work against a quiet set of neutrals, and the color of a drink is its label.
 
 ### Primary
-- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon and selected tab once those exist.
+- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (the big circle in the dark icon, the background in the light one) and the selected tab once that exists.
 
 ### Secondary
 - **Beer** (`beer`): amber fill for beer.

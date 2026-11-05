@@ -6,6 +6,12 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-05 · The app icon is two touching circles, drawn by a script
+
+- **Decision:** The icon is a big circle and a smaller one touching it, a "clink", with no text, emoji or glass. iPhone has light (`fizz` background), dark and tinted versions, and the Watch has the light one. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
+- **Why:** A glass or a hand holding one could read as encouraging drinking, which App Review checks for. Two plain circles match the round, chunky look and survive the Watch's circular crop. A script keeps the colors in step with the palette and means a redesign is an edit, not new artwork.
+- **Instead of:** Icon Composer layers or hand-drawn artwork. The cost is that the mark is very simple, with no layering or depth.
+
 ## 2026-11-04 · `/verify-pr` is the one review on every pull request
 
 - **Decision:** Every pull request gets a `/verify-pr` before merging, however small. With a linked issue it checks the acceptance criteria too. Without one it only does the code review (`/ponytail-review`) and records the result. `/code-review` is optional, for changes where a bug hunt is worth it.
