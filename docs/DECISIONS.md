@@ -12,7 +12,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Why:** A night sent during Undo could stay on the iPhone after the user took it back. Keeping the night until delivery means a failed transfer is sent again rather than lost.
 - **Instead of:** `@Attribute(.unique)`, which overwrites the saved night on a resend, and which CloudKit doesn't allow, so it would get in the way of the iCloud backup (#34). Without it, only the check in `insertIfNew` stops duplicates, so every insert has to go through it.
 - **Also:** Apple says the Simulator doesn't support `transferUserInfo`, so delivery itself has to be tried on real devices. A resend that arrives after the night was deleted on the iPhone would bring it back. The History screen, which adds deleting, has to handle that (#12).
-- **PR:** TBD
+- **PR:** [#75](https://github.com/pablocolaiacovo/clinkr/pull/75)
 
 ## 2026-11-04 · Resolve review conversations before merging
 
