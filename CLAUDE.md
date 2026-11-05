@@ -36,7 +36,7 @@ Build output goes to `build/` (gitignored).
 
 ## Rules
 
-- Follow `CONTRIBUTING.md` for how to work on the repo, such as branches, commit messages, pull requests (including the required review, and running `scripts/test.sh` before a change is done), code comments and releases. Bigger changes go on a `feature/`, `fix/` or `chore/` branch with a pull request, merged with squash.
+- Follow `CONTRIBUTING.md` for how to work on the repo, such as branches, commit messages, pull requests (including the required `/verify-pr`), code comments and releases. Bigger changes go on a `feature/`, `fix/` or `chore/` branch with a pull request, merged with squash.
 - `main` is protected: never force-push it.
 - Code style comes from `.swift-format` (4-space indent, 120-column lines). CI fails on lint errors.
 - The project file `Clinkr.xcodeproj/project.pbxproj` is managed in Xcode. When adding files, put them in the target's folder and make sure they're added to the right target. When editing the file by hand, keep Debug and Release settings in sync.

@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-04 · `/verify-pr` is the one review on every pull request
+
+- **Decision:** Every pull request gets a `/verify-pr` before merging, however small. With a linked issue it checks the acceptance criteria too. Without one it only does the code review (`/ponytail-review`) and records the result. `/code-review` is optional, for changes where a bug hunt is worth it.
+- **Why:** Two reviews on the same PR repeated each other, and `/verify-pr` already ran a review. One required review keeps the process short, and PRs without an issue use the same skill.
+- **Instead of:** Requiring both. The cost is that `/ponytail-review` checks logic, safety, tests and unneeded code, not the bug hunt `/code-review` does, so a plain bug can pass.
+- **PR:** [#76](https://github.com/pablocolaiacovo/clinkr/pull/76)
+
 ## 2026-11-04 · Resolve review conversations before merging
 
 - **Decision:** A pull request can't merge while a review conversation is open. The rule is a pull request rule with no required approvals, in the "CI must pass" ruleset.
@@ -50,7 +57,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 
 ## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
 
-- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required once on every PR, and a re-run after larger fixes on a PR linked to an issue only needs `/verify-pr`.
+- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. (The part about `/code-review` being required is replaced by 2026-11-04 · `/verify-pr` is the one review on every pull request.)
 - **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
 - **PR:** [#70](https://github.com/pablocolaiacovo/clinkr/pull/70)
 
@@ -133,6 +140,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Decision:** Every pull request gets a `/code-review` in Claude Code before merging, however small.
 - **Why:** Every change gets a second look before it reaches `main`. GitHub doesn't enforce it, so it's part of the checklist in `CONTRIBUTING.md`.
 - **PR:** [#61](https://github.com/pablocolaiacovo/clinkr/pull/61)
+- **Replaced by:** 2026-11-04 · `/verify-pr` is the one review on every pull request
 
 ## 2026-10-29 · Screens use design tokens by name
 

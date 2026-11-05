@@ -5,7 +5,7 @@ description: Check a Clinkr pull request against the acceptance criteria of the 
 
 # Verify a pull request against its issue
 
-`/code-review` checks the code for bugs. This skill checks the change does what the issue asked for, and adds a `/ponytail-review` for logic, safety, tests and unneeded code. Run it on every PR, and once more after merging a PR that has a linked issue. A PR with no linked issue has no criteria to check, so it only gets the code review and the recorded result.
+`/code-review` is an optional bug hunt. This skill checks the change does what the issue asked for, and adds a `/ponytail-review` for logic, safety, tests and unneeded code. Run it on every PR, and once more after merging a PR that has a linked issue. A PR with no linked issue has no criteria to check, so it only gets the code review and the recorded result.
 
 The argument is the PR number. If none is given, use the PR for the current branch (`gh pr view --json number`).
 
@@ -17,7 +17,7 @@ The argument is the PR number. If none is given, use the PR for the current bran
    gh pr view <PR#> --json number,title,body,state,headRefName,headRefOid,closingIssuesReferences,files
    ```
 
-2. The linked issues are those in `closingIssuesReferences`, plus any `Part of #N` in the body. If there are none, say the PR has no linked issue, so there are no criteria to check. That's fine for chores. Skip the verdicts in step 2 and go on to step 3.
+2. The linked issues are those in `closingIssuesReferences`, plus any `Part of #N` in the body. If there are none, say the PR has no linked issue, so there are no criteria to check. That's fine for chores. Do item 4 below first. If the PR isn't merged, skip the verdicts in step 2 and go on to step 3.
 3. Read each issue with `gh issue view <N> --json number,title,body,state`. The **acceptance criteria** are its checkbox items (`- [ ]` and `- [x]`), under every heading: "Done when", "Localization" and any others. The **Details** bullets are the spec. Check them too, but report them separately, since they don't decide whether the issue is done.
 4. If the PR is already merged (`state` is `MERGED`), go to [After merging](#after-merging).
 
