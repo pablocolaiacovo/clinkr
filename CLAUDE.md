@@ -32,14 +32,14 @@ scripts/test.sh watch    # Watch unit + UI tests
 xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests" "Clinkr Watch AppUITests"
 ```
 
-Run `scripts/test.sh` before calling a change done. Build output goes to `build/` (gitignored).
+Build output goes to `build/` (gitignored).
 
 ## Rules
 
-- Follow `CONTRIBUTING.md` for how to work on the repo, such as branches, commit messages, pull requests (including the required `/code-review`, and `/verify-pr` for PRs linked to an issue), code comments and releases. Bigger changes go on a `feature/`, `fix/` or `chore/` branch with a pull request, merged with squash.
+- Follow `CONTRIBUTING.md` for how to work on the repo, such as branches, commit messages, pull requests (including the required review, and running `scripts/test.sh` before a change is done), code comments and releases. Bigger changes go on a `feature/`, `fix/` or `chore/` branch with a pull request, merged with squash.
 - `main` is protected: never force-push it.
 - Code style comes from `.swift-format` (4-space indent, 120-column lines). CI fails on lint errors.
 - The project file `Clinkr.xcodeproj/project.pbxproj` is managed in Xcode. When adding files, put them in the target's folder and make sure they're added to the right target. When editing the file by hand, keep Debug and Release settings in sync.
 - Version (`MARKETING_VERSION`) and build (`CURRENT_PROJECT_VERSION`) are set at the project level, so the iPhone and Watch apps always match. Apple requires that.
 - Put code that both apps need in `Shared/`, added to both the Clinkr and Clinkr Watch App targets, rather than copying it.
-- Screens use the design system by name (`.foregroundStyle(.ink)`, `.typeStyle(.title)`, `Space.s4`, `Radius.card`, `type.glyph`), never raw colors, sizes or emoji. The design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh; keep `Shared/`, `DESIGN.md` and the design system in step, in the same pull request. Its `README.md` links back to this repo.
+- Screens use the design system by name (`.foregroundStyle(.ink)`, `.typeStyle(.title)`, `Space.s4`, `Radius.card`, `type.glyph`), never raw colors, sizes or emoji. The design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Its `README.md` links back to this repo.

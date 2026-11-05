@@ -31,11 +31,12 @@ Every pull request goes through the same steps:
 2. Run `scripts/test.sh` locally, push the branch and open the pull request. Fill in the template:
    - Write `Closes #N` only if the PR meets every acceptance criterion in the issue. Otherwise write `Part of #N`, so the issue stays open.
    - Under **Acceptance criteria**, copy each checkbox from the issue and say how it's shown to work, or which issue it's deferred to.
-3. Once it's open, run `/code-review` on it in Claude Code, passing the PR number (e.g. `/code-review 48`). This is required for every pull request, however small.
-4. If the PR closes or is part of an issue, also run `/verify-pr` with the PR number. It checks each acceptance criterion with tests and the simulators, reviews the code with `/ponytail-review` (from the ponytail plugin), posts the result on the PR, and ticks the met criteria in the PR's checklist.
-5. Fix what the review and the check find, or note in the pull request why a finding doesn't apply. Push the fixes. If they're more than small tweaks, run `/verify-pr` again, or `/code-review` if the PR has no linked issue.
-6. When the review is addressed, every conversation is resolved, every criterion is met or deferred to an open issue, and **Build and test** passes, squash and merge.
-7. After merging, run `/verify-pr` once more. It ticks the met criteria in the issue, now that they're on `main`.
+3. Once it's open, review it in Claude Code, passing the PR number. This is required for every pull request, however small:
+   - If the PR closes or is part of an issue, run `/verify-pr` (e.g. `/verify-pr 48`). It checks each acceptance criterion with tests and the simulators, reviews the code with `/ponytail-review` (from the ponytail plugin), posts the result on the PR, and ticks the met criteria in the PR's checklist.
+   - Otherwise, run `/code-review` (e.g. `/code-review 48`).
+4. Fix what the review finds, or note in the pull request why a finding doesn't apply. Push the fixes.
+5. Squash and merge once the checks under [Branches](#branches) pass and every criterion is met or deferred to an open issue.
+6. If the PR was linked to an issue, run `/verify-pr` again after merging. It ticks the met criteria in the issue, now that they're on `main`.
 
 GitHub doesn't enforce the review and verify steps, so it's up to you to do them before merging.
 
