@@ -1,11 +1,11 @@
 ---
 name: verify-pr
-description: Check a Clinkr pull request against the acceptance criteria of the issue it closes, review its code with ponytail-review, record the result on the PR, and tick the met criteria in the issue once it's merged. Use when asked to verify a PR, check it against its issue, or run /verify-pr <PR#>.
+description: Check a Clinkr pull request against the acceptance criteria of the issue it closes (if any), review its code with ponytail-review, record the result on the PR, and tick the met criteria in the issue once it's merged. Use when asked to verify a PR, check it against its issue, or run /verify-pr <PR#>.
 ---
 
 # Verify a pull request against its issue
 
-`/code-review` checks the code for bugs. This skill checks the change does what the issue asked for, and adds a `/ponytail-review` for logic, safety, tests and unneeded code. Run it on every PR that closes or is part of an issue, after `/code-review`, and once more after merging.
+`/code-review` is an optional bug hunt. This skill checks the change does what the issue asked for, and adds a `/ponytail-review` for logic, safety, tests and unneeded code. Run it on every PR, and once more after merging a PR that has a linked issue. A PR with no linked issue has no criteria to check, so it only gets the code review and the recorded result.
 
 The argument is the PR number. If none is given, use the PR for the current branch (`gh pr view --json number`).
 
@@ -17,11 +17,13 @@ The argument is the PR number. If none is given, use the PR for the current bran
    gh pr view <PR#> --json number,title,body,state,headRefName,headRefOid,closingIssuesReferences,files
    ```
 
-2. The linked issues are those in `closingIssuesReferences`, plus any `Part of #N` in the body. If there are none, say the PR has no linked issue and stop. That's fine for chores.
+2. The linked issues are those in `closingIssuesReferences`, plus any `Part of #N` in the body. If there are none, say the PR has no linked issue, so there are no criteria to check. That's fine for chores. Do item 4 below first. If the PR isn't merged, skip the verdicts in step 2 and go on to step 3.
 3. Read each issue with `gh issue view <N> --json number,title,body,state`. The **acceptance criteria** are its checkbox items (`- [ ]` and `- [x]`), under every heading: "Done when", "Localization" and any others. The **Details** bullets are the spec. Check them too, but report them separately, since they don't decide whether the issue is done.
 4. If the PR is already merged (`state` is `MERGED`), go to [After merging](#after-merging).
 
 ## 2. Check each criterion
+
+With no linked issue there are no criteria, so skip the verdicts below, but still set up the commit as described, since step 3 reads the code from it.
 
 Work on the PR's exact commit, `headRefOid`:
 
@@ -71,6 +73,8 @@ git worktree remove <scratch>/verify-pr-<PR#>
 
 While the PR is open, record the result on the PR only. The issue's boxes change after merging, so they never claim work that isn't on `main`.
 
+With no linked issue, there is no criteria table and items 3 to 5 don't apply: say there were no criteria, give the review's findings, and keep the result comment (item 2).
+
 1. Show the user a table: criterion, verdict, evidence. Put Not met and Can't verify first. List any Details bullets the diff contradicts after it. Then give the review's findings in full.
 2. Keep one result comment on the PR. Start it with `## Acceptance criteria check` and the commit it checked (`headRefOid`). End it with a `### Code review` section: whether the review ran, each finding's number, title and group, any marked **Doesn't apply**, and the closing line below. If an earlier one exists, replace its body rather than adding another:
 
@@ -89,11 +93,11 @@ End with one line, the first of these that fits:
 
 - **Not ready**: list what's Not met, the Must fix findings that still apply, or that the review didn't run. Also list any Can't verify items.
 - **Needs a manual check**: list the Can't verify items.
-- **Ready**: every criterion is Met or Deferred, and no Must fix finding still applies.
+- **Ready**: every criterion is Met or Deferred (or there are none), and no Must fix finding still applies.
 
 ## After merging
 
-Run `/verify-pr <PR#>` again once the PR is merged, to tick the issue's boxes. Don't re-check the criteria:
+Run `/verify-pr <PR#>` again once the PR is merged, to tick the issue's boxes. If the PR has no linked issue, there is nothing to tick: say so and stop. Don't re-check the criteria:
 
 1. Find the PR's `## Acceptance criteria check` comment. If its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
 2. In each linked issue, tick the boxes that comment marks **Met**. Don't untick anything: another merged PR may have met it. Change `- [ ]` to `- [x]` on exactly those lines and leave the rest of the body as it is:
