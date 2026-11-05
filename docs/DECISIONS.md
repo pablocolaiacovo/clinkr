@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
+
+- **Decision:** The icon is two chunky rounded tiles bumping, like the drink button, with a `water` bubble and a `shot` bubble rising from where they meet. The iPhone light icon has a `fizz` background with cream and `beer` tiles. The dark icon is on black with a `fizz` and a `beer` tile. The tinted one uses grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
+- **Why:** It carries "The Clink" without a glass, pour or toast, which could read as encouraging drinking, and App Review checks for that. The tiles echo the drink button, and water is the biggest bubble because water is the hero. Two big shapes keep the mark readable at 40pt and when tinted. A script keeps the colors in step with the palette, and a redesign is an edit, not new artwork.
+- **Instead of:** The Watch's tally ring, two plain circles, loose bubbles and two bumping pills, all tried and dropped. The ring and the plain circles felt generic, and a blind review found the loose bubbles generic and the pills read as medicine. The cost is that two tiles with bubbles could read as a puzzle game, and cream on `fizz` is under 3:1 contrast, so the cream tile relies on its size.
+- **PR:** [#77](https://github.com/pablocolaiacovo/clinkr/pull/77)
+
 ## 2026-11-04 · `/verify-pr` is the one review on every pull request
 
 - **Decision:** Every pull request gets a `/verify-pr` before merging, however small. With a linked issue it checks the acceptance criteria too. Without one it only does the code review (`/ponytail-review`) and records the result. `/code-review` is optional, for changes where a bug hunt is worth it.
