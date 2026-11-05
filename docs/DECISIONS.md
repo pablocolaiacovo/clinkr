@@ -6,11 +6,11 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
-## 2026-11-05 · The app icon is two touching circles, drawn by a script
+## 2026-11-05 · The app icon is the tally ring, drawn by a script
 
-- **Decision:** The icon is a big circle and a smaller one touching it, a "clink", with no text, emoji or glass. iPhone has light (`fizz` background), dark and tinted versions, and the Watch has the light one. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
-- **Why:** A glass or a hand holding one could read as encouraging drinking, which App Review checks for. Two plain circles match the round, chunky look and survive the Watch's circular crop. A script keeps the colors in step with the palette and means a redesign is an edit, not new artwork.
-- **Instead of:** Icon Composer layers or hand-drawn artwork. The cost is that the mark is very simple, with no layering or depth.
+- **Decision:** The icon is the Watch's tally ring: five round-capped segments in the beer, wine, cocktail, shot and water colors around a center dot. The iPhone light icon puts it on a dark disc over `fizz`. The dark icon is the ring on black with a `fizz` dot, and the tinted one is the same in grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
+- **Why:** The ring is the app's own signature, so the icon is recognisably Clinkr and shows no glass, pour or toast that could read as encouraging drinking, which App Review checks for. It's round and chunky, and it survives the Watch's circular crop. A first version of two touching circles was too generic. A script keeps the colors in step with the palette, and a redesign is an edit, not new artwork.
+- **Instead of:** A drink or clinking glasses, which risk the App Review rule. The cost is that a black disc with colored arcs sits near Apple's Fitness rings, so the `fizz` field and the five-color segments have to carry the difference.
 - **PR:** [#77](https://github.com/pablocolaiacovo/clinkr/pull/77)
 
 ## 2026-11-04 · `/verify-pr` is the one review on every pull request

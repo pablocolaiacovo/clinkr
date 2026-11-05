@@ -144,7 +144,7 @@ The iPhone is not built yet. Its light theme, with warm cream and a sticker look
 Six loud pop colors do the work against a quiet set of neutrals, and the color of a drink is its label.
 
 ### Primary
-- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (the big circle in the dark icon, the background in the light one) and the selected tab once that exists.
+- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (the background in the light one, the center dot in the dark one) and the selected tab once that exists.
 
 ### Secondary
 - **Beer** (`beer`): amber fill for beer.
@@ -255,6 +255,8 @@ Every tap plays the clink, which scales the button 1 → 0.92 → 1.06 → 1 ove
 
 ### Tally Ring
 The signature display. One segment per drink in its color, in the order added, with a 16pt stroke and round caps, and empty slots in `surface-raised`. A thin 5pt inner ring fills with `water` against the drink count, and is full once waters match drinks.
+
+The app icon is this ring: five round-capped segments in the drink colors around a center dot, on a dark disc over `fizz`.
 
 The ring grows 8 slots at a time, so it's never shown as full or over. Tapping it adds the last drink again. Two planned details are not built: the fizz bubbles (#23), and using the user's own plan for the night as the slot count.
 
