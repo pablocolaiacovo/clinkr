@@ -144,7 +144,7 @@ The iPhone is not built yet. Its light theme, with warm cream and a sticker look
 Six loud pop colors do the work against a quiet set of neutrals, and the color of a drink is its label.
 
 ### Primary
-- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon and selected tab once those exist.
+- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (as the background of the light one and a tile in the dark one) and the selected tab once that exists.
 
 ### Secondary
 - **Beer** (`beer`): amber fill for beer.
@@ -249,7 +249,7 @@ Chunky and tactile throughout: big, solid fills you could hit with a thumb in th
 - **States:** there are no hover or focus treatments on the Watch. Feedback is the spring and the haptic.
 
 ### Drink Button
-The signature control. A solid tile in the drink's color with its 30pt glyph above the name, both in `on-pop`, using the `card` radius. Water is a full-width pill with the glyph beside the name.
+The signature control, and the shape of the app icon's two tiles. A solid tile in the drink's color with its 30pt glyph above the name, both in `on-pop`, using the `card` radius. Water is a full-width pill with the glyph beside the name.
 
 Every tap plays the clink, which scales the button 1 → 0.92 → 1.06 → 1 over 380ms, with a click haptic for drinks and a rising tap for water.
 

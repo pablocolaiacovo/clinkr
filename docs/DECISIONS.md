@@ -6,6 +6,20 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
+
+- **Decision:** The icon is two chunky rounded tiles bumping, like the drink button, with a `water` bubble and a `shot` bubble rising from where they meet. The iPhone light icon has a `fizz` background with cream and `beer` tiles. The dark icon is on black with a `fizz` and a `beer` tile. The tinted one uses grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
+- **Why:** It carries "The Clink" without a glass, pour or toast, which could read as encouraging drinking, and App Review checks for that. The tiles echo the drink button, and water is the biggest bubble because water is the hero. Two big shapes keep the mark readable at 40pt and when tinted. A script keeps the colors in step with the palette, and a redesign is an edit, not new artwork.
+- **Instead of:** The Watch's tally ring, two plain circles, loose bubbles and two bumping pills, all tried and dropped. The ring and the plain circles felt generic, and a blind review found the loose bubbles generic and the pills read as medicine. The cost is that two tiles with bubbles could read as a puzzle game, and cream on `fizz` is under 3:1 contrast, so the cream tile relies on its size.
+- **PR:** [#77](https://github.com/pablocolaiacovo/clinkr/pull/77)
+
+## 2026-11-04 · `/verify-pr` is the one review on every pull request
+
+- **Decision:** Every pull request gets a `/verify-pr` before merging, however small. With a linked issue it checks the acceptance criteria too. Without one it only does the code review (`/ponytail-review`) and records the result. `/code-review` is optional, for changes where a bug hunt is worth it.
+- **Why:** Two reviews on the same PR repeated each other, and `/verify-pr` already ran a review. One required review keeps the process short, and PRs without an issue use the same skill.
+- **Instead of:** Requiring both. The cost is that `/ponytail-review` checks logic, safety, tests and unneeded code, not the bug hunt `/code-review` does, so a plain bug can pass.
+- **PR:** [#76](https://github.com/pablocolaiacovo/clinkr/pull/76)
+
 ## 2026-11-04 · Nights reach the iPhone once Undo is over
 
 - **Decision:** The Watch sends a finished night with `transferUserInfo` once End night's Undo is over, or as soon as the app goes to the background, and keeps it in `pendingNights` until the iPhone sends back a receipt saying it's saved. The iPhone saves it in SwiftData before sending that receipt, and skips any id it already has, so a resend makes no duplicate and doesn't undo a rename.
@@ -59,7 +73,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 
 ## 2026-11-03 · `/verify-pr` also runs `/ponytail-review`
 
-- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. `/code-review` is still required once on every PR, and a re-run after larger fixes on a PR linked to an issue only needs `/verify-pr`.
+- **Decision:** `/verify-pr` runs `/ponytail-review` on the PR's commit, and a Must fix finding makes the result **Not ready**, unless the PR explains why it doesn't apply. The result comment on the PR lists the findings and the result. (The part about `/code-review` being required is replaced by 2026-11-04 · `/verify-pr` is the one review on every pull request.)
 - **Why:** It reads the code connected to the change, not only the diff, and explains each finding in plain English.
 - **PR:** [#70](https://github.com/pablocolaiacovo/clinkr/pull/70)
 
@@ -142,6 +156,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Decision:** Every pull request gets a `/code-review` in Claude Code before merging, however small.
 - **Why:** Every change gets a second look before it reaches `main`. GitHub doesn't enforce it, so it's part of the checklist in `CONTRIBUTING.md`.
 - **PR:** [#61](https://github.com/pablocolaiacovo/clinkr/pull/61)
+- **Replaced by:** 2026-11-04 · `/verify-pr` is the one review on every pull request
 
 ## 2026-10-29 · Screens use design tokens by name
 
