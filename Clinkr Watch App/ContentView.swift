@@ -5,8 +5,6 @@ import WatchKit
 ///
 /// The Undo toast and the water break nudge sit over every screen, so they follow any add, wherever it came from.
 struct ContentView: View {
-    var sendNights: @MainActor ([Night]) -> Void = { _ in }
-
     @Environment(NightStore.self) private var nightStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
@@ -91,12 +89,8 @@ struct ContentView: View {
             nightStore.retrySaveIfFailed()
             if scenePhase == .background {
                 // The app may be suspended for hours, and a waiting Undo shouldn't keep the night from the iPhone.
-                endedNight = nil
+                closeNightSaved()
             }
-            sendNights(nightsReadyToSend)
-        }
-        .onChange(of: nightsReadyToSend, initial: true) {
-            sendNights(nightsReadyToSend)
         }
         .onChange(of: nightStore.lastAdded) { _, entry in
             // An undo or a water clears it, and another drink takes its place.
@@ -188,13 +182,10 @@ struct ContentView: View {
     }
 
     private func closeNightSaved() {
+        nightStore.releaseHeldBackNight()
         withAnimation(Motion.standard) {
             endedNight = nil
         }
-    }
-
-    private var nightsReadyToSend: [Night] {
-        nightStore.nightsReadyToSend(holdingBack: endedNight)
     }
 
     private var nudgeIsDue: Bool {

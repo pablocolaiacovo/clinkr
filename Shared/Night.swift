@@ -119,12 +119,28 @@ struct Night: Identifiable, Codable, Hashable, Sendable {
 // The dictionary WatchConnectivity carries between the apps.
 extension Night {
     private static let transferKey = "night"
+    private static let transferIDKey = "nightID"
+    private static let receiptKey = "savedNight"
 
     func transferUserInfo() throws -> [String: Any] {
-        [Self.transferKey: try JSONEncoder().encode(self)]
+        [Self.transferKey: try JSONEncoder().encode(self), Self.transferIDKey: id.uuidString]
     }
 
     init(transfer userInfo: [String: Any]) throws {
         self = try JSONDecoder().decode(Night.self, from: userInfo[Self.transferKey] as? Data ?? Data())
+    }
+
+    /// Which night a transfer carries, without decoding all of it.
+    static func transferredID(from userInfo: [String: Any]) -> Night.ID? {
+        (userInfo[transferIDKey] as? String).flatMap(UUID.init(uuidString:))
+    }
+
+    /// What the iPhone sends back once a night is safely saved.
+    static func savedReceipt(id: Night.ID) -> [String: Any] {
+        [receiptKey: id.uuidString]
+    }
+
+    static func savedID(fromReceipt userInfo: [String: Any]) -> Night.ID? {
+        (userInfo[receiptKey] as? String).flatMap(UUID.init(uuidString:))
     }
 }

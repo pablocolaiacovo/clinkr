@@ -1,6 +1,7 @@
 import Foundation
 import SwiftData
 import Testing
+@preconcurrency import WatchConnectivity
 
 @testable import Clinkr
 
@@ -81,5 +82,48 @@ struct SavedNightTests {
         try SavedNight.insertIfNew(night(), into: context)
 
         #expect(try savedNights(in: context).count == 2)
+    }
+}
+
+struct NightReceiverTests {
+    private let container: ModelContainer
+
+    init() throws {
+        container = try ModelContainer(
+            for: SavedNight.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+    }
+
+    private func savedCount() async throws -> Int {
+        try await MainActor.run { try container.mainContext.fetchCount(FetchDescriptor<SavedNight>()) }
+    }
+
+    /// Runs off the main thread, like the system's calls, since the receiver waits for the main thread to save.
+    @Test func aNightIsSavedByTheTimeTheCallReturns() async throws {
+        let receiver = await MainActor.run { NightReceiver(context: container.mainContext) }
+        let night = Night(name: "Oct 29", startTime: .now)
+
+        receiver.session(.default, didReceiveUserInfo: try night.transferUserInfo())
+
+        #expect(try await savedCount() == 1)
+    }
+
+    @Test func aResentNightIsSavedOnce() async throws {
+        let receiver = await MainActor.run { NightReceiver(context: container.mainContext) }
+        let userInfo = try Night(name: "Oct 29", startTime: .now).transferUserInfo()
+
+        receiver.session(.default, didReceiveUserInfo: userInfo)
+        receiver.session(.default, didReceiveUserInfo: userInfo)
+
+        #expect(try await savedCount() == 1)
+    }
+
+    @Test func aMessageWithNoNightSavesNothing() async throws {
+        let receiver = await MainActor.run { NightReceiver(context: container.mainContext) }
+
+        receiver.session(.default, didReceiveUserInfo: ["something": "else"])
+
+        #expect(try await savedCount() == 0)
     }
 }

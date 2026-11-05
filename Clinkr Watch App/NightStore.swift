@@ -16,7 +16,20 @@ final class NightStore {
 
     private(set) var activeNight: Night?
     /// Finished nights waiting to be sent to the iPhone, oldest first.
-    private(set) var pendingNights: [Night] = []
+    private(set) var pendingNights: [Night] = [] {
+        didSet { onNightsReady?() }
+    }
+    /// The night whose End night can still be undone. It stays back from the iPhone, which should never keep a night
+    /// the user took back. Not saved, so a relaunch sends it.
+    private(set) var heldBackNight: Night.ID? {
+        didSet {
+            if heldBackNight != oldValue {
+                onNightsReady?()
+            }
+        }
+    }
+    /// Called when the nights ready to send may have changed.
+    var onNightsReady: (@MainActor () -> Void)?
     /// The entry the last `add` logged, while it can still be undone. Not saved, so a relaunch forgets it.
     private(set) var lastAdded: DrinkEntry?
     /// Whether the last save failed. What's on screen is still kept, and the next successful save writes all of it.
@@ -71,6 +84,7 @@ final class NightStore {
         }
         if activeNight == nil {
             activeNight = Night(name: Self.defaultName(for: date), startTime: date)
+            heldBackNight = nil
         }
         let entry = DrinkEntry(type: type, timestamp: date)
         activeNight?.add(entry)
@@ -104,6 +118,7 @@ final class NightStore {
     func endNight(at date: Date = .now) {
         retryLoadIfNeeded()
         guard activeNight != nil else { return }
+        heldBackNight = activeNight?.id
         finishActiveNight(at: endOfForgottenNight(at: date) ?? date)
         save()
     }
@@ -118,17 +133,21 @@ final class NightStore {
         }
         night.reopen()
         activeNight = night
+        heldBackNight = nil
         save()
         return true
     }
 
-    /// The finished nights that can go to the iPhone. The night whose End night can still be undone stays back, so the
-    /// iPhone never keeps a night the user took back.
-    func nightsReadyToSend(holdingBack undoable: Night.ID?) -> [Night] {
-        pendingNights.filter { $0.id != undoable }
+    var nightsReadyToSend: [Night] {
+        pendingNights.filter { $0.id != heldBackNight }
     }
 
-    /// Drops a night the iPhone now has.
+    /// Undo is over, so the night it was holding back can go to the iPhone.
+    func releaseHeldBackNight() {
+        heldBackNight = nil
+    }
+
+    /// Drops a night the iPhone has saved.
     func removePendingNight(id: Night.ID) {
         retryLoadIfNeeded()
         pendingNights.removeAll { $0.id == id }
