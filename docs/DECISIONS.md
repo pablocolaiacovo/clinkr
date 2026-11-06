@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-06 · Logs stay on the device
+
+- **Decision:** Both apps log with Apple's `os.Logger` under one subsystem, `com.colaiacovo.clinkr`, in the categories `sync`, `persistence`, `nudge`, `lifecycle` and `metrics`. The iPhone app subscribes to MetricKit and logs its daily reports. Nothing is uploaded: no analytics events, no third-party crash reporter. Crashes come from Xcode Organizer and TestFlight, and a tester's logs from a sysdiagnose.
+- **Why:** Sync and saving are hard to debug on real devices without logs, but anything sent off the device changes the App Store privacy answer from "Data Not Collected" (#29) and adds an SDK to a small hobby app. Night names are logged as `.private`, so a shared sysdiagnose doesn't show them, while ids and counts stay readable.
+- **Instead of:** TelemetryDeck or Sentry, worth another look after launch along with the privacy answers. The cost is that we only see a problem when someone sends a sysdiagnose or shares analytics with developers. MetricKit isn't available on watchOS, so the Watch has no `metrics`, only the crash reports Organizer shows.
+- **PR:** [#PR](https://github.com/pablocolaiacovo/clinkr/pull/PR)
+
 ## 2026-11-06 · Double tap repeats the last drink only on the Tonight page
 
 - **Decision:** On watches with double tap, the gesture presses the ring on Tonight, which adds the last drink again, and "Had one" on the water nudge. It does nothing on the Add and Night pages, and while the nudge is up it only means "Had one".

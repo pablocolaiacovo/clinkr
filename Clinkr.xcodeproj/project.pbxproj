@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C10C0A1E0000000000000002 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10C0A1E0000000000000001 /* Log.swift */; };
+		C10C0A1E0000000000000003 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10C0A1E0000000000000001 /* Log.swift */; };
+		C10C0A1E0000000000000005 /* MetricsSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10C0A1E0000000000000004 /* MetricsSubscriber.swift */; };
 		A1B2C3D4E5F60718293A4B07 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */; };
 		A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */; };
 		A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */; };
@@ -115,6 +118,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C10C0A1E0000000000000001 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		C10C0A1E0000000000000004 /* MetricsSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSubscriber.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNight.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReceiver.swift; sourceTree = "<group>"; };
@@ -261,6 +266,7 @@
 				ACD97F9F89870E0AD392132B /* DrinkStyle.swift */,
 				E3B289634A5BE4AC917DBDC9 /* Glyphs.xcassets */,
 				5AC8F0F06BAC2BFC83F5E162 /* Layout.swift */,
+				C10C0A1E0000000000000001 /* Log.swift */,
 				17ED6C1C837283881502354F /* Night.swift */,
 				7EAFCFB8D84EF1A51540F143 /* Palette.swift */,
 				9A792CB8B3328C2A01528C73 /* Shared.xcstrings */,
@@ -295,6 +301,7 @@
 				A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */,
 				A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */,
 				A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */,
+				C10C0A1E0000000000000004 /* MetricsSubscriber.swift */,
 				350557DB748E526740B00791 /* Preview Content */,
 			);
 			path = Clinkr;
@@ -515,6 +522,7 @@
 				683EE74A02FFA99699BD105C /* Night.swift in Sources */,
 				03C2F7A872718D156E871A5C /* NightStore.swift in Sources */,
 				A1B2C3D4E5F60718293A4B01 /* NightSender.swift in Sources */,
+				C10C0A1E0000000000000003 /* Log.swift in Sources */,
 				5826BC935FEE9050ABC1CF29 /* AddView.swift in Sources */,
 				85E78942AB512E47B7C99335 /* DrinkButton.swift in Sources */,
 				A1F3C5E7092B4D6F8A1C3E50 /* UndoToast.swift in Sources */,
@@ -546,6 +554,8 @@
 				0C07FE6F4263583472A076D4 /* ContentView.swift in Sources */,
 				A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */,
 				A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */,
+				C10C0A1E0000000000000005 /* MetricsSubscriber.swift in Sources */,
+				C10C0A1E0000000000000002 /* Log.swift in Sources */,
 				3FF235BA0BD38425057D7E01 /* Drink.swift in Sources */,
 				02E2F630B7777994171AFFDE /* Night.swift in Sources */,
 				14ABDA92440294666DC8D48F /* DrinkStyle.swift in Sources */,

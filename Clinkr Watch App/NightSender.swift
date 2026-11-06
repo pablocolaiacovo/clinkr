@@ -14,10 +14,6 @@ final class NightSender: NSObject {
 
     private let store: NightStore
     private var activationFailed = false
-    private nonisolated let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier ?? "Clinkr",
-        category: "NightSender"
-    )
 
     init(store: NightStore) {
         self.store = store
@@ -32,20 +28,28 @@ final class NightSender: NSObject {
         let session = WCSession.default
         if activationFailed {
             activationFailed = false
+            Logger.sync.info("Activating the session again")
             session.activate()
             return
         }
         // Sending before the session is active is a programmer error. Activating calls this again.
-        guard session.activationState == .activated else { return }
+        guard session.activationState == .activated else {
+            Logger.sync.debug("Not sending yet: the session isn't active")
+            return
+        }
         let nights = Self.nightsToTransfer(
             store.nightsReadyToSend,
             outstanding: session.outstandingUserInfoTransfers.map(\.userInfo)
         )
+        Logger.sync.debug(
+            "\(self.store.nightsReadyToSend.count) nights ready, \(nights.count) not already on the way"
+        )
         for night in nights {
             do {
                 session.transferUserInfo(try night.transferUserInfo())
+                Logger.sync.info("Sent night \(night.id, privacy: .public)")
             } catch {
-                logger.error("Couldn't encode night \(night.id): \(error)")
+                Logger.sync.error("Couldn't encode night \(night.id, privacy: .public): \(error, privacy: .public)")
             }
         }
     }
@@ -61,9 +65,11 @@ final class NightSender: NSObject {
         WKApplication.shared().scheduleBackgroundRefresh(
             withPreferredDate: .now + Self.retryDelay,
             userInfo: Self.retryTask as NSString
-        ) { [logger] error in
+        ) { error in
             if let error {
-                logger.error("Couldn't schedule a retry: \(error)")
+                Logger.sync.error("Couldn't schedule a retry: \(error, privacy: .public)")
+            } else {
+                Logger.sync.debug("Scheduled a retry")
             }
         }
     }
@@ -76,7 +82,9 @@ extension NightSender: WCSessionDelegate {
         error: (any Error)?
     ) {
         if let error {
-            logger.error("Couldn't activate the session: \(error)")
+            Logger.sync.error("Couldn't activate the session: \(error, privacy: .public)")
+        } else {
+            Logger.sync.info("Session activated, state \(activationState.rawValue)")
         }
         Task { @MainActor in
             activationFailed = activationState != .activated
@@ -91,8 +99,11 @@ extension NightSender: WCSessionDelegate {
         didFinish userInfoTransfer: WCSessionUserInfoTransfer,
         error: (any Error)?
     ) {
-        guard let error else { return }
-        logger.error("Couldn't deliver a night: \(error)")
+        guard let error else {
+            Logger.sync.debug("A night reached the iPhone")
+            return
+        }
+        Logger.sync.error("Couldn't deliver a night: \(error, privacy: .public)")
         Task { @MainActor in
             scheduleRetryIfNeeded()
         }
@@ -100,6 +111,7 @@ extension NightSender: WCSessionDelegate {
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         guard let id = Night.savedID(fromReceipt: userInfo) else { return }
+        Logger.sync.info("The iPhone saved night \(id, privacy: .public)")
         Task { @MainActor in
             store.removePendingNight(id: id)
         }

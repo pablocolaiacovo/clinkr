@@ -58,8 +58,8 @@ struct SavedNightTests {
         let context = container.mainContext
         let night = night()
 
-        try SavedNight.insertIfNew(night, into: context)
-        try SavedNight.insertIfNew(night, into: context)
+        #expect(try SavedNight.insertIfNew(night, into: context))
+        #expect(try !SavedNight.insertIfNew(night, into: context))
 
         #expect(try savedNights(in: context).count == 1)
     }
