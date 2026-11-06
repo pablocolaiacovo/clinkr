@@ -99,7 +99,7 @@ End with one line, the first of these that fits:
 
 Run `/verify-pr <PR#>` again once the PR is merged, to tick the issue's boxes. If the PR has no linked issue, there is nothing to tick: say so and stop. Don't re-check the criteria:
 
-1. Find the PR's `## Acceptance criteria check` comment. If its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
+1. Find the PR's `## Acceptance criteria check` comment. If it marks no criterion **Met**, there is nothing to tick: say so and stop. Otherwise, if its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
 2. In each linked issue, tick the boxes that comment marks **Met**. Don't untick anything: another merged PR may have met it. Change `- [ ]` to `- [x]` on exactly those lines and leave the rest of the body as it is:
 
    ```bash
