@@ -26,7 +26,14 @@ final class NightReceiver: NSObject {
             }
             return true
         } catch {
-            Logger.persistence.error("Couldn't save night \(night.id, privacy: .public): \(error, privacy: .public)")
+            // The error can describe the saved object, name included, so only its domain and code are public.
+            let nsError = error as NSError
+            Logger.persistence.error(
+                """
+                Couldn't save night \(night.id, privacy: .public): \(nsError.domain, privacy: .public) \(nsError.code), \
+                \(error, privacy: .private)
+                """
+            )
             return false
         }
     }
