@@ -13,6 +13,14 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Instead of:** English as the source with Spanish as a translation, which made Spanish the copy that's always catching up, or a test plan that runs every test in both languages, which would double the slow Watch UI tests on CI.
 - **PR:** [#PR](https://github.com/pablocolaiacovo/clinkr/pull/PR)
 
+## 2026-11-06 · Glass for controls, solid for content (proposed)
+
+- **Decision:** If Clinkr adopts Liquid Glass, it's for the control and navigation layer only: the system bars, tab bar and sheets on the iPhone, and floating controls such as the Watch Undo toast. Drink buttons, the ring, rows, cards and charts stay solid. Nothing is built yet, and the Watch stays flat until a toast prototype on a device proves glass reads better than `surface-raised`.
+- **Why:** The code requires iOS 26 and watchOS 26 but used no glass and the design system never said why. Apple's split is glass for controls floating above content, and the drink colors are the content and the brand, so a translucent fill would change what a drink looks like. Solid fills also suit a thumb in the dark.
+- **Instead of:** Glass on everything, which hurts contrast and legibility, or no position at all, which left the sticker look (outlines and a hard shadow) on a collision course with the system bars.
+- **Open:** Concentric corners against the fixed 22pt card radius, whether the sticker look survives next to system bars, and contrast of `on-pop` text on any tinted glass. The details are in `DESIGN.md`.
+- **PR:** [#82](https://github.com/pablocolaiacovo/clinkr/pull/82)
+
 ## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
 
 - **Decision:** The icon is two chunky rounded tiles bumping, like the drink button, with a `water` bubble and a `shot` bubble rising from where they meet. The iPhone light icon has a `fizz` background with cream and `beer` tiles. The dark icon is on black with a `fizz` and a `beer` tile. The tinted one uses grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
