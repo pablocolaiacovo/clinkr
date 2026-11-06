@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-06 · Double tap repeats the last drink only on the Tonight page
+
+- **Decision:** On watches with double tap, the gesture presses the ring on Tonight, which adds the last drink again, and "Had one" on the water nudge. It does nothing on the Add and Night pages, and while the nudge is up it only means "Had one".
+- **Why:** A double tap is made without looking, and SwiftUI sends it to the first control with the shortcut anywhere in the app, not the one on screen. Left on everywhere, it could log a drink from a page you aren't on, or a drink instead of a water over the nudge.
+- **Instead of:** Double tap repeating the last drink from any page. The cost is that you have to swipe back to Tonight first.
+- **PR:** [#78](https://github.com/pablocolaiacovo/clinkr/pull/78)
+
 ## 2026-11-06 · Glass for controls, solid for content (proposed)
 
 - **Decision:** If Clinkr adopts Liquid Glass, it's for the control and navigation layer only: the system bars, tab bar and sheets on the iPhone, and floating controls such as the Watch Undo toast. Drink buttons, the ring, rows, cards and charts stay solid. Nothing is built yet, and the Watch stays flat until a toast prototype on a device proves glass reads better than `surface-raised`.
