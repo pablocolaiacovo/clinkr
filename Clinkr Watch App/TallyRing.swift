@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Tonight's drinks as a ring: one segment per drink in its color, in the order added, with empty slots in
-/// `surface-raised`. A thin inner ring fills with water against drinks.
+/// `surface-raised`. A thin inner ring fills with water against drinks. When a drink is added, a few `bg` bubbles rise
+/// once through its new segment.
 ///
 /// The ring grows by `slotsPerLap` at a time, so it's never shown as "over".
 struct TallyRing: View {
@@ -12,6 +13,8 @@ struct TallyRing: View {
     let drinks: [DrinkType]
     let waterCount: Int
 
+    @State private var bubbleSlot = 0
+    @State private var bubbleRises = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     static func slotCount(forDrinks count: Int) -> Int {
@@ -34,6 +37,11 @@ struct TallyRing: View {
         return (center - halfLength)...(center + halfLength)
     }
 
+    /// The slot of the drink just added, or nil when the change wasn't a single add, like an undo or a night loading.
+    static func addedSlot(from old: [DrinkType], to new: [DrinkType]) -> Int? {
+        new.count == old.count + 1 && new.starts(with: old) ? old.count : nil
+    }
+
     /// The width of the outer and inner rings together, so a screen can fit its content inside them.
     static let thickness = Size.ringStroke + Space.s2 + Size.waterRingStroke
 
@@ -42,6 +50,7 @@ struct TallyRing: View {
             let diameter = min(proxy.size.width, proxy.size.height)
             ZStack {
                 segments(diameter: diameter)
+                bubbles(diameter: diameter)
                 waterRing
             }
             .frame(width: diameter, height: diameter)
@@ -49,6 +58,35 @@ struct TallyRing: View {
         }
         .animation(reduceMotion ? nil : Self.animation, value: drinks)
         .animation(reduceMotion ? nil : Self.animation, value: waterCount)
+        .onChange(of: drinks) { old, new in
+            guard !reduceMotion, let slot = Self.addedSlot(from: old, to: new) else { return }
+            bubbleSlot = slot
+            bubbleRises += 1
+        }
+    }
+
+    private func bubbles(diameter: CGFloat) -> some View {
+        let slots = Self.slotCount(forDrinks: drinks.count)
+        let angle = Angle.degrees(360 * (Double(bubbleSlot) + 0.5) / Double(slots) - 90)
+        let radius = (diameter - Size.ringStroke) / 2
+        return ZStack {
+            ForEach(0..<3, id: \.self) { bubble in
+                Circle()
+                    .fill(.bg)
+                    .frame(width: Space.s1, height: Space.s1)
+                    .offset(x: Space.s2 * Double(bubble - 1))
+            }
+        }
+        .keyframeAnimator(initialValue: 1.0, trigger: bubbleRises) { content, progress in
+            content
+                .offset(y: Size.ringStroke * (0.5 - progress))
+                .opacity(sin(.pi * progress))
+        } keyframes: { _ in
+            MoveKeyframe(0)
+            LinearKeyframe(1, duration: 0.35)
+        }
+        .offset(x: radius * cos(angle.radians), y: radius * sin(angle.radians))
+        .accessibilityHidden(true)
     }
 
     private func segments(diameter: CGFloat) -> some View {
