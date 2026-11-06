@@ -73,7 +73,7 @@ For the version number:
 
 When a build goes to TestFlight or the App Store:
 
-1. On `main`, bump the version and build number in Xcode (target → General → Identity). Commit as `Release 0.2.0`.
+1. On `main`, bump the version and build number at the project level in Xcode (select the **Clinkr** project, not a target → Build Settings → Versioning). Commit as `Release 0.2.0`.
 2. Tag that commit and push the tag:
 
    ```bash
