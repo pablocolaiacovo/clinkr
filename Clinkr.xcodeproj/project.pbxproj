@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D4E5F60718293A4B07 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */; };
+		A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */; };
+		A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */; };
+		A1B2C3D4E5F60718293A4B01 /* NightSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B02 /* NightSender.swift */; };
 		5C6D7E8F901A2B3C4D5E6F70 /* NightViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E8F901A2B3C4D5E6F7081 /* NightViewTests.swift */; };
 		3A4B5C6D7E8F901A2B3C4D5E /* NightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C6D7E8F901A2B3C4D5E6F /* NightView.swift */; };
 		1E2F30415263748596071829 /* WaterNudgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3041526374859607182930 /* WaterNudgeTests.swift */; };
@@ -111,6 +115,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNight.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReceiver.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B02 /* NightSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightSender.swift; sourceTree = "<group>"; };
 		6D7E8F901A2B3C4D5E6F7081 /* NightViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightViewTests.swift; sourceTree = "<group>"; };
 		4B5C6D7E8F901A2B3C4D5E6F /* NightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightView.swift; sourceTree = "<group>"; };
 		2F3041526374859607182930 /* WaterNudgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterNudgeTests.swift; sourceTree = "<group>"; };
@@ -214,6 +222,7 @@
 				FAD9341F9F060A344C623EA9 /* Assets.xcassets */,
 				C28A8F41CDE733FB24735D6D /* ClinkrWatchApp.swift */,
 				9468A4EBA822D9AE568E168F /* NightStore.swift */,
+				A1B2C3D4E5F60718293A4B02 /* NightSender.swift */,
 				34380FD90B9453B48E1C6A48 /* AddView.swift */,
 				D89A93A994BC308F93B8DAEE /* DrinkButton.swift */,
 				B2E4D6F8193C5E7A9B2D4F61 /* UndoToast.swift */,
@@ -283,6 +292,9 @@
 				9FF1F10CBDFA723862543C79 /* Assets.xcassets */,
 				26382F9FA11B93709A2B41CD /* ClinkrApp.swift */,
 				F261572D4D37933BFCF2FD2D /* ContentView.swift */,
+				A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */,
+				A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */,
+				A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */,
 				350557DB748E526740B00791 /* Preview Content */,
 			);
 			path = Clinkr;
@@ -470,6 +482,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F60718293A4B07 /* Localizable.xcstrings in Resources */,
 				3026D57BFB7E4A4778F239C0 /* Assets.xcassets in Resources */,
 				E76284B6739753B95944CB1E /* Preview Assets.xcassets in Resources */,
 				2C2C3C688B48FA2EB8530081 /* Shared.xcstrings in Resources */,
@@ -501,6 +514,7 @@
 				F56B609D2CE8C380D628DC04 /* Drink.swift in Sources */,
 				683EE74A02FFA99699BD105C /* Night.swift in Sources */,
 				03C2F7A872718D156E871A5C /* NightStore.swift in Sources */,
+				A1B2C3D4E5F60718293A4B01 /* NightSender.swift in Sources */,
 				5826BC935FEE9050ABC1CF29 /* AddView.swift in Sources */,
 				85E78942AB512E47B7C99335 /* DrinkButton.swift in Sources */,
 				A1F3C5E7092B4D6F8A1C3E50 /* UndoToast.swift in Sources */,
@@ -530,6 +544,8 @@
 			files = (
 				29E77FABF996E6F31D2E77A9 /* ClinkrApp.swift in Sources */,
 				0C07FE6F4263583472A076D4 /* ContentView.swift in Sources */,
+				A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */,
+				A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */,
 				3FF235BA0BD38425057D7E01 /* Drink.swift in Sources */,
 				02E2F630B7777994171AFFDE /* Night.swift in Sources */,
 				14ABDA92440294666DC8D48F /* DrinkStyle.swift in Sources */,

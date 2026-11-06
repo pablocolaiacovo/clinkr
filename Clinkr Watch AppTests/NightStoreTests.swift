@@ -160,6 +160,76 @@ final class NightStoreTests {
         #expect(ended.endTime == minutes(90))
     }
 
+    @Test func theNightThatCanStillBeUndoneIsNotSent() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        store.add(.wine, at: minutes(20))
+        store.endNight(at: minutes(30))
+        let older = try #require(store.pendingNights.first)
+        let newer = try #require(store.pendingNights.last)
+
+        #expect(store.nightsReadyToSend == [older])
+        store.releaseHeldBackNight()
+        #expect(store.nightsReadyToSend == [older, newer])
+    }
+
+    @Test func aForgottenNightIsReadyToSendStraightAway() {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.add(.wine, at: minutes(0) + NightStore.staleNightGap)
+
+        #expect(store.nightsReadyToSend.count == 1)
+    }
+
+    @Test func aReopenedNightIsNotHeldBackWhenItEndsLater() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        let night = try #require(store.pendingNights.first)
+        store.reopenNight(id: night.id)
+        #expect(store.heldBackNight == nil)
+
+        store.endNight(at: minutes(20))
+        #expect(store.nightsReadyToSend.isEmpty)
+        store.releaseHeldBackNight()
+        #expect(store.nightsReadyToSend.map(\.id) == [night.id])
+    }
+
+    @Test func aRelaunchReleasesTheHeldBackNight() {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+
+        #expect(store.nightsReadyToSend.isEmpty)
+        #expect(relaunch().nightsReadyToSend.count == 1)
+    }
+
+    @Test func releasingTheHeldBackNightAnnouncesIt() {
+        let store = NightStore(fileURL: fileURL)
+        var announcements = 0
+        store.onNightsReady = { announcements += 1 }
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        let afterEnding = announcements
+
+        store.releaseHeldBackNight()
+
+        #expect(announcements == afterEnding + 1)
+    }
+
+    @Test func aNightTheIPhoneSavedLeavesTheQueueForGood() throws {
+        let store = NightStore(fileURL: fileURL)
+        store.add(.beer, at: minutes(0))
+        store.endNight(at: minutes(10))
+        let night = try #require(store.pendingNights.first)
+
+        store.removePendingNight(id: night.id)
+
+        #expect(store.pendingNights.isEmpty)
+        #expect(relaunch().pendingNights.isEmpty)
+    }
+
     @Test func reopeningTakesBackTheEnd() throws {
         let store = NightStore(fileURL: fileURL)
         store.add(.beer, at: minutes(0))

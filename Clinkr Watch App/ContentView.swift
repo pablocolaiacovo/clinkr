@@ -87,6 +87,10 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase) {
             nightStore.retrySaveIfFailed()
+            if scenePhase == .background {
+                // The app may be suspended for hours, and a waiting Undo shouldn't keep the night from the iPhone.
+                closeNightSaved()
+            }
         }
         .onChange(of: nightStore.lastAdded) { _, entry in
             // An undo or a water clears it, and another drink takes its place.
@@ -178,6 +182,7 @@ struct ContentView: View {
     }
 
     private func closeNightSaved() {
+        nightStore.releaseHeldBackNight()
         withAnimation(Motion.standard) {
             endedNight = nil
         }
