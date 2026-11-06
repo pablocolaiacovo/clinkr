@@ -276,7 +276,7 @@ Chunky and tactile throughout: big, solid fills you could hit with a thumb in th
 ### Buttons
 - **Shape:** full pills, except the drink tiles.
 - **Primary:** a `fizz` pill, 48pt tall, with `on-pop` text. End night is the example, at the top of the Night screen.
-- **Nudge action:** the same pill in `water`, for "Had one".
+- **Nudge action:** the same pill in `water`, for "Had one". Double tap presses it.
 - **Ghost:** a `surface-raised` pill, 40pt tall in a 44pt tap area, for "Later".
 - **Undo:** an `ink` pill with `bg` text, 44pt tall. It's the only `ink`-filled control on the Watch, so a mistap is easy to take back. It drops to its SF Symbol when space runs out.
 - **States:** there are no hover or focus treatments on the Watch. Feedback is the spring and the haptic.
@@ -289,7 +289,7 @@ Every tap plays the clink, which scales the button 1 → 0.92 → 1.06 → 1 ove
 ### Tally Ring
 The signature display. One segment per drink in its color, in the order added, with a 16pt stroke and round caps, and empty slots in `surface-raised`. A thin 5pt inner ring fills with `water` against the drink count, and is full once waters match drinks.
 
-The ring grows 8 slots at a time, so it's never shown as full or over. Tapping it adds the last drink again. After each drink is added, three small `bg` bubbles rise once through its new segment in 350ms, the only decorative animation, and they don't play for water, undo or removal, or under Reduce Motion. Using the user's own plan for the night as the slot count is planned but not built.
+The ring grows 8 slots at a time, so it's never shown as full or over. Tapping it adds the last drink again, and so does double tap on watches that have it, while Tonight is on screen. After each drink is added, three small `bg` bubbles rise once through its new segment in 350ms, the only decorative animation, and they don't play for water, undo or removal, or under Reduce Motion. Using the user's own plan for the night as the slot count is planned but not built.
 
 ### Undo Toast
 A `surface-raised` capsule with a `watch-body` message and the Undo pill, shown for 5 seconds after every add. With VoiceOver on, it stays until the next add or an undo.
