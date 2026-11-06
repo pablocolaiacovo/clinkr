@@ -11,6 +11,15 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Decision:** Any third-party open source package the apps ship, such as a Swift package or copied code, fonts or images, gets an entry in `THIRD-PARTY-NOTICES.md` in the same pull request that adds it, with its license text. Build and CI tools don't. The file doesn't exist yet, because the apps use only Apple's frameworks so far.
 - **Why:** Most open source licenses, such as MIT and Apache 2.0, require shipping their notice with the app. Adding it with the package means nothing has to be dug up before a release.
 - **Instead of:** Collecting notices just before a release, which is easy to forget, or an empty file kept as a placeholder.
+- **PR:** [#83](https://github.com/pablocolaiacovo/clinkr/pull/83)
+
+## 2026-11-06 · Glass for controls, solid for content (proposed)
+
+- **Decision:** If Clinkr adopts Liquid Glass, it's for the control and navigation layer only: the system bars, tab bar and sheets on the iPhone, and floating controls such as the Watch Undo toast. Drink buttons, the ring, rows, cards and charts stay solid. Nothing is built yet, and the Watch stays flat until a toast prototype on a device proves glass reads better than `surface-raised`.
+- **Why:** The code requires iOS 26 and watchOS 26 but used no glass and the design system never said why. Apple's split is glass for controls floating above content, and the drink colors are the content and the brand, so a translucent fill would change what a drink looks like. Solid fills also suit a thumb in the dark.
+- **Instead of:** Glass on everything, which hurts contrast and legibility, or no position at all, which left the sticker look (outlines and a hard shadow) on a collision course with the system bars.
+- **Open:** Concentric corners against the fixed 22pt card radius, whether the sticker look survives next to system bars, and contrast of `on-pop` text on any tinted glass. The details are in `DESIGN.md`.
+- **PR:** [#82](https://github.com/pablocolaiacovo/clinkr/pull/82)
 
 ## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
 
