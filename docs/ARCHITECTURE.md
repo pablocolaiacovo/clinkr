@@ -91,3 +91,4 @@ sequenceDiagram
     WC->>W: didReceiveUserInfo
     W->>W: Remove the night from the queue
 ```
+
