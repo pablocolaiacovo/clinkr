@@ -65,7 +65,7 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 ## Evidence on Hand
 
 - Real product copy is in `Clinkr Watch App/Localizable.xcstrings` and `Shared/Shared.xcstrings`.
-- The reasons behind past decisions are in `docs/DECISIONS.md`, and the planned features are in the GitHub issues.
+- The reasons behind past decisions are in `docs/decisions/`, and the planned features are in the GitHub issues.
 - The app is pre-release, on `0.x`, and not yet on TestFlight or the App Store. There are no users, testimonials, reviews, press or usage data. Don't fabricate any.
 
 ## Product Principles
