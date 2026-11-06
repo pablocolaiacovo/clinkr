@@ -28,6 +28,14 @@ struct TallyRingTests {
     @Test func waterWithNoDrinksFillsTheRing() {
         #expect(TallyRing.waterFraction(waters: 2, drinks: 0) == 1)
     }
+
+    @Test func bubblesRiseOnlyForASingleAddedDrink() {
+        #expect(TallyRing.addedSlot(from: [.beer], to: [.beer, .wine]) == 1)
+        #expect(TallyRing.addedSlot(from: [], to: [.shot]) == 0)
+        #expect(TallyRing.addedSlot(from: [.beer, .wine], to: [.beer]) == nil)
+        #expect(TallyRing.addedSlot(from: [], to: [.beer, .wine]) == nil)
+        #expect(TallyRing.addedSlot(from: [.beer], to: [.wine, .beer]) == nil)
+    }
 }
 
 @MainActor
