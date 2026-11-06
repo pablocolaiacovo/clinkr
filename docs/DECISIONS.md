@@ -6,6 +6,12 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-06 · Third-party packages are listed in `THIRD-PARTY-NOTICES.md`
+
+- **Decision:** Any third-party open source package the apps ship, such as a Swift package or copied code, fonts or images, gets an entry in `THIRD-PARTY-NOTICES.md` in the same pull request that adds it, with its license text. Build and CI tools don't. The file doesn't exist yet, because the apps use only Apple's frameworks so far.
+- **Why:** Most open source licenses, such as MIT and Apache 2.0, require shipping their notice with the app. Adding it with the package means nothing has to be dug up before a release.
+- **Instead of:** Collecting notices just before a release, which is easy to forget, or an empty file kept as a placeholder.
+
 ## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
 
 - **Decision:** The icon is two chunky rounded tiles bumping, like the drink button, with a `water` bubble and a `shot` bubble rising from where they meet. The iPhone light icon has a `fizz` background with cream and `beer` tiles. The dark icon is on black with a `fizz` and a `beer` tile. The tinted one uses grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.
