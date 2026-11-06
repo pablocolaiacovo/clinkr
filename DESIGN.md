@@ -228,7 +228,7 @@ The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, t
 
 ### Named Rules
 
-**The Flat Wrist Rule.** No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there.
+**The Flat Wrist Rule.** No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there. The one proposed exception is a glass Undo toast, if the prototype in #80 keeps it (see Liquid Glass).
 
 ## Liquid Glass
 

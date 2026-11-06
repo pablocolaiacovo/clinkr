@@ -12,6 +12,7 @@ What changed in each release is in the [GitHub releases](https://github.com/pabl
 - **Why:** The code requires iOS 26 and watchOS 26 but used no glass and the design system never said why. Apple's split is glass for controls floating above content, and the drink colors are the content and the brand, so a translucent fill would change what a drink looks like. Solid fills also suit a thumb in the dark.
 - **Instead of:** Glass on everything, which hurts contrast and legibility, or no position at all, which left the sticker look (outlines and a hard shadow) on a collision course with the system bars.
 - **Open:** Concentric corners against the fixed 22pt card radius, whether the sticker look survives next to system bars, and contrast of `on-pop` text on any tinted glass. The details are in `DESIGN.md`.
+- **PR:** [#82](https://github.com/pablocolaiacovo/clinkr/pull/82)
 
 ## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
 
