@@ -23,9 +23,9 @@ struct UndoToast: View {
 
     static func message(for type: DrinkType, count: Int) -> LocalizedStringResource {
         if type.countsAsDrink {
-            LocalizedStringResource("Cheers! That's \(count).", comment: "Undo toast after adding a drink")
+            LocalizedStringResource("¡Salud! Van \(count).", comment: "Undo toast after adding a drink")
         } else {
-            LocalizedStringResource("Water! That's \(count).", comment: "Undo toast after adding a water")
+            LocalizedStringResource("¡Agüita! Van \(count).", comment: "Undo toast after adding a water")
         }
     }
 
@@ -84,7 +84,7 @@ struct UndoButton: View {
     @ViewBuilder
     private var undoLabel: some View {
         let label = Label(
-            LocalizedStringResource("Undo", comment: "Button that removes the drink just added"),
+            LocalizedStringResource("Deshacer", comment: "Button that removes the drink just added"),
             systemImage: "arrow.uturn.backward"
         )
         if showsTitle {

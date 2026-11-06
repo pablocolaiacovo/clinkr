@@ -23,6 +23,8 @@ An iPhone app with a companion Apple Watch app, built with SwiftUI.
    - **Clinkr Watch App** runs the Watch app on a paired Watch simulator.
 3. Pick a simulator or device and press ⌘R.
 
+The apps are written in Spanish, with English as a translation, and follow the device's language. To run in one language whatever the simulator is set to, choose **Product › Scheme › Edit Scheme › Run › Arguments** and tick the `-AppleLanguages (es-AR)` or `-AppleLanguages (en)` line.
+
 To run on your own devices, select each target, open **Signing & Capabilities**, and choose your team (your Apple ID).
 
 ## Testing

@@ -28,7 +28,7 @@ struct ClinkrApp: App {
                     .modelContainer(container)
             } else {
                 Text(
-                    "Couldn't open your nights. Try opening Clinkr again.",
+                    "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo.",
                     comment: "Shown when the database won't open"
                 )
                 .typeStyle(.body)

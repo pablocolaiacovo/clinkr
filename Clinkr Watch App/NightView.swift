@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The Night screen, third in the swipe order: "End night", then tonight's drinks and waters, newest first. Swiping a
+/// The Night screen, third in the swipe order: "Terminar la noche", then tonight's drinks and waters, newest first. Swiping a
 /// row left removes it, like a later undo.
 struct NightView: View {
     @Environment(NightStore.self) private var nightStore
@@ -24,13 +24,13 @@ struct NightView: View {
                             Button {
                                 nightStore.removeEntry(id: entry.id)
                             } label: {
-                                Label("Remove", systemImage: "trash.fill")
+                                Label("Quitar", systemImage: "trash.fill")
                             }
                             .tint(.surfaceRaised)
                         }
                 }
             } else {
-                Text("Drinks you add show up here.")
+                Text("Lo que sumes aparece acá.")
                     .typeStyle(.watchCaption)
                     .foregroundStyle(.inkMuted)
                     .multilineTextAlignment(.center)
@@ -44,7 +44,7 @@ struct NightView: View {
 
     private var endButton: some View {
         Button(action: onEnd) {
-            Text("End night")
+            Text("Terminar la noche")
                 .typeStyle(.watchBody)
                 .foregroundStyle(.onPop)
                 .lineLimit(1)
@@ -96,9 +96,9 @@ struct NightSavedView: View {
 
     static func message(saveFailed: Bool) -> LocalizedStringResource {
         if saveFailed {
-            LocalizedStringResource("Not saved. Get home safe.", comment: "Shown after End night when saving failed")
+            LocalizedStringResource("Sin guardar. Volvé bien.", comment: "Shown after End night when saving failed")
         } else {
-            LocalizedStringResource("Night saved. Get home safe.", comment: "Shown after ending the night")
+            LocalizedStringResource("Noche guardada. Volvé bien.", comment: "Shown after ending the night")
         }
     }
 
@@ -108,13 +108,14 @@ struct NightSavedView: View {
                 .typeStyle(.watchTitle)
                 .foregroundStyle(.ink)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 // Only the message closes it, so a tap that just misses Undo doesn't throw the undo away.
                 .contentShape(Rectangle())
                 .onTapGesture(perform: onDismiss)
                 // With VoiceOver it stays until closed, so the message itself closes it.
                 .accessibilityAddTraits(.isButton)
-                .accessibilityHint(Text("Closes this message"))
+                .accessibilityHint(Text("Cierra este mensaje"))
                 .accessibilityAction(.default, onDismiss)
             UndoButton(action: onUndo)
                 .padding(.vertical, Space.s3)

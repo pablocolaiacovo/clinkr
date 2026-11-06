@@ -46,6 +46,8 @@
 		3FF235BA0BD38425057D7E01 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F2699C8EB06890887204E /* Drink.swift */; };
 		4C1E9A0D5B7F23E68A91D0C2 /* NightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B09B8021D23371CFAA15F9B /* NightTests.swift */; };
 		5D8E31A07C4B92F6E0A1B3D4 /* Shared.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9A792CB8B3328C2A01528C73 /* Shared.xcstrings */; };
+		E1A2B3C4D5E6F70812345602 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */; };
+		E1A2B3C4D5E6F70812345603 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */; };
 		683EE74A02FFA99699BD105C /* Night.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ED6C1C837283881502354F /* Night.swift */; };
 		3026D57BFB7E4A4778F239C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FF1F10CBDFA723862543C79 /* Assets.xcassets */; };
 		53C862FB621240E4945F0D64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD9341F9F060A344C623EA9 /* Assets.xcassets */; };
@@ -151,6 +153,7 @@
 		7B09B8021D23371CFAA15F9B /* NightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightTests.swift; sourceTree = "<group>"; };
 		89C0E3B52628790F5260C89C /* Clinkr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Clinkr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A792CB8B3328C2A01528C73 /* Shared.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Shared.xcstrings; sourceTree = "<group>"; };
+		E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		9FF1F10CBDFA723862543C79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0ED2ABC095B7CAA4ABBD7D8 /* ClinkrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClinkrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB744FBD4E4035B42E4822AA /* ClinkrUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClinkrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +267,7 @@
 				17ED6C1C837283881502354F /* Night.swift */,
 				7EAFCFB8D84EF1A51540F143 /* Palette.swift */,
 				9A792CB8B3328C2A01528C73 /* Shared.xcstrings */,
+				E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */,
 				9775BAA519AF9F060D460D13 /* Typography.swift */,
 			);
 			path = Shared;
@@ -453,7 +457,7 @@
 				};
 			};
 			buildConfigurationList = 360D9FE8F466B6A88C16E452 /* Build configuration list for PBXProject "Clinkr" */;
-			developmentRegion = en;
+			developmentRegion = es;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
@@ -486,6 +490,7 @@
 				3026D57BFB7E4A4778F239C0 /* Assets.xcassets in Resources */,
 				E76284B6739753B95944CB1E /* Preview Assets.xcassets in Resources */,
 				2C2C3C688B48FA2EB8530081 /* Shared.xcstrings in Resources */,
+				E1A2B3C4D5E6F70812345602 /* InfoPlist.xcstrings in Resources */,
 				C4A0DDE7B8B4FEC5FA259ED9 /* Glyphs.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +502,7 @@
 				53C862FB621240E4945F0D64 /* Assets.xcassets in Resources */,
 				C9D3D75A654795CF00269EDD /* Preview Assets.xcassets in Resources */,
 				5D8E31A07C4B92F6E0A1B3D4 /* Shared.xcstrings in Resources */,
+				E1A2B3C4D5E6F70812345603 /* InfoPlist.xcstrings in Resources */,
 				C3D5E7F92A4B6C8DAE3F5A72 /* Localizable.xcstrings in Resources */,
 				4B899032D99D009830CF45A8 /* Glyphs.xcassets in Resources */,
 			);

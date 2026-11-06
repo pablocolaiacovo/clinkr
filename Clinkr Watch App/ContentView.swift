@@ -177,7 +177,7 @@ struct ContentView: View {
             endedNight = nil
         }
         if voiceOverEnabled {
-            AccessibilityNotification.Announcement(String(localized: "Night reopened")).post()
+            AccessibilityNotification.Announcement(String(localized: "Noche retomada")).post()
         }
     }
 

@@ -1,59 +1,18 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "es",
   "strings" : {
-    "%@, %@. Your buddy is thirsty." : {
-      "comment" : "Water break nudge message. The two values are tonight's drinks and waters, like \"4 drinks\" and \"0 waters\"",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@, %2$@. Tu compa tiene sed."
-          }
-        }
-      }
-    },
-    "%lld drinks" : {
-      "comment" : "VoiceOver label for tonight's count",
+    "%@, %@. Tu compa tiene sed." : {
+      "comment" : "Water break nudge message. The two values are tonight's drinks and waters, like \"4 bebidas\" and \"0 aguas\"",
       "localizations" : {
         "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld drink"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld drinks"
-                }
-              }
-            }
-          }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld bebida"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld bebidas"
-                }
-              }
-            }
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@. Your buddy is thirsty."
           }
         }
       }
     },
-    "%lld waters" : {
+    "%lld aguas" : {
       "comment" : "Tonight screen: waters had tonight",
       "localizations" : {
         "en" : {
@@ -94,27 +53,92 @@
         }
       }
     },
-    "Adds the last drink again" : {
-      "comment" : "VoiceOver hint for tapping the tally ring",
+    "%lld bebidas" : {
+      "comment" : "VoiceOver label for tonight's count",
       "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vuelve a sumar lo último"
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld drink"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld drinks"
+                }
+              }
+            }
           }
-        }
-      }
-    },
-    "Cheers! That's %lld." : {
-      "comment" : "Undo toast after adding a drink",
-      "localizations" : {
+        },
         "es" : {
           "variations" : {
             "plural" : {
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "¡Salud! Va 1."
+                  "value" : "%lld bebida"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld bebidas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "¡Agüita! Van %lld." : {
+      "comment" : "Undo toast after adding a water",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Water! That's %lld."
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¡Agüita! Va %lld."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¡Agüita! Van %lld."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "¡Salud! Van %lld." : {
+      "comment" : "Undo toast after adding a drink",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheers! That's %lld."
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¡Salud! Va %lld."
                 }
               },
               "other" : {
@@ -128,190 +152,178 @@
         }
       }
     },
-    "Closes this message" : {
-      "comment" : "VoiceOver hint on the message shown after ending the night",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cierra este mensaje"
-          }
-        }
-      }
-    },
-    "Drinks you add show up here." : {
-      "comment" : "Night screen before anything is logged tonight",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lo que sumes aparece acá."
-          }
-        }
-      }
-    },
-    "End night" : {
-      "comment" : "Night screen button that ends and saves tonight's night",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terminar la noche"
-          }
-        }
-      }
-    },
-    "Had one" : {
-      "comment" : "Water break nudge button that logs a water",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ya tomé uno"
-          }
-        }
-      }
-    },
-    "Later" : {
-      "comment" : "Water break nudge button that puts it off",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Después"
-          }
-        }
-      }
-    },
-    "Night reopened" : {
-      "comment" : "VoiceOver announcement after Undo takes back End night",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Noche retomada"
-          }
-        }
-      }
-    },
-    "Night saved. Get home safe." : {
-      "comment" : "Shown after ending the night",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Noche guardada. Volvé bien."
-          }
-        }
-      }
-    },
-    "Not saved" : {
-      "comment" : "Tonight screen, when saving the night failed",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin guardar"
-          }
-        }
-      }
-    },
-    "Not saved. Get home safe." : {
-      "comment" : "Shown after End night when saving failed",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin guardar. Volvé bien."
-          }
-        }
-      }
-    },
-    "Remove" : {
-      "comment" : "Swipe action on a Night screen row that removes that drink",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quitar"
-          }
-        }
-      }
-    },
-    "Swipe up to start the night" : {
-      "comment" : "Tonight screen before the first drink",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deslizá para arrancar la noche"
-          }
-        }
-      }
-    },
-    "Today" : {
-      "comment" : "Tonight screen caption for a night that started by day",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoy"
-          }
-        }
-      }
-    },
-    "Tonight" : {
-      "comment" : "Tonight screen caption for a night that started after 5 pm",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta noche"
-          }
-        }
-      }
-    },
-    "Undo" : {
-      "comment" : "Button that removes the drink just added",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deshacer"
-          }
-        }
-      }
-    },
-    "Water break?" : {
+    "¿Un vasito de agua?" : {
       "comment" : "Water break nudge headline",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Un vasito de agua?"
+            "value" : "Water break?"
           }
         }
       }
     },
-    "Water! That's %lld." : {
-      "comment" : "Undo toast after adding a water",
+    "Cierra este mensaje" : {
+      "comment" : "VoiceOver hint on the message shown after ending the night",
       "localizations" : {
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "¡Agüita! Va 1."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "¡Agüita! Van %lld."
-                }
-              }
-            }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closes this message"
+          }
+        }
+      }
+    },
+    "Deshacer" : {
+      "comment" : "Button that removes the drink just added",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
+    "Deslizá para arrancar la noche" : {
+      "comment" : "Tonight screen before the first drink",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe up to start the night"
+          }
+        }
+      }
+    },
+    "Después" : {
+      "comment" : "Water break nudge button that puts it off",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        }
+      }
+    },
+    "Esta noche" : {
+      "comment" : "Tonight screen caption for a night that started after 5 pm",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonight"
+          }
+        }
+      }
+    },
+    "Hoy" : {
+      "comment" : "Tonight screen caption for a night that started by day",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Lo que sumes aparece acá." : {
+      "comment" : "Night screen before anything is logged tonight",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drinks you add show up here."
+          }
+        }
+      }
+    },
+    "Noche guardada. Volvé bien." : {
+      "comment" : "Shown after ending the night",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night saved. Get home safe."
+          }
+        }
+      }
+    },
+    "Noche retomada" : {
+      "comment" : "VoiceOver announcement after Undo takes back End night",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night reopened"
+          }
+        }
+      }
+    },
+    "Quitar" : {
+      "comment" : "Swipe action on a Night screen row that removes that drink",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
+    },
+    "Sin guardar" : {
+      "comment" : "Tonight screen, when saving the night failed",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not saved"
+          }
+        }
+      }
+    },
+    "Sin guardar. Volvé bien." : {
+      "comment" : "Shown after End night when saving failed",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not saved. Get home safe."
+          }
+        }
+      }
+    },
+    "Terminar la noche" : {
+      "comment" : "Night screen button that ends and saves tonight's night",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End night"
+          }
+        }
+      }
+    },
+    "Vuelve a sumar lo último" : {
+      "comment" : "VoiceOver hint for tapping the tally ring",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adds the last drink again"
+          }
+        }
+      }
+    },
+    "Ya tomé uno" : {
+      "comment" : "Water break nudge button that logs a water",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Had one"
           }
         }
       }

@@ -35,4 +35,6 @@ The iPhone app and the Watch app run on separate simulators. Run whichever one t
 
 ## Checking the result
 
+The apps follow the simulator's language. To see them in Spanish (Argentina) or English whatever it's set to, add launch arguments, like `xcrun simctl launch --terminate-running-process <udid> <bundle-id> -AppleLanguages "(es-AR)" -AppleLocale es_AR`, or `"(en)"` and `en_US`. Check new text in both.
+
 Take a screenshot and confirm the change is visible. Report what you saw. If the build fails, show the first error rather than the whole log.

@@ -6,6 +6,13 @@ Add an entry in the same pull request that makes the decision. Keep it to a few 
 
 What changed in each release is in the [GitHub releases](https://github.com/pablocolaiacovo/clinkr/releases), so there's no separate changelog.
 
+## 2026-11-06 · Spanish is the development language
+
+- **Decision:** Both apps are written in Spanish. The text in code and the String Catalogs' source language are Spanish (`es`), written in Argentine Spanish, and English (`en`) is the one translation. The UI tests launch the apps in each language, and the schemes have launch arguments, off by default, that run them in either one.
+- **Why:** Spanish is the launch language, so the copy should be written and reviewed in Spanish first, with English as an adaptation in the same voice rather than the other way round. `es` rather than `es-AR` means a phone set to any Spanish, like Mexico's or Spain's, gets the Spanish text, and a device with none of Clinkr's languages in its list falls back to Spanish.
+- **Instead of:** English as the source with Spanish as a translation, which made Spanish the copy that's always catching up, or a test plan that runs every test in both languages, which would double the slow Watch UI tests on CI.
+- **PR:** [#PR](https://github.com/pablocolaiacovo/clinkr/pull/PR)
+
 ## 2026-11-05 · The app icon is two clinking tiles, drawn by a script
 
 - **Decision:** The icon is two chunky rounded tiles bumping, like the drink button, with a `water` bubble and a `shot` bubble rising from where they meet. The iPhone light icon has a `fizz` background with cream and `beer` tiles. The dark icon is on black with a `fizz` and a `beer` tile. The tinted one uses grays. The Watch uses the light icon. `scripts/make-app-icons.swift` draws all the PNGs from the palette values.

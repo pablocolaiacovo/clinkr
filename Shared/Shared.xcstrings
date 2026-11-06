@@ -1,24 +1,24 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "es",
   "strings" : {
-    "Beer" : {
+    "Agua" : {
       "comment" : "Drink type",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Birra"
+            "value" : "Water"
           }
         }
       }
     },
-    "Cocktail" : {
+    "Birra" : {
       "comment" : "Drink type",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trago"
+            "value" : "Beer"
           }
         }
       }
@@ -26,7 +26,7 @@
     "Shot" : {
       "comment" : "Drink type",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shot"
@@ -34,24 +34,24 @@
         }
       }
     },
-    "Water" : {
+    "Trago" : {
       "comment" : "Drink type",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Agua"
+            "value" : "Cocktail"
           }
         }
       }
     },
-    "Wine" : {
+    "Vino" : {
       "comment" : "Drink type",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vino"
+            "value" : "Wine"
           }
         }
       }

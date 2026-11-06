@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The water break nudge: a friendly suggestion, never a warning. "Had one" logs a water and "Later" puts it off.
+/// The water break nudge: a friendly suggestion, never a warning. "Ya tomé uno" logs a water and "Después" puts it off.
 struct WaterNudgeView: View {
     static let animation = Motion.standard
 
@@ -32,13 +32,13 @@ struct WaterNudgeView: View {
                         .frame(width: Size.glyph, height: Size.glyph)
                         .foregroundStyle(.water)
                         .accessibilityHidden(true)
-                    Text("Water break?")
+                    Text("¿Un vasito de agua?")
                         .typeStyle(.watchTitle)
                         .foregroundStyle(.ink)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityActions {
                             if let onUndo {
-                                Button("Undo", action: onUndo)
+                                Button("Deshacer", action: onUndo)
                             }
                         }
                 }
@@ -48,7 +48,7 @@ struct WaterNudgeView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom, Space.s1)
                 Button(action: onHadOne) {
-                    Text("Had one")
+                    Text("Ya tomé uno")
                         .typeStyle(.watchBody)
                         .foregroundStyle(.onPop)
                         .frame(maxWidth: .infinity, minHeight: Size.primaryPill)
@@ -57,7 +57,7 @@ struct WaterNudgeView: View {
                 }
                 .buttonStyle(.plain)
                 Button(action: onLater) {
-                    Text("Later")
+                    Text("Después")
                         .typeStyle(.watchBody)
                         .foregroundStyle(.ink)
                         .frame(maxWidth: .infinity, minHeight: Size.secondaryPill)
@@ -75,9 +75,9 @@ struct WaterNudgeView: View {
 
     /// Tonight's totals in `ink`, the rest in `ink-muted`.
     private var message: Text {
-        let drinks = Text("\(drinkCount) drinks").foregroundStyle(.ink)
-        let waters = Text("\(waterCount) waters").foregroundStyle(.ink)
-        return Text("\(drinks), \(waters). Your buddy is thirsty.")
+        let drinks = Text("\(drinkCount) bebidas").foregroundStyle(.ink)
+        let waters = Text("\(waterCount) aguas").foregroundStyle(.ink)
+        return Text("\(drinks), \(waters). Tu compa tiene sed.")
     }
 }
 
