@@ -256,7 +256,7 @@ Every tap plays the clink, which scales the button 1 → 0.92 → 1.06 → 1 ove
 ### Tally Ring
 The signature display. One segment per drink in its color, in the order added, with a 16pt stroke and round caps, and empty slots in `surface-raised`. A thin 5pt inner ring fills with `water` against the drink count, and is full once waters match drinks.
 
-The ring grows 8 slots at a time, so it's never shown as full or over. Tapping it adds the last drink again, and so does double tap on watches that have it, while Tonight is on screen. Two planned details are not built: the fizz bubbles (#23), and using the user's own plan for the night as the slot count.
+The ring grows 8 slots at a time, so it's never shown as full or over. Tapping it adds the last drink again, and so does double tap on watches that have it, while Tonight is on screen. After each drink is added, three small `bg` bubbles rise once through its new segment in 350ms, the only decorative animation, and they don't play for water, undo or removal, or under Reduce Motion. Using the user's own plan for the night as the slot count is planned but not built.
 
 ### Undo Toast
 A `surface-raised` capsule with a `watch-body` message and the Undo pill, shown for 5 seconds after every add. With VoiceOver on, it stays until the next add or an undo.
