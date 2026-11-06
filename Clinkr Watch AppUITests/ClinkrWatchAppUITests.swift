@@ -36,6 +36,23 @@ final class ClinkrWatchAppUITests: XCTestCase {
         XCTAssertTrue(waitToDisappear(nightSaved), "The message closes by itself")
     }
 
+    /// Double tap can't be performed in the simulator, but it presses this same button.
+    func testTappingTheRingAddsTheLastDrinkAgain() throws {
+        launch()
+        endAnyNightLeftOver()
+
+        swipeUp(to: app.buttons["Beer"])
+        tapUntilToastShows(app.buttons["Beer"])
+        app.swipeDown()
+        let ring = app.buttons.matching(NSPredicate(format: "label CONTAINS '1 drink'")).firstMatch
+        tapOnceStill(ring)
+
+        let twoDrinks = app.buttons.matching(NSPredicate(format: "label CONTAINS '2 drinks'")).firstMatch
+        XCTAssertTrue(twoDrinks.waitForExistence(timeout: 5), "The ring counts the drink again")
+        let toast = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS \"That's 2.\""))
+        XCTAssertTrue(toast.firstMatch.waitForExistence(timeout: 5), "The toast offers to undo it")
+    }
+
     func testRemovingADrinkCallsOffTheWaitingNudge() throws {
         launch()
         endAnyNightLeftOver()

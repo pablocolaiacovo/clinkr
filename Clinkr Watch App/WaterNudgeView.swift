@@ -56,6 +56,7 @@ struct WaterNudgeView: View {
                         .contentShape(Capsule())
                 }
                 .buttonStyle(.plain)
+                .handGestureShortcut(.primaryAction)
                 Button(action: onLater) {
                     Text("Later")
                         .typeStyle(.watchBody)
@@ -73,7 +74,6 @@ struct WaterNudgeView: View {
         .accessibilityAddTraits(.isModal)
     }
 
-    /// Tonight's totals in `ink`, the rest in `ink-muted`.
     private var message: Text {
         let drinks = Text("\(drinkCount) drinks").foregroundStyle(.ink)
         let waters = Text("\(waterCount) waters").foregroundStyle(.ink)

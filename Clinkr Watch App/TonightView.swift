@@ -1,10 +1,12 @@
 import SwiftUI
 import WatchKit
 
-/// The Tonight screen, first in the swipe order: the tally ring with tonight's count in the middle. Tapping the ring
-/// adds the last drink again.
+/// The Tonight screen, first in the swipe order: the tally ring with tonight's count in the middle. Tapping the ring,
+/// or double tap on watches that have it, adds the last drink again.
 struct TonightView: View {
     @Environment(NightStore.self) private var nightStore
+    /// Off while another page or the water nudge is on screen, since double tap reaches any control in the app.
+    var doubleTapRepeats = true
 
     var body: some View {
         let night = nightStore.activeNight
@@ -16,6 +18,7 @@ struct TonightView: View {
                     ring(night)
                 }
                 .buttonStyle(.plain)
+                .handGestureShortcut(.primaryAction, isEnabled: doubleTapRepeats)
                 .accessibilityHint(Text("Adds the last drink again"))
             } else {
                 ring(night)
