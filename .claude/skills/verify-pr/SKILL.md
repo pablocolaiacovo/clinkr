@@ -40,9 +40,11 @@ Give each criterion one verdict, with evidence:
 | Verdict | When |
 |---|---|
 | **Met** | A test asserts it (name the test), or you saw it working in the simulator (say what you did and saw) |
-| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 4 adds it |
+| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 4 adds it. A criterion the issue marks as checked in #31 is Deferred too: the PR doesn't need to say so |
 | **Not met** | The diff doesn't do it, or it does something else, or it's deferred to an issue that's closed or doesn't exist |
-| **Can't verify** | Neither a test nor the simulator can show it. Say what the user should check by hand |
+| **Can't verify** | Neither a test nor the simulator can show it, and it isn't a real-device check. Say what the user should check by hand |
+
+**Real-device checks** go to #31, the V1 beta QA, which lists them under **Real-device checks**. Until the paid developer account (#27), nothing runs on a real iPhone or Watch, so a criterion that only a device can show (the Watch-to-iPhone transfer, double tap, VoiceOver, haptics, background notifications) is Deferred to #31, not Can't verify. Verify whatever part the simulator can show, and defer only the rest. Step 4 records it.
 
 How to gather the evidence:
 
@@ -86,8 +88,8 @@ With no linked issue, there is no criteria table and items 3 to 5 don't apply: s
    ```
 
 3. In the PR body's **Acceptance criteria** section, set each box from this run's verdict: `- [x]` for Met, `- [ ]` for everything else, unticking any box an earlier run ticked. Change only those lines (`gh pr view <PR#> --json body --jq .body`, edit, then `gh pr edit <PR#> --body-file <file>`).
-4. For each **Deferred** criterion whose target issue doesn't list it yet, add it there as a new checkbox under "Done when", with "(from #N)" at the end.
-5. If the PR says `Closes #N` but any criterion of #N is Deferred or Not met, the issue would close with work left. Tell the user and suggest changing the PR body to `Part of #N`.
+4. For each **Deferred** criterion whose target issue doesn't list it yet, add it there as a new checkbox under "Done when", with "(from #N)" at the end. A real-device check goes under #31's **Real-device checks** section instead. Then, in #N, append " (real devices: checked in #31)" to that criterion's line. If #N doesn't end with a `**Real-device checks:**` paragraph yet, add one saying those parts are checked in #31 and the issue can close without them.
+5. If the PR says `Closes #N` but any criterion of #N is Not met, or Deferred to an issue other than #31, the issue would close with work left. Tell the user and suggest changing the PR body to `Part of #N`. Criteria deferred to #31's real-device checks don't count: #31 tracks them, so #N can close.
 
 End with one line, the first of these that fits:
 
