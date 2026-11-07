@@ -60,11 +60,11 @@ struct TonightCaptionTests {
 
     @Test(arguments: [5, 12, 16])
     func daytimeStartIsToday(hour: Int) {
-        #expect(caption(atHour: hour) == "Today")
+        #expect(caption(atHour: hour) == "Hoy")
     }
 
     @Test(arguments: [17, 21, 0, 4])
     func eveningOrLateStartIsTonight(hour: Int) {
-        #expect(caption(atHour: hour) == "Tonight")
+        #expect(caption(atHour: hour) == "Esta noche")
     }
 }

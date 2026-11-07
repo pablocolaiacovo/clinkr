@@ -51,6 +51,16 @@ Delete any other comment, such as one that repeats what the code says or leftove
 
 This applies to existing code too. When a change touches a file, for a new feature or anything else, delete the unnecessary comments already in that file as part of the same change.
 
+## Strings
+
+Clinkr is written in Spanish (Argentina), and Spanish is the project's development language, so it's also what a device gets when none of its languages is one the app has. English is a translation.
+
+- Write UI text in code in Spanish, as `Text("...")`, `LocalizedStringResource` or `String(localized:)`, with a `comment:` when the context isn't obvious. Xcode adds it to the target's `Localizable.xcstrings` when it builds. Text both apps show goes in `Shared/Shared.xcstrings` (pass `table: "Shared"`). The app name and permission prompts go in `Shared/InfoPlist.xcstrings`.
+- Add the English in the catalog in the same pull request, as an adaptation in the same voice rather than a literal translation (see `PRODUCT.md`).
+- Counts use the catalog's plural variations (**Vary by Plural**), never `"s"` added in code. Dates, times and numbers come from formatters, like `.formatted()` and `Date.FormatStyle`.
+- Watch buttons and toasts must fit one line at `watch-body` in Spanish on the smallest Watch. Cut words, not the font size.
+- Check new screens in both languages. The UI tests launch the apps in each one with `-AppleLanguages`.
+
 ## Commit messages
 
 Use a short summary line in the imperative ("Add heart rate screen", not "Added..."), under about 70 characters. Add a blank line and more detail if the change needs explaining.

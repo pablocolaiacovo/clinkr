@@ -52,7 +52,6 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 **Undecided:**
 - The privacy position. Today's data lives on the Watch, and there is no account or backend, but iCloud backup (#34) and Apple Health (#35) are open ideas. Don't claim anything about privacy yet.
 - The App Store age rating and listing (#29, #30).
-- The source language. #24 specifies Spanish as the development language, but the string catalogs are still English-sourced.
 
 ## Brand Commitments
 

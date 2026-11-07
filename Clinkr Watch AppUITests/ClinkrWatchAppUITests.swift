@@ -93,6 +93,16 @@ final class ClinkrWatchAppUITests: XCTestCase {
         XCTAssertTrue(emptyTonight.firstMatch.waitForExistence(timeout: 5), "The empty Tonight keeps its hint")
     }
 
+    /// The other tests run in English, so this one checks the Spanish the app is written in.
+    func testLaunchesInSpanish() throws {
+        continueAfterFailure = false
+        app.launchArguments = ["-AppleLanguages", "(es-AR)", "-AppleLocale", "es_AR"]
+        app.launch()
+
+        swipeUp(to: app.buttons["Birra"])
+        XCTAssertTrue(app.buttons["Trago"].exists)
+    }
+
     /// Long enough for any wait on the toast to end, even on a slow test machine.
     private let toastWait: TimeInterval = 30
 

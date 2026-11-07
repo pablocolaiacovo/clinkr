@@ -19,7 +19,7 @@ struct TonightView: View {
                 }
                 .buttonStyle(.plain)
                 .handGestureShortcut(.primaryAction, isEnabled: doubleTapRepeats)
-                .accessibilityHint(Text("Adds the last drink again"))
+                .accessibilityHint(Text("Vuelve a sumar lo último"))
             } else {
                 ring(night)
             }
@@ -47,7 +47,7 @@ struct TonightView: View {
                 if nightStore.saveFailed {
                     Text(Self.notSaved)
                 }
-                Text("Swipe up to start the night", comment: "Tonight screen before the first drink")
+                Text("Deslizá para arrancar la noche", comment: "Tonight screen before the first drink")
             }
             .typeStyle(.watchCaption)
             .foregroundStyle(.inkMuted)
@@ -64,7 +64,7 @@ struct TonightView: View {
                 .foregroundStyle(.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
-                .accessibilityLabel(Text("\(night.drinkCount) drinks"))
+                .accessibilityLabel(Text("\(night.drinkCount) tragos"))
             Text(Self.caption(forNightStartingAt: night.startTime, saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)
@@ -77,11 +77,11 @@ struct TonightView: View {
     }
 
     private static let notSaved = LocalizedStringResource(
-        "Not saved",
+        "Sin guardar",
         comment: "Tonight screen, when saving the night failed"
     )
 
-    /// "Today" for a night that started in the daytime, like a lunch, otherwise "Tonight".
+    /// "Hoy" for a night that started in the daytime, like a lunch, otherwise "Esta noche".
     static func caption(
         forNightStartingAt start: Date,
         saveFailed: Bool,
@@ -92,9 +92,10 @@ struct TonightView: View {
         }
         let hour = calendar.component(.hour, from: start)
         if (5..<17).contains(hour) {
-            return LocalizedStringResource("Today", comment: "Tonight screen caption for a night that started by day")
+            return LocalizedStringResource("Hoy", comment: "Tonight screen caption for a night that started by day")
         }
-        return LocalizedStringResource("Tonight", comment: "Tonight screen caption for a night that started after 5 pm")
+        return LocalizedStringResource(
+            "Esta noche", comment: "Tonight screen caption for a night that started after 5 pm")
     }
 
     private func waters(_ count: Int) -> some View {
@@ -111,7 +112,7 @@ struct TonightView: View {
                 .lineLimit(1)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("\(count) waters"))
+        .accessibilityLabel(Text("\(count) aguas"))
         .padding(.top, Space.s1)
     }
 

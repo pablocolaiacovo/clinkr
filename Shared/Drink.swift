@@ -17,11 +17,11 @@ enum DrinkType: String, CaseIterable, Codable, Sendable {
     /// only need translating once.
     var displayName: LocalizedStringResource {
         switch self {
-        case .beer: LocalizedStringResource("Beer", table: Self.stringTable, comment: "Drink type")
-        case .wine: LocalizedStringResource("Wine", table: Self.stringTable, comment: "Drink type")
-        case .cocktail: LocalizedStringResource("Cocktail", table: Self.stringTable, comment: "Drink type")
+        case .beer: LocalizedStringResource("Birra", table: Self.stringTable, comment: "Drink type")
+        case .wine: LocalizedStringResource("Vino", table: Self.stringTable, comment: "Drink type")
+        case .cocktail: LocalizedStringResource("Trago", table: Self.stringTable, comment: "Drink type")
         case .shot: LocalizedStringResource("Shot", table: Self.stringTable, comment: "Drink type")
-        case .water: LocalizedStringResource("Water", table: Self.stringTable, comment: "Drink type")
+        case .water: LocalizedStringResource("Agua", table: Self.stringTable, comment: "Drink type")
         }
     }
 

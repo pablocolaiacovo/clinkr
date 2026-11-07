@@ -1,35 +1,35 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "es",
   "strings" : {
-    "Couldn't open your nights. Try opening Clinkr again." : {
+    "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo." : {
       "comment" : "Shown when the database won't open",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo."
+            "value" : "Couldn't open your nights. Try opening Clinkr again."
           }
         }
       }
     },
-    "No nights yet. Start one on your watch." : {
+    "Todavía no hay noches. Arrancá una en tu reloj." : {
       "comment" : "Empty state of the list of nights",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todavía no hay noches. Arrancá una en tu reloj."
+            "value" : "No nights yet. Start one on your watch."
           }
         }
       }
     },
-    "Your nights" : {
+    "Tus noches" : {
       "comment" : "Title of the list of nights",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tus noches"
+            "value" : "Your nights"
           }
         }
       }
