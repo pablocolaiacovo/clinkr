@@ -64,7 +64,7 @@ struct TonightView: View {
                 .foregroundStyle(.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
-                .accessibilityLabel(Text("\(night.drinkCount) bebidas"))
+                .accessibilityLabel(Text("\(night.drinkCount) tragos"))
             Text(Self.caption(forNightStartingAt: night.startTime, saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)

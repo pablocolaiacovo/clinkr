@@ -2,7 +2,7 @@
   "sourceLanguage" : "es",
   "strings" : {
     "%@, %@. Tu compa tiene sed." : {
-      "comment" : "Water break nudge message. The two values are tonight's drinks and waters, like \"4 bebidas\" and \"0 aguas\"",
+      "comment" : "Water break nudge message. The two values are tonight's drinks and waters, like \"4 tragos\" and \"0 aguas\"",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -53,7 +53,7 @@
         }
       }
     },
-    "%lld bebidas" : {
+    "%lld tragos" : {
       "comment" : "VoiceOver label for tonight's count",
       "localizations" : {
         "en" : {
@@ -80,13 +80,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld bebida"
+                  "value" : "%lld trago"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld bebidas"
+                  "value" : "%lld tragos"
                 }
               }
             }

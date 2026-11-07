@@ -75,7 +75,7 @@ struct WaterNudgeView: View {
     }
 
     private var message: Text {
-        let drinks = Text("\(drinkCount) bebidas").foregroundStyle(.ink)
+        let drinks = Text("\(drinkCount) tragos").foregroundStyle(.ink)
         let waters = Text("\(waterCount) aguas").foregroundStyle(.ink)
         return Text("\(drinks), \(waters). Tu compa tiene sed.")
     }
