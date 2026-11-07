@@ -23,13 +23,16 @@ final class SavedNight {
     }
 
     /// Adds a night unless it's already saved, so a resend from the Watch makes no duplicate and doesn't undo a rename.
-    /// Saves either way, which also retries a night whose earlier save failed.
-    static func insertIfNew(_ night: Night, into context: ModelContext) throws {
+    /// Saves either way, which also retries a night whose earlier save failed. Returns whether it was new.
+    @discardableResult
+    static func insertIfNew(_ night: Night, into context: ModelContext) throws -> Bool {
         let id = night.id
         let matching = FetchDescriptor<SavedNight>(predicate: #Predicate { $0.id == id })
-        if try context.fetchCount(matching) == 0 {
+        let isNew = try context.fetchCount(matching) == 0
+        if isNew {
             context.insert(SavedNight(night))
         }
         try context.save()
+        return isNew
     }
 }
