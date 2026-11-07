@@ -19,7 +19,7 @@ Branch names start with what kind of change it is:
 
 Keep branches small and merge them within a few days. Merge with **Squash and merge**, so each pull request becomes one commit on `main`. GitHub deletes the branch after the merge.
 
-`main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes and every review conversation is resolved. No approvals are required. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
+`main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes and every review conversation is resolved. A pull request that changes only Markdown files or `docs/` skips the build, and the check shows as skipped, which counts as passing. `DESIGN.md` and `.impeccable/` still run it, because lint checks their colors. No approvals are required. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
 
 Pull requests also run the CodeQL security scan (**Analyze**). The Swift scan can take about 30 minutes and isn't required for merging, but look at any alert it raises.
 
@@ -27,13 +27,13 @@ Pull requests also run the CodeQL security scan (**Analyze**). The Swift scan ca
 
 Every pull request goes through the same steps:
 
-1. Update the docs the change affects: `README.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/ARCHITECTURE.md`, `PRODUCT.md` and `DESIGN.md`. If the change makes a decision about how the app works or how it's built, add an entry to `docs/DECISIONS.md` with the reason. If it changes a token, glyph, component or visual rule, update `Shared/`, `DESIGN.md` and the [design system](https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh) together, and run `/impeccable document` (from the impeccable plugin), asking it to refresh only the sidecar, `.impeccable/design.json`. `scripts/test.sh` fails if the colors in `DESIGN.md` or the sidecar differ from `Shared/Palette.swift`. Add a diagram or other visual when it explains something faster than text, such as a Mermaid diagram in `docs/` for how pieces fit together, or a screenshot in the pull request for a new or changed screen.
+1. Update the docs the change affects: `README.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/ARCHITECTURE.md`, `PRODUCT.md` and `DESIGN.md`. If the change makes a decision about how the app works or how it's built, add a file to `docs/decisions/` with the reason (see its `README.md`). If it changes a token, glyph, component or visual rule, update `Shared/`, `DESIGN.md` and the [design system](https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh) together, and run `/impeccable document` (from the impeccable plugin), asking it to refresh only the sidecar, `.impeccable/design.json`. `scripts/test.sh` fails if the colors in `DESIGN.md` or the sidecar differ from `Shared/Palette.swift`. Add a diagram or other visual when it explains something faster than text, such as a Mermaid diagram in `docs/` for how pieces fit together, or a screenshot in the pull request for a new or changed screen.
 2. Run `scripts/test.sh` locally, push the branch and open the pull request. Fill in the template:
    - Write `Closes #N` only if the PR meets every acceptance criterion in the issue. Otherwise write `Part of #N`, so the issue stays open.
    - Under **Acceptance criteria**, copy each checkbox from the issue and say how it's shown to work, or which issue it's deferred to.
    - Checks that need a real iPhone or Watch go to #31's **Real-device checks** until there's a paid developer account (#27). They don't stop `Closes #N`. `/verify-pr` records them.
 3. Once it's open, run `/verify-pr` on it in Claude Code, passing the PR number (e.g. `/verify-pr 48`). This is required for every pull request, however small. It reviews the code with `/ponytail-review` (from the ponytail plugin) and posts the result on the PR. If the PR closes or is part of an issue, it also checks each acceptance criterion with tests and the simulators, and ticks the met criteria in the PR's checklist. For a risky change you can also run `/code-review` for a bug hunt.
-4. Fix what the review finds, or note in the pull request why a finding doesn't apply. Push the fixes. If they're more than small tweaks, run `/verify-pr` again.
+4. Fix what the review finds, or note in the pull request why a finding doesn't apply. Push the fixes. If `/verify-pr` marked any criterion **Met**, run it again after every push, however small, so the issue's boxes are only ticked for the code that merges. Otherwise run it again only if the fixes are more than small tweaks.
 5. When every finding is addressed or explained, the checks under [Branches](#branches) pass, and every criterion (if there is an issue) is met or deferred to an open issue, squash and merge.
 6. If the PR was linked to an issue, run `/verify-pr` again after merging. It ticks the met criteria in the issue, now that they're on `main`.
 
@@ -74,7 +74,7 @@ For the version number:
 
 When a build goes to TestFlight or the App Store:
 
-1. On `main`, bump the version and build number in Xcode (target → General → Identity). Commit as `Release 0.2.0`.
+1. On `main`, bump the version and build number at the project level in Xcode (select the **Clinkr** project, not a target → Build Settings → Versioning). Commit as `Release 0.2.0`.
 2. Tag that commit and push the tag:
 
    ```bash

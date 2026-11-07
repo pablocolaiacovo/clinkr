@@ -13,8 +13,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Check for code changes
+    runs-on: ubuntu-latest
+    outputs:
+      docs_only: ${{ steps.diff.outputs.docs_only }}
+    steps:
+      # Pushes skip this, so docs_only stays empty and the full job runs.
+      - if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - id: diff
+        if: github.event_name == 'pull_request'
+        run: |
+          # HEAD is the PR merged into its base, so HEAD^1 is the base.
+          files="$(git diff --name-only --no-renames HEAD^1 HEAD)"
+          echo "$files"
+          # DESIGN.md and .impeccable/ are checked by lint against Shared/Palette.swift, so they count as code.
+          if echo "$files" | grep -vE '\.md$|^docs/' | grep -q . || echo "$files" | grep -qE '^DESIGN\.md$|^\.impeccable/'; then
+            echo "docs_only=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "docs_only=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build-and-test:
     name: Build and test
+    needs: changes
+    # Skipped jobs count as passing for the required check. Runs if `changes` fails, so a broken check never lets code through.
+    if: ${{ !cancelled() && needs.changes.outputs.docs_only != 'true' }}
     runs-on: macos-26
     timeout-minutes: 30
     steps:

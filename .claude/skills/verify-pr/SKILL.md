@@ -48,7 +48,7 @@ Give each criterion one verdict, with evidence:
 
 How to gather the evidence:
 
-- **Tests:** CI already runs `scripts/test.sh` on the PR. Read its result with `gh pr checks <PR#> --json name,bucket`. If **Build and test** passed, rely on it. If it failed, report that and stop. Run `scripts/test.sh` locally only if CI hasn't finished. Then look for a test that covers each criterion, in `SharedTests/`, `ClinkrTests/`, `ClinkrUITests/` and `Clinkr Watch AppTests/`. A test that only exists but doesn't assert the behaviour doesn't count.
+- **Tests:** CI already runs `scripts/test.sh` on the PR. Read its result with `gh pr checks <PR#> --json name,bucket`. If **Build and test** passed, rely on it. If it failed, report that and stop. Run `scripts/test.sh` locally only if CI hasn't finished. Then look for a test that covers each criterion, in `SharedTests/`, `ClinkrTests/`, `ClinkrUITests/`, `Clinkr Watch AppTests/` and `Clinkr Watch AppUITests/`. A test that only exists but doesn't assert the behaviour doesn't count.
 - **Simulator:** for anything a user would see or tap, follow the `run` skill, then do what the criterion describes and take a screenshot. Use the smallest Watch (40 or 41mm) for size and fit criteria. For localization criteria, launch the app in each language instead of changing the simulator's settings, for example in Spanish (Argentina):
 
   ```bash
@@ -101,7 +101,7 @@ End with one line, the first of these that fits:
 
 Run `/verify-pr <PR#>` again once the PR is merged, to tick the issue's boxes. If the PR has no linked issue, there is nothing to tick: say so and stop. Don't re-check the criteria:
 
-1. Find the PR's `## Acceptance criteria check` comment. If its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
+1. Find the PR's `## Acceptance criteria check` comment. If there's no such comment, the PR was never verified: say so and stop. If it marks no criterion **Met**, there is nothing to tick: say so and stop. Otherwise, if its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
 2. In each linked issue, tick the boxes that comment marks **Met**. Don't untick anything: another merged PR may have met it. Change `- [ ]` to `- [x]` on exactly those lines and leave the rest of the body as it is:
 
    ```bash
