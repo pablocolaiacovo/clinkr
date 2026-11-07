@@ -7,7 +7,7 @@ description: Build and launch Clinkr on the iOS and watchOS simulators to see a 
 
 The iPhone app and the Watch app run on separate simulators. Run whichever one the change touches, or both.
 
-Before using a simulator, check whether it's already running with `xcrun simctl list devices booted`. Remember the UDIDs of the ones you boot yourself, so [When you're done](#when-youre-done) shuts down only those.
+Before using a simulator, check whether it's already running with `xcrun simctl list devices booted`. Remember the UDIDs of the ones you boot yourself, so [When you're done](#when-youre-done) shuts down only those. If a simulator shuts down while you're using it, another session finished with it: boot it again, remember it as yours, and carry on.
 
 ## iPhone app
 
@@ -52,8 +52,8 @@ Booted simulators keep using memory and CPU. Once the check is finished (at the 
    xcrun simctl shutdown <udid>
    ```
 
-3. If `xcrun simctl list devices booted` now lists none, quit the Simulator app:
+3. Quit the Simulator app if no simulator is left booted:
 
    ```bash
-   osascript -e 'quit app "Simulator"'
+   xcrun simctl list devices booted | grep -q Booted || osascript -e 'quit app "Simulator"'
    ```
