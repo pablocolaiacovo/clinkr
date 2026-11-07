@@ -71,6 +71,8 @@ Then remove the temporary worktree, if step 2 added one:
 git worktree remove <scratch>/verify-pr-<PR#>
 ```
 
+If step 2 booted any simulators, shut them down as the `run` skill's **When you're done** describes.
+
 ## 4. Report and record
 
 While the PR is open, record the result on the PR only. The issue's boxes change after merging, so they never claim work that isn't on `main`.
