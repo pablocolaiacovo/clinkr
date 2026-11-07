@@ -7,6 +7,8 @@ description: Build and launch Clinkr on the iOS and watchOS simulators to see a 
 
 The iPhone app and the Watch app run on separate simulators. Run whichever one the change touches, or both.
 
+Before using a simulator, check whether it's already running with `xcrun simctl list devices booted`. Remember the UDIDs of the ones you boot yourself, so [When you're done](#when-youre-done) shuts down only those.
+
 ## iPhone app
 
 1. Pick an available iPhone simulator on the newest iOS runtime. `scripts/test.sh` has a `simulator_id` helper that shows how.
@@ -38,3 +40,20 @@ The iPhone app and the Watch app run on separate simulators. Run whichever one t
 The apps follow the simulator's language. To see them in Spanish (Argentina) or English whatever it's set to, add launch arguments, like `xcrun simctl launch --terminate-running-process <udid> <bundle-id> -AppleLanguages "(es-AR)" -AppleLocale es_AR`, or `"(en)"` and `en_US`. Check new text in both.
 
 Take a screenshot and confirm the change is visible. Report what you saw. If the build fails, show the first error rather than the whole log.
+
+## When you're done
+
+Booted simulators keep using memory and CPU. Once the check is finished (at the end of `/verify-pr`, or when the user says they're done looking), shut down the ones you booted:
+
+1. If you opened the iOS Simulator tool's live panel, close it (`detach`).
+2. Shut down each simulator you booted, and only those. Another session or a `scripts/test.sh` run may be using the others, so never `shutdown all`:
+
+   ```bash
+   xcrun simctl shutdown <udid>
+   ```
+
+3. If `xcrun simctl list devices booted` now lists none, quit the Simulator app:
+
+   ```bash
+   osascript -e 'quit app "Simulator"'
+   ```
