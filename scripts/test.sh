@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Lints, checks DESIGN.md and its sidecar against Palette.swift, then builds and tests the iPhone and Watch apps on the newest available simulators.
-# Usage: scripts/test.sh [lint|ios|watch|all]   (default: all)
+# Also archives the apps unsigned in Release, which compiles differently from the Debug test builds.
+# Usage: scripts/test.sh [lint|release|ios|watch|all]   (default: all)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -101,6 +102,14 @@ test_scheme() {
         -derivedDataPath "$DERIVED_DATA" CODE_SIGNING_ALLOWED=NO -quiet
 }
 
+# Archives the iPhone app, with the Watch app inside, as TestFlight needs. Needs no simulator, so no test lock.
+release() {
+    echo "==> Release archive"
+    xcodebuild archive -project Clinkr.xcodeproj -scheme Clinkr -destination "generic/platform=iOS" \
+        -archivePath build/Release/Clinkr.xcarchive -derivedDataPath build/Release/DerivedData \
+        CODE_SIGNING_ALLOWED=NO -quiet
+}
+
 test_ios() {
     local id
     id="$(simulator_id iOS "iPhone")"
@@ -119,6 +128,7 @@ test_watch() {
 
 case "${1:-all}" in
     lint) lint ;;
+    release) release ;;
     ios)
         take_test_lock
         test_ios
@@ -129,12 +139,13 @@ case "${1:-all}" in
         ;;
     all)
         lint
+        release
         take_test_lock
         test_ios
         test_watch
         ;;
     *)
-        echo "Usage: $0 [lint|ios|watch|all]" >&2
+        echo "Usage: $0 [lint|release|ios|watch|all]" >&2
         exit 2
         ;;
 esac

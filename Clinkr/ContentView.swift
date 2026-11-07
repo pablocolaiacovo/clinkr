@@ -179,17 +179,20 @@ extension View {
     }
 }
 
-#Preview("Nights") {
-    let container = try! ModelContainer(
-        for: SavedNight.self,
-        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-    )
-    for night in SavedNight.sampleNights() {
-        _ = try? SavedNight.insertIfNew(night, into: container.mainContext)
+// sampleNights() exists only in Debug builds, and Release still compiles previews.
+#if DEBUG
+    #Preview("Nights") {
+        let container = try! ModelContainer(
+            for: SavedNight.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        for night in SavedNight.sampleNights() {
+            _ = try? SavedNight.insertIfNew(night, into: container.mainContext)
+        }
+        return ContentView()
+            .modelContainer(container)
     }
-    return ContentView()
-        .modelContainer(container)
-}
+#endif
 
 #Preview("Empty") {
     ContentView()
