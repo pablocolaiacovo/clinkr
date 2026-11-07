@@ -32,7 +32,7 @@ scripts/test.sh watch    # Watch unit + UI tests
 xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests" "Clinkr Watch AppUITests"
 ```
 
-Build output goes to `build/` (gitignored).
+Build output goes to `build/` (gitignored). Only one `scripts/test.sh` runs tests at a time on this Mac, so a run started while another is testing prints "Waiting for another test run" and waits. That's expected, not a hang.
 
 ## Rules
 
