@@ -26,8 +26,9 @@ Swift 6 language mode, so strict concurrency checking is on.
 ## Commands
 
 ```bash
-scripts/test.sh          # lint + iPhone tests + Watch tests
+scripts/test.sh          # lint + Release archive + iPhone tests + Watch tests
 scripts/test.sh lint     # swift-format lint, and DESIGN.md's colors against Shared/Palette.swift
+scripts/test.sh release  # unsigned Release archive, which catches code that only breaks in optimized builds
 scripts/test.sh ios      # iPhone unit + UI tests
 scripts/test.sh watch    # Watch unit + UI tests
 xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests" "Clinkr Watch AppUITests"

@@ -57,6 +57,9 @@ jobs:
       - name: Lint
         run: scripts/test.sh lint
 
+      - name: Release archive
+        run: scripts/test.sh release
+
       - name: Test iPhone app
         run: scripts/test.sh ios
 
