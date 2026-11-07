@@ -33,11 +33,11 @@ To run on your own devices, select each target, open **Signing & Capabilities**,
 scripts/test.sh
 ```
 
-This checks the code style with swift-format and `DESIGN.md`'s colors against `Shared/Palette.swift`, then runs the iPhone and Watch unit and UI tests on the newest simulators. In Xcode, press ⌘U to run the tests for the selected scheme. GitHub Actions runs the same script on every pull request and push to `main`.
+This checks the code style with swift-format and `DESIGN.md`'s colors against `Shared/Palette.swift`, then runs the iPhone and Watch unit and UI tests on the newest simulators. Only one run tests at a time: a second run, say from another worktree, waits for the first, because two runs on one simulator hang each other. In Xcode, press ⌘U to run the tests for the selected scheme. GitHub Actions runs the same script on every pull request and push to `main`.
 
 ## Workflow
 
-How to work on the repo is in [CONTRIBUTING.md](CONTRIBUTING.md): branches, pull requests (each one needs a `/verify-pr` in Claude Code before merging, which reviews the code and checks the issue's acceptance criteria), code comments, versions and releases. Diagrams of how the iPhone and Watch apps fit together are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and the decisions behind the app and why they were made are in [docs/decisions/](docs/decisions/). Who the app is for is in [PRODUCT.md](PRODUCT.md). Its look is in [DESIGN.md](DESIGN.md) and the [design system](https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh).
+How to work on the repo is in [CONTRIBUTING.md](CONTRIBUTING.md): branches, pull requests (each one needs a `/verify-pr` in Claude Code before merging, which reviews the code and checks the issue's acceptance criteria), code comments, versions and releases. Diagrams of how the iPhone and Watch apps fit together are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and the decisions behind the app and why they were made are in [docs/decisions/](docs/decisions/). How to read the apps' logs and crash reports is in [docs/DEBUGGING.md](docs/DEBUGGING.md). Who the app is for is in [PRODUCT.md](PRODUCT.md). Its look is in [DESIGN.md](DESIGN.md) and the [design system](https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh).
 
 ## License
 

@@ -8,7 +8,7 @@ An iPhone app with a companion Apple Watch app, written in SwiftUI. It's a hobby
 |---|---|---|
 | `Clinkr/` | Clinkr (iOS 26+) | iPhone app. Bundle ID `com.colaiacovo.clinkr` |
 | `Clinkr Watch App/` | Clinkr Watch App (watchOS 26+) | Watch app, embedded in the iPhone app. Bundle ID `com.colaiacovo.clinkr.watchkitapp` |
-| `Shared/` | Clinkr and Clinkr Watch App | Code and strings both apps use: the data model, the design system tokens and drink glyphs, `Shared.xcstrings`, and `InfoPlist.xcstrings` for the app name |
+| `Shared/` | Clinkr and Clinkr Watch App | Code and strings both apps use: the data model, the design system tokens and drink glyphs, the `Logger` categories (`Log.swift`), `Shared.xcstrings`, and `InfoPlist.xcstrings` for the app name |
 | `SharedTests/` | ClinkrTests and Clinkr Watch AppTests | Tests for `Shared/`, run on both platforms |
 | `ClinkrTests/` | ClinkrTests | iPhone unit tests (Swift Testing) |
 | `ClinkrUITests/` | ClinkrUITests | iPhone UI tests (XCTest) |
@@ -16,6 +16,7 @@ An iPhone app with a companion Apple Watch app, written in SwiftUI. It's a hobby
 | `Clinkr Watch AppUITests/` | Clinkr Watch AppUITests | Watch UI tests (XCTest) |
 | `scripts/test.sh` | | Lint and tests, used by CI too |
 | `docs/ARCHITECTURE.md` | | Mermaid diagrams of how the apps fit together |
+| `docs/DEBUGGING.md` | | How to read the apps' logs in Console.app, find crash reports and get a sysdiagnose from a tester |
 | `docs/decisions/` | | Decisions and the reasons behind them, one dated file each. Read the relevant ones before changing something that looks deliberate |
 | `PRODUCT.md` | | Who the app is for, what it's for, and its voice and principles. Read it before designing a screen or writing copy |
 | `DESIGN.md` | | The look of the apps as built: tokens, components and visual rules. `.impeccable/design.json` is its generated sidecar |
@@ -32,7 +33,7 @@ scripts/test.sh watch    # Watch unit + UI tests
 xcrun swift-format format --in-place --recursive Clinkr "Clinkr Watch App" Shared SharedTests ClinkrTests ClinkrUITests "Clinkr Watch AppTests" "Clinkr Watch AppUITests"
 ```
 
-Build output goes to `build/` (gitignored).
+Build output goes to `build/` (gitignored). Only one `scripts/test.sh` runs tests at a time on this Mac, so a run started while another is testing prints "Waiting for another test run" and waits. That's expected, not a hang.
 
 ## Rules
 

@@ -36,7 +36,6 @@ final class NightStore {
     private(set) var saveFailed = false
 
     private let fileURL: URL
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Clinkr", category: "NightStore")
     /// True while the saved file exists but couldn't be read, like right after a restart before the Watch is
     /// unlocked. Nothing is written until it's read, so the saved nights are never overwritten; changes made
     /// meanwhile (unlikely, since a locked Watch can't log drinks) are replaced by the saved nights once they load.
@@ -71,7 +70,7 @@ final class NightStore {
                 withIntermediateDirectories: true
             )
         } catch {
-            logger.error("Couldn't create the folder for saved nights: \(error)")
+            Logger.persistence.error("Couldn't create the folder for saved nights: \(error, privacy: .public)")
         }
         load()
     }
@@ -83,12 +82,15 @@ final class NightStore {
             finishActiveNight(at: forgottenEnd)
         }
         if activeNight == nil {
-            activeNight = Night(name: Self.defaultName(for: date), startTime: date)
+            let night = Night(name: Self.defaultName(for: date), startTime: date)
+            activeNight = night
             heldBackNight = nil
+            Logger.persistence.info("Started night \(night.id, privacy: .public)")
         }
         let entry = DrinkEntry(type: type, timestamp: date)
         activeNight?.add(entry)
         lastAdded = entry
+        Logger.persistence.info("Added \(type.rawValue, privacy: .public) \(entry.id, privacy: .public)")
         save()
     }
 
@@ -107,8 +109,11 @@ final class NightStore {
                 night.name == Self.defaultName(for: night.startTime)
                 ? Self.defaultName(for: first.timestamp) : night.name
             activeNight = Night(id: night.id, name: name, startTime: first.timestamp, entries: remaining)
+            Logger.persistence.info("Removed entry \(id, privacy: .public), \(remaining.count) entries")
         } else {
             activeNight = nil
+            Logger.persistence.info(
+                "Removed entry \(id, privacy: .public), the only one, so night \(night.id, privacy: .public) is gone")
         }
         save()
     }
@@ -134,6 +139,7 @@ final class NightStore {
         night.reopen()
         activeNight = night
         heldBackNight = nil
+        Logger.persistence.info("Reopened night \(id, privacy: .public)")
         save()
         return true
     }
@@ -144,6 +150,9 @@ final class NightStore {
 
     /// Undo is over, so the night it was holding back can go to the iPhone.
     func releaseHeldBackNight() {
+        if let heldBackNight {
+            Logger.persistence.debug("Undo is over for night \(heldBackNight, privacy: .public)")
+        }
         heldBackNight = nil
     }
 
@@ -151,6 +160,7 @@ final class NightStore {
     func removePendingNight(id: Night.ID) {
         retryLoadIfNeeded()
         pendingNights.removeAll { $0.id == id }
+        Logger.persistence.info("Dropped night \(id, privacy: .public), \(self.pendingNights.count) still waiting")
         save()
     }
 
@@ -171,6 +181,7 @@ final class NightStore {
     private func finishActiveNight(at date: Date) {
         guard var night = activeNight else { return }
         night.end(at: date)
+        Logger.persistence.info("Ended night \(night.id, privacy: .public) with \(night.entries.count) entries")
         pendingNights.append(night)
         activeNight = nil
         lastAdded = nil
@@ -199,7 +210,7 @@ final class NightStore {
             return
         } catch {
             // The file is there but can't be read yet. Leave it alone and try again on the next change.
-            logger.error("Couldn't read saved nights: \(error)")
+            Logger.persistence.error("Couldn't read saved nights: \(error, privacy: .public)")
             needsLoad = true
             return
         }
@@ -208,9 +219,10 @@ final class NightStore {
             let snapshot = try JSONDecoder().decode(Snapshot.self, from: data)
             activeNight = snapshot.activeNight
             pendingNights = snapshot.pendingNights
+            Logger.persistence.debug("Loaded saved nights, \(self.pendingNights.count) waiting for the iPhone")
         } catch {
             // The file can't be decoded. Keep it for a look later instead of overwriting it on the next save.
-            logger.error("Couldn't decode saved nights: \(error)")
+            Logger.persistence.error("Couldn't decode saved nights: \(error, privacy: .public)")
             let corruptURL = fileURL.appendingPathExtension("corrupt")
             try? FileManager.default.removeItem(at: corruptURL)
             try? FileManager.default.moveItem(at: fileURL, to: corruptURL)
@@ -219,7 +231,7 @@ final class NightStore {
 
     private func save() {
         guard !needsLoad else {
-            logger.error("Not saving: the saved nights haven't been read yet")
+            Logger.persistence.error("Not saving: the saved nights haven't been read yet")
             saveFailed = true
             return
         }
@@ -229,7 +241,7 @@ final class NightStore {
             try data.write(to: fileURL, options: .atomic)
             saveFailed = false
         } catch {
-            logger.error("Couldn't save nights: \(error)")
+            Logger.persistence.error("Couldn't save nights: \(error, privacy: .public)")
             saveFailed = true
         }
     }

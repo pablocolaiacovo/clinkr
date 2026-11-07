@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 
 @main
 struct ClinkrWatchApp: App {
@@ -8,6 +9,7 @@ struct ClinkrWatchApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
+        Logger.lifecycle.info("Watch app launched")
         let store = NightStore()
         _nightStore = State(initialValue: store)
         nightSender = NightSender(store: store)
@@ -19,12 +21,14 @@ struct ClinkrWatchApp: App {
                 .environment(nightStore)
         }
         .onChange(of: scenePhase) {
+            Logger.lifecycle.info("Watch app is \(String(describing: scenePhase), privacy: .public)")
             nightSender.send()
             if scenePhase == .background {
                 nightSender.scheduleRetryIfNeeded()
             }
         }
         .backgroundTask(.appRefresh(NightSender.retryTask)) { [nightSender] in
+            Logger.lifecycle.info("Woke for a background refresh")
             await nightSender.send()
             await nightSender.scheduleRetryIfNeeded()
         }
