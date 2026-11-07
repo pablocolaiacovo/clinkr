@@ -74,6 +74,8 @@ let icon: [String: Any] = [
 
 let bundle = URL(fileURLWithPath: "Shared/AppIcon.icon")
 let assets = bundle.appendingPathComponent("Assets")
+// Cleared first, so a renamed shape leaves no old SVG behind.
+try? FileManager.default.removeItem(at: assets)
 try FileManager.default.createDirectory(at: assets, withIntermediateDirectories: true)
 for shape in tiles + bubbles {
     let svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1024\" height=\"1024\">\(shape.svg)</svg>\n"
