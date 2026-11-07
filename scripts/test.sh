@@ -59,6 +59,24 @@ design_tokens() {
     diff <(palette_colors) <(jq -r '.extensions.colorMeta | to_entries[] | "\(.key) \(.value.canonical)"' .impeccable/design.json | sort)
 }
 
+# Waits until no other run of this script is testing, since two runs on the same simulator hang each other. A lock left
+# behind by a killed run is cleared.
+take_test_lock() {
+    local lock="/tmp/clinkr-test.lock" pid waiting=""
+    until mkdir "$lock" 2>/dev/null; do
+        pid="$(cat "$lock/pid" 2>/dev/null || true)"
+        if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
+            rm -rf "$lock"
+            continue
+        fi
+        [[ -z "$waiting" ]] && echo "==> Waiting for another test run${pid:+ (pid $pid)} to finish"
+        waiting=1
+        sleep 5
+    done
+    echo $$ >"$lock/pid"
+    trap "rm -rf '$lock'" EXIT
+}
+
 test_scheme() {
     local scheme="$1" id="$2"
     echo "==> Test $scheme on $id"
@@ -84,10 +102,17 @@ test_watch() {
 
 case "${1:-all}" in
     lint) lint ;;
-    ios) test_ios ;;
-    watch) test_watch ;;
+    ios)
+        take_test_lock
+        test_ios
+        ;;
+    watch)
+        take_test_lock
+        test_watch
+        ;;
     all)
         lint
+        take_test_lock
         test_ios
         test_watch
         ;;
