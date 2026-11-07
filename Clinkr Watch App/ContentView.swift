@@ -33,7 +33,7 @@ struct ContentView: View {
         // The stack gives the clock its own space, so the grid scrolls under it cleanly.
         NavigationStack {
             TabView(selection: $page) {
-                TonightView()
+                TonightView(doubleTapRepeats: page == .tonight && !showsWaterNudge)
                     .overlay(alignment: .bottom) { undoToast }
                     .tag(Page.tonight)
                 AddView()
