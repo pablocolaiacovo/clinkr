@@ -1,66 +1,83 @@
 #!/usr/bin/env swift
-// Renders the app icon PNGs into both asset catalogs. Run from the repo root: swift scripts/make-app-icons.swift
-// The mark is two chunky tiles clinking (the drink button's shape) with two bubbles rising from where they meet.
-// Colors come from Shared/Palette.swift (see DESIGN.md).
-import AppKit
-import UniformTypeIdentifiers
+// Writes Shared/AppIcon.icon, the layered Icon Composer icon both apps use. Run from the repo root:
+// swift scripts/make-app-icons.swift
+// The colors are copies of Shared/Palette.swift values; scripts/test.sh lint checks they still match.
+import Foundation
 
-struct Look {
-    let file: String
-    let background: UInt32
-    let left: UInt32
-    let right: UInt32
-    let water: UInt32
-    let bubble: UInt32
+// Named after their DESIGN.md slugs: ink is the dark-mode ink (cream), bg the dark background.
+let fizz = 0xFF5C39
+let ink = 0xFFF7EC
+let bg = 0x000000
+let beer = 0xFFB81C
+let water = 0x4FD8FF
+let shot = 0xB98CFF
+
+func solid(_ hex: Int) -> [String: Any] {
+    let parts = [hex >> 16, hex >> 8, hex].map { String(format: "%.5f", Double($0 & 0xFF) / 255) }
+    return ["solid": "srgb:\(parts.joined(separator: ",")),1.00000"]
 }
 
-let looks = [
-    Look(file: "AppIcon.png", background: 0xFF5C39, left: 0xFFF7EC, right: 0xFFB81C, water: 0x4FD8FF, bubble: 0xB98CFF),
-    Look(file: "AppIcon-dark.png", background: 0x000000, left: 0xFF5C39, right: 0xFFB81C, water: 0x4FD8FF, bubble: 0xB98CFF),
-    // iOS recolors the tinted icon from its brightness, so the four shapes differ in gray, not hue.
-    Look(file: "AppIcon-tinted.png", background: 0x000000, left: 0xFFFFFF, right: 0x8C8C8C, water: 0xD0D0D0, bubble: 0x6A6A6A),
+struct Shape {
+    let name: String
+    let svg: String
+    let color: Int
+    var dark: Int? = nil
+    var dimmedWhenTinted = false
+}
+
+func tile(_ name: String, x: Int, y: Int, degrees: Double, color: Int, dark: Int? = nil, dimmed: Bool = false) -> Shape {
+    let svg = "<rect x=\"-170\" y=\"-170\" width=\"340\" height=\"340\" rx=\"100\" "
+        + "transform=\"translate(\(x) \(y)) rotate(\(degrees))\"/>"
+    return Shape(name: name, svg: svg, color: color, dark: dark, dimmedWhenTinted: dimmed)
+}
+
+func bubble(_ name: String, x: Int, y: Int, radius: Int, color: Int, dimmed: Bool = false) -> Shape {
+    Shape(name: name, svg: "<circle cx=\"\(x)\" cy=\"\(y)\" r=\"\(radius)\"/>", color: color, dimmedWhenTinted: dimmed)
+}
+
+let tiles = [
+    tile("left-tile", x: 350, y: 620, degrees: -11.459, color: ink, dark: fizz),
+    tile("right-tile", x: 694, y: 590, degrees: 11.459, color: beer, dimmed: true),
 ]
-let phone = "Clinkr/Assets.xcassets/AppIcon.appiconset"
-let watch = "Clinkr Watch App/Assets.xcassets/AppIcon.appiconset"
+let bubbles = [
+    bubble("water", x: 505, y: 345, radius: 90, color: water),
+    bubble("shot", x: 660, y: 265, radius: 58, color: shot, dimmed: true),
+]
 
-func color(_ hex: UInt32) -> CGColor {
-    let c = [CGFloat((hex >> 16) & 0xFF) / 255, CGFloat((hex >> 8) & 0xFF) / 255, CGFloat(hex & 0xFF) / 255, 1]
-    return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!, components: c)!
+func layer(_ shape: Shape) -> [String: Any] {
+    var layer: [String: Any] = ["name": shape.name, "image-name": "\(shape.name).svg", "glass": true, "fill": solid(shape.color)]
+    if let dark = shape.dark {
+        layer["fill-specializations"] = [["appearance": "dark", "value": solid(dark)]]
+    }
+    // Tinted icons lose their hues, so a lower opacity is what keeps neighboring shapes apart.
+    if shape.dimmedWhenTinted {
+        layer["opacity-specializations"] = [["appearance": "tinted", "value": 0.55]]
+    }
+    return layer
 }
 
-func render(_ look: Look) -> Data {
-    let size = 1024
-    // noneSkipLast gives a PNG with no alpha channel, which the App Store requires for icons.
-    let ctx = CGContext(
-        data: nil, width: size, height: size, bitsPerComponent: 8, bytesPerRow: 0,
-        space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
-    ctx.setFillColor(color(look.background))
-    ctx.fill(CGRect(x: 0, y: 0, width: size, height: size))
-    // Coordinates below are from the top left; the whole mark stays inside the Watch's circular crop.
-    func tile(_ x: CGFloat, _ y: CGFloat, _ angle: CGFloat, _ hex: UInt32) {
-        ctx.saveGState()
-        ctx.translateBy(x: x, y: CGFloat(size) - y)
-        ctx.rotate(by: angle)
-        ctx.setFillColor(color(hex))
-        ctx.addPath(CGPath(roundedRect: CGRect(x: -170, y: -170, width: 340, height: 340), cornerWidth: 100, cornerHeight: 100, transform: nil))
-        ctx.fillPath()
-        ctx.restoreGState()
-    }
-    func bubble(_ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ hex: UInt32) {
-        ctx.setFillColor(color(hex))
-        ctx.fillEllipse(in: CGRect(x: x - r, y: CGFloat(size) - y - r, width: 2 * r, height: 2 * r))
-    }
-    tile(350, 620, 0.2, look.left)
-    tile(694, 590, -0.2, look.right)
-    bubble(505, 345, 90, look.water)
-    bubble(660, 265, 58, look.bubble)
-    let data = NSMutableData()
-    let dest = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, 1, nil)!
-    CGImageDestinationAddImage(dest, ctx.makeImage()!, nil)
-    CGImageDestinationFinalize(dest)
-    return data as Data
+// The tiles are drink colors, so they stay solid (DESIGN.md, The Content Stays Solid Rule); the bubbles are glass.
+func group(_ name: String, _ shapes: [Shape], translucent: Bool) -> [String: Any] {
+    [
+        "name": name, "layers": shapes.map(layer), "shadow": ["kind": "neutral", "opacity": 0.5],
+        "translucency": ["enabled": translucent, "value": translucent ? 0.4 : 0], "specular": true,
+    ]
 }
 
-// The Watch has one icon; the iPhone also gets dark and tinted.
-for look in looks { try render(look).write(to: URL(fileURLWithPath: "\(phone)/\(look.file)")) }
-try render(looks[0]).write(to: URL(fileURLWithPath: "\(watch)/AppIcon.png"))
+let icon: [String: Any] = [
+    "fill": solid(fizz),
+    "fill-specializations": [["appearance": "dark", "value": solid(bg)]],
+    // The first group is drawn on top.
+    "groups": [group("Bubbles", bubbles, translucent: true), group("Tiles", tiles, translucent: false)],
+    "supported-platforms": ["circles": ["watchOS"], "squares": "shared"],
+]
+
+let bundle = URL(fileURLWithPath: "Shared/AppIcon.icon")
+let assets = bundle.appendingPathComponent("Assets")
+try FileManager.default.createDirectory(at: assets, withIntermediateDirectories: true)
+for shape in tiles + bubbles {
+    let svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1024\" height=\"1024\">\(shape.svg)</svg>\n"
+    try svg.write(to: assets.appendingPathComponent("\(shape.name).svg"), atomically: true, encoding: .utf8)
+}
+let json = try JSONSerialization.data(withJSONObject: icon, options: [.prettyPrinted, .sortedKeys])
+try json.write(to: bundle.appendingPathComponent("icon.json"))

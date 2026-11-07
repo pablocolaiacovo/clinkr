@@ -57,6 +57,9 @@ design_tokens() {
     echo "==> Design tokens"
     diff <(palette_colors) <(sed -nE 's/^  ([a-z-]+): "(#[0-9A-F]{6})"$/\1 \2/p' DESIGN.md | sort)
     diff <(palette_colors) <(jq -r '.extensions.colorMeta | to_entries[] | "\(.key) \(.value.canonical)"' .impeccable/design.json | sort)
+    # The app icon script keeps its own copies of palette colors, so each one must still match.
+    comm -23 <(sed -nE 's/^let ([a-z]+) = 0x([0-9A-F]{6})$/\1 #\2/p' scripts/make-app-icons.swift | sort) <(palette_colors) |
+        diff /dev/null -
 }
 
 # Waits until no other run of this script is testing, since two runs on the same simulator hang each other. A lock left

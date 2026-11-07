@@ -232,7 +232,7 @@ The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, t
 
 ## Liquid Glass
 
-**Status: proposed.** Nothing here is built yet, and no shipped screen uses glass. Both apps require iOS 26 and watchOS 26, so the system's Liquid Glass (the translucent, light-bending material Apple introduced in 26) is available. This section says where it belongs, so it's a choice and not an accident.
+**Status: proposed.** No shipped screen uses glass yet. The only glass so far is the app icon (below). Both apps require iOS 26 and watchOS 26, so the system's Liquid Glass (the translucent, light-bending material Apple introduced in 26) is available. This section says where it belongs, so it's a choice and not an accident.
 
 The rule is Apple's own split: glass is the **control and navigation layer** that floats above the content, and the content stays solid. In Clinkr the drink colors are the content, so they never become glass.
 
@@ -244,6 +244,11 @@ The rule is Apple's own split: glass is the **control and navigation layer** tha
 - iPhone navigation bar, toolbars, tab bar and sheets: use the system components as they are, with no custom background behind them. They get glass and the scroll-edge effect for free.
 - Floating controls that sit over content: the Watch Undo toast, and the ghost "Later" pill. On the Watch, try `.glassEffect()` on the toast capsule and the `.glass` button style on the ghost pill.
 - Prominent actions keep their solid fill (`fizz`, `water`, `ink` for Undo). If one ever becomes glass, use the prominent glass style and check `on-pop` text still passes 4.5:1. A light tint over a moving background will not.
+
+### App icon
+- One layered icon for both apps, `Shared/AppIcon.icon`, written by `scripts/make-app-icons.swift`. The system gives it the light, dark, tinted and clear looks.
+- The bubbles are glass with some translucency. The tiles are drink-button shapes, so they follow The Content Stays Solid Rule: glass edge and highlight, no translucency, so `fizz` never shows through the cream tile and the colors stay true in dark.
+- In tinted, the `beer` tile and the `shot` bubble are dimmed, since tinted icons lose their hues and the shapes would merge.
 
 ### Named Rules
 
