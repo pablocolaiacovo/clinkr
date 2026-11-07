@@ -40,13 +40,15 @@ Give each criterion one verdict, with evidence:
 | Verdict | When |
 |---|---|
 | **Met** | A test asserts it (name the test), or you saw it working in the simulator (say what you did and saw) |
-| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 4 adds it |
+| **Deferred** | The PR says it's left to another issue, and that issue exists and is open. If the issue doesn't list the criterion yet, step 4 adds it. A criterion the issue marks as checked in #31 is Deferred too: the PR doesn't need to say so |
 | **Not met** | The diff doesn't do it, or it does something else, or it's deferred to an issue that's closed or doesn't exist |
-| **Can't verify** | Neither a test nor the simulator can show it. Say what the user should check by hand |
+| **Can't verify** | Neither a test nor the simulator can show it, and it isn't a real-device check. Say what the user should check by hand |
+
+**Real-device checks** go to #31, the V1 beta QA, which lists them under **Real-device checks**. Until the paid developer account (#27), nothing runs on a real iPhone or Watch, so a criterion that only a device can show (the Watch-to-iPhone transfer, double tap, VoiceOver, haptics, background notifications) is Deferred to #31, not Can't verify. Verify whatever part the simulator can show, and defer only the rest. Step 4 records it.
 
 How to gather the evidence:
 
-- **Tests:** CI already runs `scripts/test.sh` on the PR. Read its result with `gh pr checks <PR#> --json name,bucket`. If **Build and test** passed, rely on it. If it failed, report that and stop. Run `scripts/test.sh` locally only if CI hasn't finished. Then look for a test that covers each criterion, in `SharedTests/`, `ClinkrTests/`, `ClinkrUITests/` and `Clinkr Watch AppTests/`. A test that only exists but doesn't assert the behaviour doesn't count.
+- **Tests:** CI already runs `scripts/test.sh` on the PR. Read its result with `gh pr checks <PR#> --json name,bucket`. If **Build and test** passed, rely on it. If it failed, report that and stop. Run `scripts/test.sh` locally only if CI hasn't finished. Then look for a test that covers each criterion, in `SharedTests/`, `ClinkrTests/`, `ClinkrUITests/`, `Clinkr Watch AppTests/` and `Clinkr Watch AppUITests/`. A test that only exists but doesn't assert the behaviour doesn't count.
 - **Simulator:** for anything a user would see or tap, follow the `run` skill, then do what the criterion describes and take a screenshot. Use the smallest Watch (40 or 41mm) for size and fit criteria. For localization criteria, launch the app in each language instead of changing the simulator's settings, for example in Spanish (Argentina):
 
   ```bash
@@ -86,8 +88,8 @@ With no linked issue, there is no criteria table and items 3 to 5 don't apply: s
    ```
 
 3. In the PR body's **Acceptance criteria** section, set each box from this run's verdict: `- [x]` for Met, `- [ ]` for everything else, unticking any box an earlier run ticked. Change only those lines (`gh pr view <PR#> --json body --jq .body`, edit, then `gh pr edit <PR#> --body-file <file>`).
-4. For each **Deferred** criterion whose target issue doesn't list it yet, add it there as a new checkbox under "Done when", with "(from #N)" at the end.
-5. If the PR says `Closes #N` but any criterion of #N is Deferred or Not met, the issue would close with work left. Tell the user and suggest changing the PR body to `Part of #N`.
+4. For each **Deferred** criterion whose target issue doesn't list it yet, add it there as a new checkbox under "Done when", with "(from #N)" at the end. A real-device check goes under #31's **Real-device checks** section instead. Then, in #N, append " (real devices: checked in #31)" to that criterion's line. If #N doesn't end with a `**Real-device checks:**` paragraph yet, add one saying those parts are checked in #31 and the issue can close without them.
+5. If the PR says `Closes #N` but any criterion of #N is Not met, or Deferred to an issue other than #31, the issue would close with work left. Tell the user and suggest changing the PR body to `Part of #N`. Criteria deferred to #31's real-device checks don't count: #31 tracks them, so #N can close.
 
 End with one line, the first of these that fits:
 
@@ -99,7 +101,7 @@ End with one line, the first of these that fits:
 
 Run `/verify-pr <PR#>` again once the PR is merged, to tick the issue's boxes. If the PR has no linked issue, there is nothing to tick: say so and stop. Don't re-check the criteria:
 
-1. Find the PR's `## Acceptance criteria check` comment. If its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
+1. Find the PR's `## Acceptance criteria check` comment. If there's no such comment, the PR was never verified: say so and stop. If it marks no criterion **Met**, there is nothing to tick: say so and stop. Otherwise, if its commit isn't the merged `headRefOid`, the last pushes weren't checked: say so and stop, so the user can decide.
 2. In each linked issue, tick the boxes that comment marks **Met**. Don't untick anything: another merged PR may have met it. Change `- [ ]` to `- [x]` on exactly those lines and leave the rest of the body as it is:
 
    ```bash
