@@ -75,6 +75,41 @@ struct SavedNightTests {
         #expect(try savedNights(in: context).map(\.name) == ["Birthday"])
     }
 
+    @Test func aDeletedNightStaysGoneAfterAnAppRestart() throws {
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folderURL) }
+        let configuration = ModelConfiguration(url: folderURL.appending(path: "test.store"))
+        let kept = night()
+
+        do {
+            let firstRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            try SavedNight.insertIfNew(night(), into: firstRun.mainContext)
+            try SavedNight.insertIfNew(kept, into: firstRun.mainContext)
+            let deleted = try savedNights(in: firstRun.mainContext).filter { $0.id != kept.id }
+            try SavedNight.delete(deleted, from: firstRun.mainContext)
+        }
+
+        let secondRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+        #expect(try savedNights(in: secondRun.mainContext).map(\.id) == [kept.id])
+    }
+
+    @Test func nightsAreGroupedByMonthNewestFirst() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .gmt
+        func saved(_ month: Int, _ day: Int) -> SavedNight {
+            let date = calendar.date(from: DateComponents(year: 2026, month: month, day: day, hour: 22))!
+            return SavedNight(Night(name: "", startTime: date))
+        }
+        let nights = [saved(10, 17), saved(10, 3), saved(9, 27), saved(8, 31), saved(8, 1)]
+
+        let months = SavedNight.byMonth(newestFirst: nights, calendar: calendar)
+
+        #expect(months.map { calendar.component(.month, from: $0.month) } == [10, 9, 8])
+        let ids = nights.map(\.id)
+        let expected: [[UUID]] = [[ids[0], ids[1]], [ids[2]], [ids[3], ids[4]]]
+        #expect(months.map { $0.nights.map(\.id) } == expected)
+    }
+
     @Test func differentNightsAreBothKept() throws {
         let context = container.mainContext
 

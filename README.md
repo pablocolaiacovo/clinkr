@@ -25,6 +25,8 @@ An iPhone app with a companion Apple Watch app, built with SwiftUI.
 
 The apps are written in Spanish, with English as a translation, and follow the device's language. To run in one language whatever the simulator is set to, choose **Product › Scheme › Edit Scheme › Run › Arguments** and tick the `-AppleLanguages (es-AR)` or `-AppleLanguages (en)` line.
 
+The simulators can't send nights from the Watch to the iPhone, so the iPhone's History screen starts empty there. To try it with a few months of made-up nights, tick `-SampleNights` in the same place for the **Clinkr** scheme. They live in memory only, so deleting one doesn't touch your saved nights, and they're back on the next launch. Debug builds only.
+
 To run on your own devices, select each target, open **Signing & Capabilities**, and choose your team (your Apple ID).
 
 ## Testing
