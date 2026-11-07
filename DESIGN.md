@@ -130,7 +130,7 @@ Everything in Clinkr is built around one physical moment: you tap, it clinks, th
 
 The Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.
 
-The iPhone is not built yet. Its light theme, with warm cream and a sticker look, is specified but provisional, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.
+On the iPhone only the History screen is built. Its light theme, with warm cream and a sticker look, is still provisional elsewhere, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.
 
 **Key Characteristics:**
 - Solid, saturated fills on black, with no outlines or gradients on the Watch
@@ -224,7 +224,7 @@ The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, t
 
 ### Shadow Vocabulary
 
-- **Sticker (provisional)** (`0 4px 0 0` in `ink-light`, no blur): iPhone cards and primary buttons in light mode only, like a sticker on a page. It's defined in `Shared/`, but no screen uses it yet.
+- **Sticker** (`0 4px 0 0` in `ink-light`, no blur): iPhone cards and primary buttons in light mode only, like a sticker on a page. The History screen's month cards use it, next to the system's glass navigation bar.
 
 ### Named Rules
 
@@ -259,7 +259,6 @@ The rule is Apple's own split: glass is the **control and navigation layer** tha
 
 ### Open questions
 - **Concentric corners.** `Radius.card` (22) is fixed. Cards near the screen edge on the iPhone may need `ConcentricRectangle` so they follow the device corner. Decide when the first real iPhone screen exists.
-- **Sticker look.** Decide whether the light-mode sticker treatment survives next to system glass bars, or whether the iPhone cards move to a quieter outline.
 - **Watch value.** Glass over flat black has nothing to refract. Prototype the Undo toast on a device and keep it only if it reads better than `surface-raised`.
 - **Tokens.** If glass is adopted, the design system needs a surfaces section and previews that mark which components are glass. Web previews can only approximate it.
 
@@ -306,12 +305,15 @@ Rows on `surface` with the `card` radius, at least 44pt tall: a 20pt glyph in it
 ### Navigation
 System vertical pages on the Watch, inside a navigation stack that keeps content clear of the clock. No custom navigation.
 
+### History List
+The iPhone's home screen: every night, newest first, under the system large title in `display`. Each month has a `label` header in `ink-muted` and one `surface` card: in light mode a 2px (`Size.outline`) outline in `hairline-light` and the sticker shadow, in dark mode the Watch's tonal surface with a quiet `hairline` outline. Rows are split by a 2px `surface-raised` rule. A row shows the day number in `title` over the weekday in `label`, the night's name in `title` over an 8pt (`Size.miniBar`) stacked bar by drink type (no water, `s1` gaps), and the drink count in `title` with tabular figures. VoiceOver reads a row as one element, like "7, Sat, Saturday night, 6 drinks". Swipe-to-delete is the only edit. The cards are drawn per row, as slices of one shape, so the system list keeps its swipe actions.
+
 ### iPhone Cards and Chips (provisional)
-Not built. In light mode the plan is white `surface` cards on cream, with a 2px outline in `hairline-light` and the sticker shadow. In dark mode they match the Watch's tonal surfaces. Chips use a drink-color fill, `on-pop` text and the `chip` radius.
+Night cards and chips beyond the History list aren't built. In light mode the plan is white `surface` cards on cream, with a 2px outline in `hairline-light` and the sticker shadow. In dark mode they match the Watch's tonal surfaces. Chips use a drink-color fill, `on-pop` text and the `chip` radius.
 
 Only `wine` reaches 3:1 against cream (3.43:1), and `fizz` falls just short (2.87:1), so every pop-colored card or chip on cream needs the outline. Chart marks get a thinner 1.5px outline for the same reason.
 
-The design system specifies four planned iPhone components, whose full specs live there: `HistoryList`, `NightCard`, `NightRecap` and `TrendChart`. Water never appears in a stacked bar or trend chart, and every chart keeps a legend, so identity is never color alone.
+The design system specifies four iPhone components, whose full specs live there: `HistoryList` (built), `NightCard`, `NightRecap` and `TrendChart`. Water never appears in a stacked bar or trend chart, and every chart keeps a legend, so identity is never color alone.
 
 ## Do's and Don'ts
 

@@ -32,6 +32,10 @@ enum Size {
     static let ringStroke: CGFloat = 16
     /// The Watch tally ring's inner water ring.
     static let waterRingStroke: CGFloat = 5
+    /// The iPhone's sticker outline on light-mode cards, and the rule between their rows.
+    static let outline: CGFloat = 2
+    /// Height of the mini stacked bar on a History row.
+    static let miniBar: CGFloat = 8
 }
 
 /// Corner radii from the design system, in points.

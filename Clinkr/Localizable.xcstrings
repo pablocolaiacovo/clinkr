@@ -1,6 +1,47 @@
 {
   "sourceLanguage" : "es",
   "strings" : {
+    "%lld tragos" : {
+      "comment" : "VoiceOver label for a night's count",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld drink"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld drinks"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld trago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld tragos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo." : {
       "comment" : "Shown when the database won't open",
       "localizations" : {
@@ -8,6 +49,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Couldn't open your nights. Try opening Clinkr again."
+          }
+        }
+      }
+    },
+    "Noche del %@" : {
+      "comment" : "Default night name. The value is the weekday it started, like \"viernes\"",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ night"
           }
         }
       }

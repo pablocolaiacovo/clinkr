@@ -89,6 +89,10 @@
             argument = "-AppleLanguages (en) -AppleLocale en_US"
             isEnabled = "NO">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-SampleNights"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
