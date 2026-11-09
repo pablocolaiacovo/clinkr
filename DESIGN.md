@@ -144,7 +144,7 @@ On the iPhone only the History screen is built. Its light theme, with warm cream
 Six loud pop colors do the work against a quiet set of neutrals, and the color of a drink is its label.
 
 ### Primary
-- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (as the background of the light one and a tile in the dark one) and the selected tab once that exists.
+- **Fizz** (`fizz`): the brand and the primary action, such as End night. It's a hot coral, and it also marks the app icon (as the background of the light one and a tile in the dark one).
 
 ### Secondary
 - **Beer** (`beer`): amber fill for beer.
@@ -161,7 +161,7 @@ Six loud pop colors do the work against a quiet set of neutrals, and the color o
 - **Background** (`bg`, `bg-light`): pure black on the Watch so the OLED stays off, and warm cream on the iPhone in light mode.
 - **Surface** (`surface`, `surface-light`): Night screen rows on the Watch, and cards and sheets on the iPhone.
 - **Surface Raised** (`surface-raised`, `surface-raised-light`): empty ring slots, the water ring's track, toasts and ghost pills.
-- **Ink** (`ink`, `ink-light`): primary text, plus the fill of the Undo pill.
+- **Ink** (`ink`, `ink-light`): primary text, the fill of the Undo pill, and both apps' accent color, so system controls such as back buttons, links, alert buttons and a selected tab use it instead of blue.
 - **Ink Muted** (`ink-muted`, `ink-muted-light`): captions, timestamps and supporting text.
 - **Hairline** (`hairline`, `hairline-light`): a quiet divider in dark, and the full-ink sticker outline in light. No shipped screen uses it yet.
 
@@ -174,6 +174,8 @@ The Watch is dark only and uses the unsuffixed values. The iPhone follows the sy
 **The Fill, Not Text Rule.** Pop colors are fills, never text. Anything on them uses `on-pop`, never white. A glyph may stand alone in its drink color on a dark `bg`, but never on cream.
 
 **The Careful Alone Rule.** `careful` always comes with an icon and words, and never shares a screen with a `fizz` fill, because the two sit close in hue.
+
+**The Ink Tint Rule.** The system tint is `ink`, never a pop color, because the system draws it as text. In dark mode `ink` is cream, so no screen uses a system prominent button style (`.borderedProminent`, `.glassProminent`), which puts white on the tint. Primary actions use the design system's pills.
 
 **The Friendly Nudge Rule.** The water break nudge is drawn in `water`. A suggestion never borrows the look of an alert.
 

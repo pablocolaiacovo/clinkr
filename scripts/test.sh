@@ -62,8 +62,17 @@ icon_colors() {
         done
 }
 
+# Prints the iPhone's AccentColor (light, then dark) and the Watch's, as "#HEX" lines.
+accent_colors() {
+    local hex='.colors[].color.components | "#" + .red[2:] + .green[2:] + .blue[2:]'
+    jq -r "$hex" Clinkr/Assets.xcassets/AccentColor.colorset/Contents.json \
+        "Clinkr Watch App/Assets.xcassets/AccentColor.colorset/Contents.json"
+}
+
 design_tokens() {
     echo "==> Design tokens"
+    # The accent color is ink, kept as a copy in each asset catalog.
+    diff <(accent_colors) <(palette_colors | awk '$1 == "ink-light" { l = $2 } $1 == "ink" { d = $2 } END { print l; print d; print d }')
     diff <(palette_colors) <(sed -nE 's/^  ([a-z-]+): "(#[0-9A-F]{6})"$/\1 \2/p' DESIGN.md | sort)
     diff <(palette_colors) <(jq -r '.extensions.colorMeta | to_entries[] | "\(.key) \(.value.canonical)"' .impeccable/design.json | sort)
     # The app icon script keeps its own copies of palette colors, so each one must still match.
