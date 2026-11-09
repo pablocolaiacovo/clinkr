@@ -1,0 +1,60 @@
+name: CodeQL
+
+on:
+  pull_request:
+    paths: &code
+      - "**/*.swift"
+      - "Clinkr.xcodeproj/**"
+      - ".github/workflows/**"
+  push:
+    branches: [main]
+    paths: *code
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ matrix.runner }}
+    # A Swift scan takes about 15 minutes, so this stops a stuck runner long before GitHub's 6-hour limit.
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            runner: ubuntu-latest
+            build-mode: none
+          - language: swift
+            runner: macos-26
+            build-mode: manual
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      - name: Build
+        if: matrix.language == 'swift'
+        run: |
+          xcode="$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)"
+          sudo xcode-select -s "$xcode"
+          # The iPhone scheme also builds the Watch app it embeds, so one build covers both apps' code.
+          xcodebuild build -project Clinkr.xcodeproj -scheme Clinkr -destination "generic/platform=iOS Simulator" \
+            CODE_SIGNING_ALLOWED=NO -quiet
+
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:${{ matrix.language }}

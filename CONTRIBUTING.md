@@ -21,7 +21,7 @@ Keep branches small and merge them within a few days. Merge with **Squash and me
 
 `main` is protected against force-pushes and deletion. Pull requests can only be merged once the CI check (**Build and test**) passes and every review conversation is resolved. A pull request that changes only Markdown files or `docs/` skips the build, and the check shows as skipped, which counts as passing. `DESIGN.md` and `.impeccable/` still run it, because lint checks their colors. No approvals are required. As the repo admin, you can still push small changes straight to `main`, and CI runs on them after the push.
 
-Pull requests also run the CodeQL security scan (**Analyze**). The Swift scan can take about 30 minutes and isn't required for merging, but look at any alert it raises.
+Pull requests that change Swift files, the Xcode project or a workflow also run the CodeQL security scan (**Analyze**), from `.github/workflows/codeql.yml`. It also runs weekly. The Swift scan takes about 15 minutes, stops after 30, and isn't required for merging, but look at any alert it raises.
 
 ## Pull requests
 
