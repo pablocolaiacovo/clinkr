@@ -467,6 +467,11 @@
         "section": "colors"
       },
       {
+        "name": "The Ink Tint Rule",
+        "body": "The system tint is `ink`, never a pop color, because the system draws it as text. In dark mode `ink` is cream, so no screen uses a system prominent button style (`.borderedProminent`, `.glassProminent`), which puts white on the tint. Primary actions use the design system's pills.",
+        "section": "colors"
+      },
+      {
         "name": "The Friendly Nudge Rule",
         "body": "The water break nudge is drawn in `water`. A suggestion never borrows the look of an alert.",
         "section": "colors"
