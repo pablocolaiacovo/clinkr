@@ -35,7 +35,7 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 
 ## Capabilities and Constraints
 
-**Built:** the Watch screens Tonight, Add and Night, the Undo toast, the water break nudge, saving nights to a file on the Watch, sending them to the iPhone, and the iPhone's History screen.
+**Built:** the Watch screens Tonight, Add and Night, the Undo toast, the water break nudge, saving nights to a file on the Watch, sending them to the iPhone, and the iPhone's History and Night Recap screens.
 
 **Not built yet:** the recap, Settings, Get home and most other features are open GitHub issues.
 

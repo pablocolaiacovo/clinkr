@@ -36,6 +36,12 @@ enum Size {
     static let outline: CGFloat = 2
     /// Height of the mini stacked bar on a History row.
     static let miniBar: CGFloat = 8
+    /// A drink's dot on the recap timeline.
+    static let drinkDot: CGFloat = 14
+    /// A water's dot on the recap timeline, and the dots in its legend and on the Waters tile.
+    static let waterDot: CGFloat = 10
+    /// The outline around every chart mark, thinner than a card's.
+    static let chartOutline: CGFloat = 1.5
 }
 
 /// Corner radii from the design system, in points.

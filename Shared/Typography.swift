@@ -14,6 +14,8 @@ enum TypeStyle: CaseIterable, Sendable {
     case watchCaption
     /// One per iPhone screen: the history header, the recap headline.
     case display
+    /// The numbers on the recap's stat tiles.
+    case stat
     /// Night names, card titles, section headers.
     case title
     /// Paragraphs and recap copy.
@@ -28,6 +30,7 @@ enum TypeStyle: CaseIterable, Sendable {
         case .watchBody: 16
         case .watchCaption: 13
         case .display: 40
+        case .stat: 32
         case .title: 24
         case .body: 16
         case .label: 12
@@ -36,7 +39,7 @@ enum TypeStyle: CaseIterable, Sendable {
 
     var weight: Font.Weight {
         switch self {
-        case .countHero, .display, .watchCaption: .bold
+        case .countHero, .display, .stat, .watchCaption: .bold
         case .watchTitle, .watchBody, .title: .semibold
         case .body: .medium
         case .label: .heavy
@@ -48,6 +51,7 @@ enum TypeStyle: CaseIterable, Sendable {
         switch self {
         case .countHero, .display: .largeTitle
         case .watchTitle: .title3
+        case .stat: .title
         case .title: .title2
         case .watchBody, .body: .body
         case .watchCaption: .caption

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T02:56:27Z",
+  "generatedAt": "2026-11-09T21:50:00Z",
   "title": "Design System: Clinkr",
   "extensions": {
     "colorMeta": {
@@ -341,6 +341,10 @@
         "displayName": "Display",
         "purpose": "iPhone, provisional: once per screen."
       },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "iPhone: the numbers on the night recap's stat tiles, with tabular figures."
+      },
       "title": {
         "displayName": "Title",
         "purpose": "iPhone, provisional: night names, card titles, section headers."
@@ -358,7 +362,7 @@
       {
         "name": "shadow-sticker",
         "value": "0 4px 0 0 #1A1220",
-        "purpose": "iPhone cards and primary buttons in light mode only, used by the History screen's month cards. Never on the Watch."
+        "purpose": "iPhone cards and primary buttons in light mode only, used by the History screen's month cards and the night recap's tiles and timeline card. Never on the Watch."
       }
     ],
     "motion": [
@@ -442,7 +446,7 @@
   ],
   "narrative": {
     "northStar": "The Clink",
-    "overview": "Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a haptic. A tap on a drink button also clinks, with a short spring. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.\n\nThe Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.\n\nOn the iPhone only the History screen is built. Its light theme, with warm cream and a sticker look, is still provisional elsewhere, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.",
+    "overview": "Everything in Clinkr is built around one physical moment: you tap, it clinks, the ring fills. Shapes are round and chunky, fills are solid, and every add answers with a haptic. A tap on a drink button also clinks, with a short spring. The system exists for a thumb in the dark, so one large target and one glance beat any detail that needs a steady hand.\n\nThe Watch is the built expression of this world: saturated color on pure black, where the off pixels disappear and only the content remains. Density is low and scale is loud. A single number and a ring fill Tonight, and the drink colors carry the meaning so the screen needs few words. Color does the playing, and the shapes stay simple enough that it never turns noisy.\n\nOn the iPhone the History screen and the Night Recap are built. Its light theme, with warm cream and a sticker look, is still provisional elsewhere, and is marked as such throughout this file. Shipped values live in `Shared/`, and the wider design system lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh. Keep all three in step.",
     "keyCharacteristics": [
       "Solid, saturated fills on black, with no outlines or gradients on the Watch",
       "Round everywhere: pills, large-radius cards, round-capped ring segments",

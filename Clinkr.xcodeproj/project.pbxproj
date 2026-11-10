@@ -12,6 +12,7 @@
 		C10C0A1E0000000000000005 /* MetricsSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10C0A1E0000000000000004 /* MetricsSubscriber.swift */; };
 		A1B2C3D4E5F60718293A4B07 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */; };
 		A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */; };
+		C10C0A1E00000000000000F1 /* NightRecap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10C0A1E00000000000000F2 /* NightRecap.swift */; };
 		A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */; };
 		A1B2C3D4E5F60718293A4B01 /* NightSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B02 /* NightSender.swift */; };
 		5C6D7E8F901A2B3C4D5E6F70 /* NightViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E8F901A2B3C4D5E6F7081 /* NightViewTests.swift */; };
@@ -126,6 +127,7 @@
 		C10C0A1E0000000000000004 /* MetricsSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSubscriber.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNight.swift; sourceTree = "<group>"; };
+		C10C0A1E00000000000000F2 /* NightRecap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightRecap.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReceiver.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B02 /* NightSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightSender.swift; sourceTree = "<group>"; };
 		6D7E8F901A2B3C4D5E6F7081 /* NightViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightViewTests.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				F261572D4D37933BFCF2FD2D /* ContentView.swift */,
 				A1B2C3D4E5F60718293A4B08 /* Localizable.xcstrings */,
 				A1B2C3D4E5F60718293A4B06 /* SavedNight.swift */,
+				C10C0A1E00000000000000F2 /* NightRecap.swift */,
 				A1B2C3D4E5F60718293A4B04 /* NightReceiver.swift */,
 				C10C0A1E0000000000000004 /* MetricsSubscriber.swift */,
 				350557DB748E526740B00791 /* Preview Content */,
@@ -565,6 +568,7 @@
 				29E77FABF996E6F31D2E77A9 /* ClinkrApp.swift in Sources */,
 				0C07FE6F4263583472A076D4 /* ContentView.swift in Sources */,
 				A1B2C3D4E5F60718293A4B05 /* SavedNight.swift in Sources */,
+				C10C0A1E00000000000000F1 /* NightRecap.swift in Sources */,
 				A1B2C3D4E5F60718293A4B03 /* NightReceiver.swift in Sources */,
 				C10C0A1E0000000000000005 /* MetricsSubscriber.swift in Sources */,
 				C10C0A1E0000000000000002 /* Log.swift in Sources */,

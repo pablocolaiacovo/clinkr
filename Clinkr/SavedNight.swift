@@ -5,7 +5,10 @@ import SwiftData
 @Model
 final class SavedNight {
     var id: UUID
+    /// The Watch's placeholder name. Never shown; see `displayName`.
     var name: String
+    /// The name the user gave the night on the iPhone, or `nil` to use `defaultName`.
+    var customName: String?
     var startTime: Date
     var endTime: Date?
     var entries: [DrinkEntry]
@@ -63,8 +66,20 @@ extension SavedNight {
         return months
     }
 
-    /// The V1 name, like "Noche del viernes", made from the date in the phone's language. The Watch's placeholder in
-    /// `name` isn't shown; playful names replace this in #21.
+    /// The name to show: the user's own if they renamed the night, else `defaultName`.
+    var displayName: String {
+        customName ?? defaultName
+    }
+
+    /// Keeps `newName` as the night's name. A blank name, or the default one, goes back to the default, so the
+    /// night still follows the phone's language.
+    func rename(to newName: String) {
+        let trimmed = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        customName = trimmed.isEmpty || trimmed == defaultName ? nil : trimmed
+    }
+
+    /// The V1 name, like "Noche del viernes", made from the date in the phone's language. Playful names replace
+    /// this in #21.
     var defaultName: String {
         String(
             localized: "Noche del \(startTime.formatted(.dateTime.weekday(.wide)))",
