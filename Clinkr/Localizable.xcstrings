@@ -1,6 +1,58 @@
 {
   "sourceLanguage" : "es",
   "strings" : {
+    "%@ por hora" : {
+      "comment" : "VoiceOver value of the pace, like 1.9 per hour",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ per hour"
+          }
+        }
+      }
+    },
+    "%lld aguas" : {
+      "comment" : "VoiceOver count of waters in the timeline",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld water"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld waters"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld agua"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld aguas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld tragos" : {
       "comment" : "VoiceOver label for a night's count",
       "localizations" : {
@@ -42,6 +94,127 @@
         }
       }
     },
+    "/h" : {
+      "comment" : "Unit after the drinks-per-hour pace, like 1.9/h",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/h"
+          }
+        }
+      }
+    },
+    "Afuera" : {
+      "comment" : "Recap tile: how long the night lasted",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Out for"
+          }
+        }
+      }
+    },
+    "Aguas" : {
+      "comment" : "Recap tile: number of waters",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waters"
+          }
+        }
+      }
+    },
+    "Cambia el nombre de la noche" : {
+      "comment" : "VoiceOver hint on the night's name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renames the night"
+          }
+        }
+      }
+    },
+    "Cambiar el nombre" : {
+      "comment" : "Title of the rename alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename night"
+          }
+        }
+      }
+    },
+    "Carril" : {
+      "comment" : "Chart axis: drinks on top, water below",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lane"
+          }
+        }
+      }
+    },
+    "Cómo fue la noche" : {
+      "comment" : "Title of the recap's timeline card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How the night went"
+          }
+        }
+      }
+    },
+    "Guardar" : {
+      "comment" : "Saves the night's new name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Hora" : {
+      "comment" : "Chart axis: when an entry was logged",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Línea de tiempo" : {
+      "comment" : "VoiceOver label of the recap's timeline",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timeline"
+          }
+        }
+      }
+    },
+    "Muy corta para saber" : {
+      "comment" : "VoiceOver pace of a night under 15 minutes",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too short to tell"
+          }
+        }
+      }
+    },
     "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo." : {
       "comment" : "Shown when the database won't open",
       "localizations" : {
@@ -64,6 +237,28 @@
         }
       }
     },
+    "Nombre" : {
+      "comment" : "Placeholder of the night name field",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Ritmo" : {
+      "comment" : "Recap tile: drinks per hour",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pace"
+          }
+        }
+      }
+    },
     "Todavía no hay noches. Arrancá una en tu reloj." : {
       "comment" : "Empty state of the list of nights",
       "localizations" : {
@@ -71,6 +266,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No nights yet. Start one on your watch."
+          }
+        }
+      }
+    },
+    "Tragos" : {
+      "comment" : "Recap tile: number of drinks",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drinks"
           }
         }
       }

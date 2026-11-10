@@ -68,11 +68,38 @@ struct SavedNightTests {
         let context = container.mainContext
         let night = night()
         try SavedNight.insertIfNew(night, into: context)
-        try savedNights(in: context).first?.name = "Birthday"
+        try savedNights(in: context).first?.rename(to: "Birthday")
 
         try SavedNight.insertIfNew(night, into: context)
 
-        #expect(try savedNights(in: context).map(\.name) == ["Birthday"])
+        #expect(try savedNights(in: context).map(\.displayName) == ["Birthday"])
+    }
+
+    @Test func aRenameSurvivesAnAppRestart() throws {
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folderURL) }
+        let configuration = ModelConfiguration(url: folderURL.appending(path: "test.store"))
+
+        do {
+            let firstRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            try SavedNight.insertIfNew(night(), into: firstRun.mainContext)
+            try savedNights(in: firstRun.mainContext).first?.rename(to: "  Birthday ")
+            try firstRun.mainContext.save()
+        }
+
+        let secondRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+        #expect(try savedNights(in: secondRun.mainContext).map(\.displayName) == ["Birthday"])
+    }
+
+    @Test(arguments: ["", "   ", "default"])
+    func aBlankOrDefaultRenameGoesBackToTheDefaultName(newName: String) {
+        let saved = SavedNight(night())
+        saved.rename(to: "Birthday")
+
+        saved.rename(to: newName == "default" ? saved.defaultName : newName)
+
+        #expect(saved.customName == nil)
+        #expect(saved.displayName == saved.defaultName)
     }
 
     @Test func aDeletedNightStaysGoneAfterAnAppRestart() throws {
@@ -160,5 +187,34 @@ struct NightReceiverTests {
         receiver.session(.default, didReceiveUserInfo: ["something": "else"])
 
         #expect(try await savedCount() == 0)
+    }
+}
+
+struct TimelinePointTests {
+    private let start = Date(timeIntervalSinceReferenceDate: 0)
+
+    private func entry(_ type: DrinkType, minutes: Double) -> DrinkEntry {
+        DrinkEntry(type: type, timestamp: start.addingTimeInterval(minutes * 60))
+    }
+
+    @Test func waterSitsOnTheLowerLaneAndDrinksAbove() {
+        let points = TimelinePoint.layout([entry(.beer, minutes: 0), entry(.water, minutes: 30)])
+
+        #expect(points.map(\.lane) == [1, 0])
+    }
+
+    @Test func drinksAFewMinutesApartStackUpward() {
+        let points = TimelinePoint.layout([
+            entry(.shot, minutes: 0), entry(.shot, minutes: 5), entry(.water, minutes: 6), entry(.beer, minutes: 10),
+            entry(.wine, minutes: 60),
+        ])
+
+        #expect(points.map(\.lane) == [1, 2, 0, 3, 1])
+    }
+
+    @Test func aSteadyPaceStartsNewStacksInsteadOfOneTower() {
+        let points = TimelinePoint.layout((0..<6).map { entry(.beer, minutes: Double($0) * 10) })
+
+        #expect(points.map(\.lane) == [1, 2, 1, 2, 1, 2])
     }
 }

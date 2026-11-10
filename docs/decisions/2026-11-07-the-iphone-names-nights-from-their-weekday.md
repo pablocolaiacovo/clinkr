@@ -4,4 +4,5 @@
 - **Why:** The issue asks for a simple default from the date that follows the language. Working it out at display time means switching the phone's language renames every night, which a stored name wouldn't.
 - **Instead of:** Renaming the night when it's saved, which would freeze it in whatever language the phone had then.
 - **Open:** A night that starts after midnight is named for the new day. Playful names and renaming come in #21, which will need to decide when a stored name wins over this default.
+- **Also:** A rename made on the iPhone wins over this name. See [2026-11-09 · A rename is kept apart from the Watch's name](2026-11-09-a-rename-is-kept-apart-from-the-watchs-name.md).
 - **PR:** [#95](https://github.com/pablocolaiacovo/clinkr/pull/95)

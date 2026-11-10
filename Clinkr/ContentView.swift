@@ -13,18 +13,20 @@ struct ContentView: View {
                 ForEach(SavedNight.byMonth(newestFirst: nights), id: \.month) { month in
                     Section {
                         ForEach(month.nights) { night in
-                            NightRow(night: night)
-                                .listRowInsets(
-                                    EdgeInsets(
-                                        top: Space.s3, leading: Space.s4 * 2, bottom: Space.s3, trailing: Space.s4 * 2)
+                            NavigationLink(value: night) {
+                                NightRow(night: night)
+                            }
+                            .listRowInsets(
+                                EdgeInsets(
+                                    top: Space.s3, leading: Space.s4 * 2, bottom: Space.s3, trailing: Space.s4 * 2)
+                            )
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                CardSlice(
+                                    isFirst: night.id == month.nights.first?.id,
+                                    isLast: night.id == month.nights.last?.id
                                 )
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(
-                                    CardSlice(
-                                        isFirst: night.id == month.nights.first?.id,
-                                        isLast: night.id == month.nights.last?.id
-                                    )
-                                )
+                            )
                         }
                         .onDelete { offsets in
                             delete(offsets.map { month.nights[$0] })
@@ -49,6 +51,9 @@ struct ContentView: View {
                 }
             }
             .navigationTitle(Text("Tus noches", comment: "Title of the list of nights"))
+            .navigationDestination(for: SavedNight.self) { night in
+                NightRecap(night: night)
+            }
         }
     }
 
@@ -92,7 +97,7 @@ private struct NightRow: View {
             }
             .frame(minWidth: Size.minTarget)
             VStack(alignment: .leading, spacing: Space.s1) {
-                Text(night.defaultName)
+                Text(night.displayName)
                     .typeStyle(.title)
                     .lineLimit(2)
                 MiniBar(countsByType: summary.countsByType)

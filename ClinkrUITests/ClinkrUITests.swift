@@ -49,6 +49,54 @@ final class ClinkrUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[label].waitForNonExistence(timeout: 5))
     }
 
+    /// The newest sample night: beer, beer, water, cocktail, shot, shot, beer over 4 hours.
+    @MainActor
+    func testRecapShowsTheNightsNumbersToVoiceOver() throws {
+        let app = launch(language: "en", locale: "en_US", sampleNights: true)
+        night(containing: " night, ", in: app).tap()
+
+        XCTAssertTrue(app.staticTexts["How the night went"].waitForExistence(timeout: 5))
+        XCTAssertEqual(stat("Drinks", in: app).value as? String, "6")
+        XCTAssertEqual(stat("Waters", in: app).value as? String, "1")
+        XCTAssertEqual(stat("Out for", in: app).value as? String, "4 hours")
+        XCTAssertEqual(stat("Pace", in: app).value as? String, "1.5 per hour")
+        let timeline = app.descendants(matching: .any)["Timeline"]
+        XCTAssertTrue((timeline.value as? String)?.hasPrefix("6 drinks, 1 water, ") == true)
+    }
+
+    @MainActor
+    func testRecapShowsSpanishNumbers() throws {
+        let app = launch(language: "es-AR", locale: "es_AR", sampleNights: true)
+        night(containing: "Noche del ", in: app).tap()
+
+        XCTAssertTrue(app.staticTexts["Cómo fue la noche"].waitForExistence(timeout: 5))
+        XCTAssertEqual(stat("Ritmo", in: app).value as? String, "1,5 por hora")
+    }
+
+    @MainActor
+    func testRenamingANightKeepsTheNewName() throws {
+        let app = launch(language: "en", locale: "en_US", sampleNights: true)
+        night(containing: " night, ", in: app).tap()
+
+        let name = app.buttons.matching(NSPredicate(format: "label ENDSWITH %@", " night")).firstMatch
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap()
+        let field = app.alerts.textFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        field.tap()
+        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 30) + "Karaoke")
+        app.alerts.buttons["Save"].tap()
+
+        XCTAssertTrue(app.buttons["Karaoke"].waitForExistence(timeout: 5))
+        app.buttons["BackButton"].tap()
+        XCTAssertTrue(night(containing: "Karaoke", in: app).waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func stat(_ label: String, in app: XCUIApplication) -> XCUIElement {
+        app.otherElements[label]
+    }
+
     /// The first night row. Each row reads as one element, like "7, Sat, Saturday night, 6 drinks".
     @MainActor
     private func night(containing text: String, in app: XCUIApplication) -> XCUIElement {
