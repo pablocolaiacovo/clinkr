@@ -493,32 +493,32 @@
       },
       {
         "name": "The Flat Wrist Rule",
-        "body": "No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there. The one proposed exception is a glass Undo toast, if the prototype in #80 keeps it (see Liquid Glass).",
+        "body": "No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there. The Undo toast was tried as glass and stays solid too (see Liquid Glass).",
         "section": "elevation"
       },
       {
         "name": "The Content Stays Solid Rule",
-        "body": "A drink color is never behind glass and never glass itself. Glass floats above content, never inside it. (Proposed.)",
+        "body": "A drink color is never behind glass and never glass itself. Glass floats above content, never inside it.",
         "section": "elevation"
       },
       {
         "name": "The Glass Is Rare Rule",
-        "body": "Glass is for a handful of controls per screen. Neighbouring glass controls share one `GlassEffectContainer`. (Proposed.)",
+        "body": "Glass is for a handful of controls per screen. Neighbouring glass controls share one `GlassEffectContainer`.",
         "section": "elevation"
       },
       {
         "name": "The No Sticker On Glass Rule",
-        "body": "The sticker outline and shadow belong to opaque light-mode cards only. A glass control never gets an outline, a hard shadow or a custom darkening background. (Proposed.)",
+        "body": "The sticker outline and shadow belong to opaque light-mode cards only. A glass control never gets an outline, a hard shadow or a custom darkening background.",
         "section": "elevation"
       },
       {
         "name": "The Solid Fallback Rule",
-        "body": "With Reduce Transparency or Increase Contrast on, every glass control must still be legible. Check each custom glass use with both settings on. (Proposed.)",
+        "body": "With Reduce Transparency or Increase Contrast on, every glass control must still be legible. Check each custom glass use with both settings on.",
         "section": "elevation"
       },
       {
         "name": "The Clink Still Leads Rule",
-        "body": "A glass control that is also a drink action keeps the clink spring and haptic. Don't stack `.interactive()` glass motion on top of it. (Proposed.)",
+        "body": "A glass control that is also a drink action keeps the clink spring and haptic. Don't stack `.interactive()` glass motion on top of it.",
         "section": "elevation"
       }
     ],
@@ -529,7 +529,7 @@
       "Do tell drinks apart with glyphs and labels as well as color.",
       "Do check Watch screens in Spanish on the smallest Watch, and cut words before cutting size.",
       "Do keep tap targets at 44pt or more, even when the visual is smaller.",
-      "Do keep glass for the control and navigation layer, and use the system bars and sheets as they are (proposed, see Liquid Glass)."
+      "Do keep glass for the control and navigation layer, and use the system bars and sheets as they are (see Liquid Glass)."
     ],
     "donts": [
       "Don't use raw colors, sizes or emoji on a screen.",
@@ -539,7 +539,7 @@
       "Don't show the ring as full or over, or put a big night's count in red.",
       "Don't use confirmation dialogs. Offer Undo instead.",
       "Don't auto-play sound.",
-      "Don't put a drink color behind glass, or give a glass control a sticker outline, a hard shadow or a custom background (proposed, see Liquid Glass)."
+      "Don't put a drink color behind glass, or give a glass control a sticker outline, a hard shadow or a custom background (see Liquid Glass)."
     ]
   }
 }

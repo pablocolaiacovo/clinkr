@@ -5,3 +5,4 @@
 - **Instead of:** Glass on everything, which hurts contrast and legibility, or no position at all, which left the sticker look (outlines and a hard shadow) on a collision course with the system bars.
 - **Open:** Concentric corners against the fixed 22pt card radius, whether the sticker look survives next to system bars, and contrast of `on-pop` text on any tinted glass. The details are in `DESIGN.md`.
 - **PR:** [#82](https://github.com/pablocolaiacovo/clinkr/pull/82)
+- **Replaced by:** [2026-11-09 · The Watch stays solid](2026-11-09-the-watch-stays-solid.md)
