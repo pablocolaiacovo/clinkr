@@ -259,7 +259,7 @@ private struct Timeline: View {
 
 /// One entry placed on the timeline: water on lane 0, drinks on lane 1 and up.
 struct TimelinePoint: Identifiable, Equatable {
-    /// Drinks closer together than this stack upward instead of overlapping.
+    /// Drinks within this time of a stack's first drink stack upward instead of overlapping.
     static let stackWindow: TimeInterval = 12 * 60
 
     let entry: DrinkEntry
@@ -269,16 +269,17 @@ struct TimelinePoint: Identifiable, Equatable {
 
     /// `entries` must be in time order, as `Night` keeps them.
     static func layout(_ entries: [DrinkEntry]) -> [TimelinePoint] {
-        var lastDrink: Date?
+        var stackStart: Date?
         var stack = 0
         return entries.map { entry in
             guard entry.type.countsAsDrink else { return TimelinePoint(entry: entry, lane: 0) }
-            if let lastDrink, entry.timestamp.timeIntervalSince(lastDrink) < stackWindow {
+            // Measured from the stack's first drink, so a steady pace starts new stacks instead of one tall tower.
+            if let stackStart, entry.timestamp.timeIntervalSince(stackStart) < stackWindow {
                 stack += 1
             } else {
+                stackStart = entry.timestamp
                 stack = 0
             }
-            lastDrink = entry.timestamp
             return TimelinePoint(entry: entry, lane: 1 + stack)
         }
     }

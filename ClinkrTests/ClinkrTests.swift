@@ -211,4 +211,10 @@ struct TimelinePointTests {
 
         #expect(points.map(\.lane) == [1, 2, 0, 3, 1])
     }
+
+    @Test func aSteadyPaceStartsNewStacksInsteadOfOneTower() {
+        let points = TimelinePoint.layout((0..<6).map { entry(.beer, minutes: Double($0) * 10) })
+
+        #expect(points.map(\.lane) == [1, 2, 1, 2, 1, 2])
+    }
 }
