@@ -1,6 +1,9 @@
 import XCTest
 
 final class ClinkrUITests: XCTestCase {
+    /// A cold simulator on CI can take more than 5 seconds to show the first screen.
+    private let launchWait: TimeInterval = 15
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
@@ -8,13 +11,14 @@ final class ClinkrUITests: XCTestCase {
     @MainActor
     func testLaunchesInSpanish() throws {
         XCTAssertTrue(
-            launch(language: "es-AR", locale: "es_AR").navigationBars["Tus noches"].waitForExistence(timeout: 5))
+            launch(language: "es-AR", locale: "es_AR").navigationBars["Tus noches"].waitForExistence(
+                timeout: launchWait))
     }
 
     @MainActor
     func testLaunchesInEnglish() throws {
         XCTAssertTrue(
-            launch(language: "en", locale: "en_US").navigationBars["Your nights"].waitForExistence(timeout: 5))
+            launch(language: "en", locale: "en_US").navigationBars["Your nights"].waitForExistence(timeout: launchWait))
     }
 
     /// The newest sample night starts 6 hours ago, so its month leads the list.
@@ -23,7 +27,7 @@ final class ClinkrUITests: XCTestCase {
         let app = launch(language: "es-AR", locale: "es_AR", sampleNights: true)
         let newestMonth = Date.now.addingTimeInterval(-6 * 3600)
             .formatted(Date.FormatStyle(locale: Locale(identifier: "es_AR")).month(.wide))
-        XCTAssertTrue(app.staticTexts[newestMonth.uppercased()].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts[newestMonth.uppercased()].waitForExistence(timeout: launchWait))
         XCTAssertTrue(night(containing: "Noche del ", in: app).exists)
     }
 
@@ -32,7 +36,7 @@ final class ClinkrUITests: XCTestCase {
         let app = launch(language: "en", locale: "en_US", sampleNights: true)
         let newestMonth = Date.now.addingTimeInterval(-6 * 3600)
             .formatted(Date.FormatStyle(locale: Locale(identifier: "en_US")).month(.wide))
-        XCTAssertTrue(app.staticTexts[newestMonth.uppercased()].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts[newestMonth.uppercased()].waitForExistence(timeout: launchWait))
         XCTAssertTrue(night(containing: " night, ", in: app).exists)
     }
 
@@ -40,7 +44,7 @@ final class ClinkrUITests: XCTestCase {
     func testSwipingANightDeletesIt() throws {
         let app = launch(language: "en", locale: "en_US", sampleNights: true)
         let first = night(containing: " night, ", in: app)
-        XCTAssertTrue(first.waitForExistence(timeout: 5))
+        XCTAssertTrue(first.waitForExistence(timeout: launchWait))
         let label = first.label
 
         first.swipeLeft()
