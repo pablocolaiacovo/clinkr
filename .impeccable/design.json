@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T02:56:27Z",
+  "generatedAt": "2026-11-10T10:10:00Z",
   "title": "Design System: Clinkr",
   "extensions": {
     "colorMeta": {
@@ -503,7 +503,7 @@
       },
       {
         "name": "The Glass Is Rare Rule",
-        "body": "Glass is for a handful of controls per screen. Neighbouring glass controls share one `GlassEffectContainer`.",
+        "body": "Glass is for a handful of controls per screen. Group neighbouring glass controls in one `GlassEffectContainer` so they blend and render as one.",
         "section": "elevation"
       },
       {
@@ -513,7 +513,7 @@
       },
       {
         "name": "The Solid Fallback Rule",
-        "body": "With Reduce Transparency or Increase Contrast on, every glass control must still be legible. Check each custom glass use with both settings on.",
+        "body": "With Reduce Transparency or Increase Contrast on, every glass control must still be legible. Rely on the system behavior, and check each custom glass use with both settings on.",
         "section": "elevation"
       },
       {
