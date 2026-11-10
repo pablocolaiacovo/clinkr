@@ -230,11 +230,11 @@ The Watch is flat. There are no shadows, and depth comes only from tone: `bg`, t
 
 ### Named Rules
 
-**The Flat Wrist Rule.** No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there. The one proposed exception is a glass Undo toast, if the prototype in #80 keeps it (see Liquid Glass).
+**The Flat Wrist Rule.** No shadows on the Watch, ever. The `stickerShadow()` modifier draws nothing in dark mode, so it can't appear there. The Undo toast was tried as glass and stays solid too (see Liquid Glass).
 
 ## Liquid Glass
 
-**Status: proposed.** No shipped screen uses glass yet. The only glass so far is the app icon (below). Both apps require iOS 26 and watchOS 26, so the system's Liquid Glass (the translucent, light-bending material Apple introduced in 26) is available. This section says where it belongs, so it's a choice and not an accident.
+**Status: decided.** Glass is the iPhone's system bars and sheets, and the app icon (below). The Watch has none. Both apps require iOS 26 and watchOS 26, so the system's Liquid Glass (the translucent, light-bending material Apple introduced in 26) is available. This section says where it belongs, so it's a choice and not an accident.
 
 The rule is Apple's own split: glass is the **control and navigation layer** that floats above the content, and the content stays solid. In Clinkr the drink colors are the content, so they never become glass.
 
@@ -244,7 +244,7 @@ The rule is Apple's own split: glass is the **control and navigation layer** tha
 
 ### Glass (controls and navigation)
 - iPhone navigation bar, toolbars, tab bar and sheets: use the system components as they are, with no custom background behind them. They get glass and the scroll-edge effect for free.
-- Floating controls that sit over content: the Watch Undo toast, and the ghost "Later" pill. On the Watch, try `.glassEffect()` on the toast capsule and the `.glass` button style on the ghost pill.
+- Not the Watch's floating controls. The Undo toast and the ghost "Later" pill were tried as glass and stay `surface-raised`: over the drink buttons the toast let `cocktail` show through and its message fell to 2.75:1, and over flat black the pill had nothing to refract. See `docs/decisions/2026-11-09-the-watch-stays-solid.md`.
 - Prominent actions keep their solid fill (`fizz`, `water`, `ink` for Undo). If one ever becomes glass, use the prominent glass style and check `on-pop` text still passes 4.5:1. A light tint over a moving background will not.
 
 ### App icon
@@ -266,8 +266,7 @@ The rule is Apple's own split: glass is the **control and navigation layer** tha
 
 ### Open questions
 - **Concentric corners.** `Radius.card` (22) is fixed. Cards near the screen edge on the iPhone may need `ConcentricRectangle` so they follow the device corner. Decide when the first real iPhone screen exists.
-- **Watch value.** Glass over flat black has nothing to refract. Prototype the Undo toast on a device and keep it only if it reads better than `surface-raised`.
-- **Tokens.** If glass is adopted, the design system needs a surfaces section and previews that mark which components are glass. Web previews can only approximate it.
+- **Tokens.** Only system components are glass, so the design system has no glass tokens. If a custom glass control ever ships, add a surfaces section and previews that mark it. Web previews can only approximate it.
 
 ## Shapes
 
@@ -331,7 +330,7 @@ The design system specifies four iPhone components, whose full specs live there:
 - **Do** tell drinks apart with glyphs and labels as well as color.
 - **Do** check Watch screens in Spanish on the smallest Watch, and cut words before cutting size.
 - **Do** keep tap targets at 44pt or more, even when the visual is smaller.
-- **Do** keep glass for the control and navigation layer, and use the system bars and sheets as they are (proposed, see Liquid Glass).
+- **Do** keep glass for the control and navigation layer, and use the system bars and sheets as they are (see Liquid Glass).
 
 ### Don't:
 - **Don't** use raw colors, sizes or emoji on a screen.
@@ -341,4 +340,4 @@ The design system specifies four iPhone components, whose full specs live there:
 - **Don't** show the ring as full or over, or put a big night's count in red.
 - **Don't** use confirmation dialogs. Offer Undo instead.
 - **Don't** auto-play sound.
-- **Don't** put a drink color behind glass, or give a glass control a sticker outline, a hard shadow or a custom background (proposed, see Liquid Glass).
+- **Don't** put a drink color behind glass, or give a glass control a sticker outline, a hard shadow or a custom background (see Liquid Glass).
