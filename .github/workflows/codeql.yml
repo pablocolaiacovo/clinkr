@@ -23,8 +23,8 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ matrix.runner }}
-    # A Swift scan takes about 15 minutes, so this stops a stuck runner long before GitHub's 6-hour limit.
-    timeout-minutes: 30
+    # A Swift scan takes about 25 minutes, so this stops a stuck runner long before GitHub's 6-hour limit.
+    timeout-minutes: 40
     permissions:
       contents: read
       security-events: write
