@@ -4,4 +4,4 @@
 - **Why:** The Watch's `name` is a placeholder that's never shown, and the weekday name is worked out when the screen draws so it follows the phone's language. A separate optional field keeps both: a resend from the Watch never touches it, and an unrenamed night still changes language with the phone. SwiftData adds the new optional field to existing databases on its own.
 - **Instead of:** Writing the rename over `name`, which would leave no way to tell a rename from the Watch's placeholder.
 - **Open:** Playful names in #21 can replace the default under `customName` without changing this.
-- **PR:** #PR
+- **PR:** [#101](https://github.com/pablocolaiacovo/clinkr/pull/101)
