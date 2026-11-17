@@ -4,10 +4,13 @@ import SwiftData
 import os
 
 /// Saves the nights the Watch sends and tells it once each one is safe, so it can let go of its copy. The system wakes
-/// the app in the background to deliver them, so this has to be running from launch, before any screen appears.
+/// the app in the background to deliver them, so this has to be running from launch, before any screen appears. As the
+/// session's one delegate, it also keeps the Watch's setup for the empty History screen.
 @MainActor
+@Observable
 final class NightReceiver: NSObject {
     private let context: ModelContext
+    private(set) var watchSetup: WatchSetup?
 
     init(context: ModelContext) {
         self.context = context
@@ -37,6 +40,15 @@ final class NightReceiver: NSObject {
             return false
         }
     }
+
+    nonisolated private func updateWatchSetup(from session: WCSession) {
+        let setup = WatchSetup(
+            isActivated: session.activationState == .activated,
+            isPaired: session.isPaired,
+            isWatchAppInstalled: session.isWatchAppInstalled
+        )
+        Task { @MainActor in self.watchSetup = setup }
+    }
 }
 
 extension NightReceiver: WCSessionDelegate {
@@ -50,6 +62,13 @@ extension NightReceiver: WCSessionDelegate {
         } else {
             Logger.sync.info("Session activated, state \(activationState.rawValue)")
         }
+        updateWatchSetup(from: session)
+    }
+
+    nonisolated func sessionWatchStateDidChange(_ session: WCSession) {
+        Logger.sync.info(
+            "Watch state changed, paired \(session.isPaired), app installed \(session.isWatchAppInstalled)")
+        updateWatchSetup(from: session)
     }
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {

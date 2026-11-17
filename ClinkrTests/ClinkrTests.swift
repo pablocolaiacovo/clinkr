@@ -190,6 +190,25 @@ struct NightReceiverTests {
     }
 }
 
+struct WatchSetupTests {
+    @Test(arguments: [(true, true), (true, false), (false, true), (false, false)])
+    func nothingIsKnownBeforeActivation(isPaired: Bool, isWatchAppInstalled: Bool) {
+        #expect(WatchSetup(isActivated: false, isPaired: isPaired, isWatchAppInstalled: isWatchAppInstalled) == nil)
+    }
+
+    @Test func noPairedWatchAsksForOne() {
+        #expect(WatchSetup(isActivated: true, isPaired: false, isWatchAppInstalled: false) == .noWatch)
+    }
+
+    @Test func aPairedWatchWithoutTheAppAsksToInstallIt() {
+        #expect(WatchSetup(isActivated: true, isPaired: true, isWatchAppInstalled: false) == .appNotInstalled)
+    }
+
+    @Test func theInstalledAppIsReadyForTheFirstNight() {
+        #expect(WatchSetup(isActivated: true, isPaired: true, isWatchAppInstalled: true) == .ready)
+    }
+}
+
 struct TimelinePointTests {
     private let start = Date(timeIntervalSinceReferenceDate: 0)
 

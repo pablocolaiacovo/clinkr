@@ -56,6 +56,7 @@ struct ClinkrApp: App {
             if let container {
                 ContentView()
                     .modelContainer(container)
+                    .environment(nightReceiver)
             } else {
                 Text(
                     "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo.",

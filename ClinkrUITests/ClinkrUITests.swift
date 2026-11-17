@@ -21,6 +21,14 @@ final class ClinkrUITests: XCTestCase {
             launch(language: "en", locale: "en_US").navigationBars["Your nights"].waitForExistence(timeout: launchWait))
     }
 
+    /// The simulator never receives a night, so the list starts empty.
+    @MainActor
+    func testAnEmptyListExplainsTheWatch() throws {
+        XCTAssertTrue(
+            launch(language: "en", locale: "en_US").staticTexts["How Clinkr works"].waitForExistence(
+                timeout: launchWait))
+    }
+
     /// The newest sample night starts 6 hours ago, so its month leads the list.
     @MainActor
     func testSampleNightsAreGroupedByMonthInSpanish() throws {
