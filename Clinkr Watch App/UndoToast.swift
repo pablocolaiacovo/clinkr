@@ -77,6 +77,8 @@ struct UndoButton: View {
         Button(action: action) {
             undoLabel
                 .typeStyle(.watchBody)
+                .lineLimit(1)
+                .fixedSize()
                 .foregroundStyle(.bg)
                 .padding(.horizontal, Space.s3)
                 .frame(minWidth: Size.minTarget, maxWidth: fillsWidth ? .infinity : nil, minHeight: Size.minTarget)
