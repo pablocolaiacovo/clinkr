@@ -4,8 +4,17 @@ import os
 
 /// The History screen: every night received from the Watch, newest first, grouped by month.
 struct ContentView: View {
+    /// UI tests ask for longer: on a slow test machine, finding Undo and tapping it can take more than 5 seconds.
+    static let undoDuration: Duration = .seconds(
+        ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+
     @Environment(\.modelContext) private var context
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \SavedNight.startTime, order: .reverse) private var nights: [SavedNight]
+    /// The nights just deleted, while their Undo shows. Only the last delete can be undone.
+    @State private var deleted: [SavedNight.Copy]?
 
     var body: some View {
         NavigationStack {
@@ -48,17 +57,79 @@ struct ContentView: View {
             .navigationDestination(for: SavedNight.self) { night in
                 NightRecap(night: night)
             }
+            .toolbar {
+                if let deleted {
+                    ToolbarItem(placement: .bottomBar) {
+                        Text(Self.deletedMessage(count: deleted.count))
+                            .typeStyle(.body)
+                            .foregroundStyle(.ink)
+                            .fixedSize()
+                            .padding(.horizontal, Space.s2)
+                    }
+                    ToolbarSpacer(.flexible, placement: .bottomBar)
+                    ToolbarItem(placement: .bottomBar) {
+                        Button(action: undoDelete) {
+                            Text("Deshacer", comment: "Button that brings back the night just deleted")
+                                .typeStyle(.body)
+                        }
+                    }
+                }
+            }
+        }
+        .task(id: deleted) {
+            // VoiceOver needs time to reach Undo, so there it stays until the next delete or an undo.
+            guard deleted != nil, !voiceOverEnabled else { return }
+            do {
+                try await Task.sleep(for: Self.undoDuration)
+            } catch {
+                return
+            }
+            withAnimation(motion) { deleted = nil }
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .background {
+                deleted = nil
+            }
         }
     }
 
+    private var motion: Animation? {
+        reduceMotion ? nil : Motion.standard
+    }
+
+    private static func deletedMessage(count: Int) -> LocalizedStringResource {
+        LocalizedStringResource("\(count) noches borradas", comment: "Shown with Undo after deleting nights")
+    }
+
+    /// Deletes straight away, so the list and the database always agree. Undo saves the nights again.
     private func delete(_ nights: [SavedNight]) {
         do {
-            try SavedNight.delete(nights, from: context)
+            let copies = try SavedNight.delete(nights, from: context)
             Logger.persistence.info("Deleted \(nights.count) nights")
+            withAnimation(motion) { deleted = copies }
+            if voiceOverEnabled {
+                AccessibilityNotification.Announcement(String(localized: Self.deletedMessage(count: copies.count)))
+                    .post()
+            }
         } catch {
             // Puts the rows back, so the list never shows a night as gone when it's still saved.
             context.rollback()
             Logger.persistence.error("Couldn't delete nights: \(error, privacy: .public)")
+        }
+    }
+
+    private func undoDelete() {
+        guard let copies = deleted else { return }
+        withAnimation(motion) {
+            deleted = nil
+            do {
+                try SavedNight.restore(copies, into: context)
+                Logger.persistence.info("Restored \(copies.count) nights")
+            } catch {
+                // Leaves them deleted, as the list shows.
+                context.rollback()
+                Logger.persistence.error("Couldn't restore nights: \(error, privacy: .public)")
+            }
         }
     }
 }
@@ -182,7 +253,7 @@ extension View {
 #if DEBUG
     #Preview("Nights") {
         let container = try! ModelContainer(
-            for: SavedNight.self,
+            for: SavedNight.self, DeletedNight.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         for night in SavedNight.sampleNights() {
@@ -195,5 +266,5 @@ extension View {
 
 #Preview("Empty") {
     ContentView()
-        .modelContainer(for: SavedNight.self, inMemory: true)
+        .modelContainer(for: [SavedNight.self, DeletedNight.self], inMemory: true)
 }

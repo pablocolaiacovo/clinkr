@@ -20,12 +20,13 @@ final class NightReceiver: NSObject {
         WCSession.default.activate()
     }
 
-    private func save(_ night: Night) -> Bool {
+    /// Returns whether the Watch can have its receipt: true for a night saved now, before, or deleted by the user.
+    func save(_ night: Night) -> Bool {
         do {
             if try SavedNight.insertIfNew(night, into: context) {
                 Logger.persistence.info("Saved night \(night.id, privacy: .public)")
             } else {
-                Logger.persistence.info("Night \(night.id, privacy: .public) was already saved, skipped the duplicate")
+                Logger.persistence.info("Night \(night.id, privacy: .public) was already saved or deleted, skipped it")
             }
             return true
         } catch {

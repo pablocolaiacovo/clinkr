@@ -53,6 +53,47 @@
         }
       }
     },
+    "%lld noches borradas" : {
+      "comment" : "Shown with Undo after deleting nights",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Night deleted"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld nights deleted"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Noche borrada"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld noches borradas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld tragos" : {
       "comment" : "VoiceOver label for a night's count",
       "localizations" : {
@@ -189,6 +230,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How the night went"
+          }
+        }
+      }
+    },
+    "Deshacer" : {
+      "comment" : "Button that brings back the night just deleted",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
           }
         }
       }
