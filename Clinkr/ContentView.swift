@@ -64,7 +64,7 @@ struct ContentView: View {
             .toolbar {
                 if let deleted {
                     ToolbarItem(placement: .bottomBar) {
-                        Text(Self.deletedMessage(count: deleted.count))
+                        Text(Self.deletedMessage)
                             .typeStyle(.body)
                             .foregroundStyle(.ink)
                             .fixedSize()
@@ -101,9 +101,8 @@ struct ContentView: View {
         reduceMotion ? nil : Motion.standard
     }
 
-    private static func deletedMessage(count: Int) -> LocalizedStringResource {
-        LocalizedStringResource("\(count) noches borradas", comment: "Shown with Undo after deleting nights")
-    }
+    private static let deletedMessage = LocalizedStringResource(
+        "Noche borrada", comment: "Shown with Undo after deleting a night")
 
     /// Deletes straight away, so the list and the database always agree. Undo saves the nights again.
     private func delete(_ nights: [SavedNight]) {
@@ -112,7 +111,7 @@ struct ContentView: View {
             Logger.persistence.info("Deleted \(nights.count) nights")
             withAnimation(motion) { deleted = copies }
             if voiceOverEnabled {
-                AccessibilityNotification.Announcement(String(localized: Self.deletedMessage(count: copies.count)))
+                AccessibilityNotification.Announcement(String(localized: Self.deletedMessage))
                     .post()
             }
         } catch {

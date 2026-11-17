@@ -53,47 +53,6 @@
         }
       }
     },
-    "%lld noches borradas" : {
-      "comment" : "Shown with Undo after deleting nights",
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Night deleted"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld nights deleted"
-                }
-              }
-            }
-          }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Noche borrada"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld noches borradas"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "%lld tragos" : {
       "comment" : "VoiceOver label for a night's count",
       "localizations" : {
@@ -307,6 +266,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Couldn't open your nights. Try opening Clinkr again."
+          }
+        }
+      }
+    },
+    "Noche borrada" : {
+      "comment" : "Shown with Undo after deleting a night",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night deleted"
           }
         }
       }
