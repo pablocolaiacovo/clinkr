@@ -32,7 +32,7 @@ enum WatchSetup: Equatable, Sendable {
             )
         case .ready:
             Text(
-                "Todavía no hay noches. Arrancá una en tu reloj.",
+                "Todavía no hay noches. Las que anotes en el reloj aparecen acá.",
                 comment: "Empty list of nights, when the Clinkr Watch app is installed"
             )
         }

@@ -303,13 +303,13 @@
         }
       }
     },
-    "Todavía no hay noches. Arrancá una en tu reloj." : {
+    "Todavía no hay noches. Las que anotes en el reloj aparecen acá." : {
       "comment" : "Empty list of nights, when the Clinkr Watch app is installed",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No nights yet. Start one on your watch."
+            "value" : "No nights yet. Nights you log on your watch show up here."
           }
         }
       }
