@@ -1,6 +1,6 @@
 # Clinkr
 
-An iPhone app with a companion Apple Watch app, written in SwiftUI. It's a hobby project, and the owner is new to iOS development, so explain Apple-specific concepts briefly when they come up.
+An Apple Watch app with a companion iPhone app, written in SwiftUI. It's a hobby project, and the owner is new to iOS development, so explain Apple-specific concepts briefly when they come up.
 
 ## Layout
 

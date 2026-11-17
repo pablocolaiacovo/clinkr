@@ -1,6 +1,6 @@
 # Clinkr
 
-An iPhone app with a companion Apple Watch app, built with SwiftUI.
+An Apple Watch app with a companion iPhone app, built with SwiftUI.
 
 ## Requirements
 
