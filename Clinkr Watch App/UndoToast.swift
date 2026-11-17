@@ -4,7 +4,12 @@ import SwiftUI
 /// confirmation: Undo removes the entry straight away.
 struct UndoToast: View {
     /// UI tests ask for longer: on a slow test machine, finding Undo and tapping it can take more than 5 seconds.
-    static let duration: Duration = .seconds(ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #if DEBUG
+        static let duration: Duration = .seconds(
+            ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #else
+        static let duration: Duration = .seconds(5)
+    #endif
     static let animation = Motion.standard
 
     let type: DrinkType

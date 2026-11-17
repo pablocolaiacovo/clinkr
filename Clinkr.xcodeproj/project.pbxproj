@@ -54,6 +54,8 @@
 		5D8E31A07C4B92F6E0A1B3D4 /* Shared.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9A792CB8B3328C2A01528C73 /* Shared.xcstrings */; };
 		E1A2B3C4D5E6F70812345602 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */; };
 		E1A2B3C4D5E6F70812345603 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */; };
+		E1A2B3C4D5E6F70812345612 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345611 /* PrivacyInfo.xcprivacy */; };
+		E1A2B3C4D5E6F70812345613 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E1A2B3C4D5E6F70812345611 /* PrivacyInfo.xcprivacy */; };
 		683EE74A02FFA99699BD105C /* Night.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ED6C1C837283881502354F /* Night.swift */; };
 		3026D57BFB7E4A4778F239C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FF1F10CBDFA723862543C79 /* Assets.xcassets */; };
 		53C862FB621240E4945F0D64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD9341F9F060A344C623EA9 /* Assets.xcassets */; };
@@ -164,6 +166,7 @@
 		89C0E3B52628790F5260C89C /* Clinkr.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Clinkr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A792CB8B3328C2A01528C73 /* Shared.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Shared.xcstrings; sourceTree = "<group>"; };
 		E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		E1A2B3C4D5E6F70812345611 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9FF1F10CBDFA723862543C79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0ED2ABC095B7CAA4ABBD7D8 /* ClinkrTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClinkrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB744FBD4E4035B42E4822AA /* ClinkrUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClinkrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +281,7 @@
 				C10C0A1E0000000000000001 /* Log.swift */,
 				17ED6C1C837283881502354F /* Night.swift */,
 				7EAFCFB8D84EF1A51540F143 /* Palette.swift */,
+				E1A2B3C4D5E6F70812345611 /* PrivacyInfo.xcprivacy */,
 				9A792CB8B3328C2A01528C73 /* Shared.xcstrings */,
 				E1A2B3C4D5E6F70812345601 /* InfoPlist.xcstrings */,
 				9775BAA519AF9F060D460D13 /* Typography.swift */,
@@ -505,6 +509,7 @@
 				E76284B6739753B95944CB1E /* Preview Assets.xcassets in Resources */,
 				2C2C3C688B48FA2EB8530081 /* Shared.xcstrings in Resources */,
 				E1A2B3C4D5E6F70812345602 /* InfoPlist.xcstrings in Resources */,
+				E1A2B3C4D5E6F70812345612 /* PrivacyInfo.xcprivacy in Resources */,
 				C4A0DDE7B8B4FEC5FA259ED9 /* Glyphs.xcassets in Resources */,
 				1C0A7E5D2B9F4C6E8A3D0B72 /* AppIcon.icon in Resources */,
 			);
@@ -518,6 +523,7 @@
 				C9D3D75A654795CF00269EDD /* Preview Assets.xcassets in Resources */,
 				5D8E31A07C4B92F6E0A1B3D4 /* Shared.xcstrings in Resources */,
 				E1A2B3C4D5E6F70812345603 /* InfoPlist.xcstrings in Resources */,
+				E1A2B3C4D5E6F70812345613 /* PrivacyInfo.xcprivacy in Resources */,
 				C3D5E7F92A4B6C8DAE3F5A72 /* Localizable.xcstrings in Resources */,
 				4B899032D99D009830CF45A8 /* Glyphs.xcassets in Resources */,
 				1C0A7E5D2B9F4C6E8A3D0B73 /* AppIcon.icon in Resources */,
@@ -718,7 +724,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -754,6 +760,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_ASSET_PATHS = "\"Clinkr/Preview Content\"";
 				INFOPLIST_KEY_CFBundleDisplayName = Clinkr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -774,6 +781,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				DEVELOPMENT_ASSET_PATHS = "\"Clinkr Watch App/Preview Content\"";
 				INFOPLIST_KEY_CFBundleDisplayName = Clinkr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.colaiacovo.clinkr;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.colaiacovo.clinkr.watchkitapp;
@@ -825,6 +833,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_ASSET_PATHS = "\"Clinkr/Preview Content\"";
 				INFOPLIST_KEY_CFBundleDisplayName = Clinkr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -888,7 +897,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -939,6 +948,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				DEVELOPMENT_ASSET_PATHS = "\"Clinkr Watch App/Preview Content\"";
 				INFOPLIST_KEY_CFBundleDisplayName = Clinkr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.colaiacovo.clinkr;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.colaiacovo.clinkr.watchkitapp;
