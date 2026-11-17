@@ -1,14 +1,14 @@
 # Privacy policy · Política de privacidad
 
-Clinkr is an iPhone app with an Apple Watch companion. / Clinkr es una app para iPhone con una app compañera para Apple Watch.
+Clinkr is an Apple Watch app with an iPhone companion. / Clinkr es una app para Apple Watch con una app compañera para iPhone.
 
 **Effective date · Vigente desde:** `[FECHA / DATE: the owner fills this in before submitting]`
 
 ## Español
 
-**En corto:** tus datos quedan en tu iPhone y tu Watch. Yo no recibo nada.
+**En corto:** tus datos quedan en tu Watch y tu iPhone. Yo no recibo nada.
 
-- **Qué se guarda.** Las noches que registrás: qué tomaste y a qué hora, el agua, y el nombre que le pongas a una noche. La noche en curso vive en tu Watch y las noches terminadas, en tu iPhone.
+- **Qué se guarda.** Las noches que registrás en el Watch: qué tomaste y a qué hora, y el agua. La noche en curso vive en tu Watch. Las noches terminadas pasan a tu iPhone, donde les podés poner un nombre.
 - **Cómo viaja.** El Watch manda cada noche terminada al iPhone emparejado con WatchConnectivity, el sistema de Apple. No pasa por ningún servidor mío.
 - **Qué no hay.** Clinkr no tiene cuentas, no hace conexiones a internet, no usa analíticas, publicidad ni SDK de terceros, y no te rastrea. No usa Salud, ubicación, contactos, cámara, micrófono ni notificaciones. No estima alcohol en sangre.
 - **Registros técnicos.** La app escribe registros de funcionamiento con las herramientas de Apple (`os.Logger` y MetricKit). Quedan en tu dispositivo. Solo salen si vos mandás un diagnóstico, por ejemplo a quien te ayude con un problema.
@@ -20,9 +20,9 @@ Clinkr is an iPhone app with an Apple Watch companion. / Clinkr es una app para 
 
 ## English
 
-**In short:** your data stays on your iPhone and your Watch. I don't receive anything.
+**In short:** your data stays on your Watch and your iPhone. I don't receive anything.
 
-- **What's stored.** The nights you log: what you drank and when, water, and any name you give a night. Tonight's night lives on your Watch, and finished nights live on your iPhone.
+- **What's stored.** The nights you log on the Watch: what you drank and when, and water. Tonight's night lives on your Watch. Finished nights move to your iPhone, where you can give them a name.
 - **How it travels.** The Watch sends each finished night to the paired iPhone using Apple's WatchConnectivity. It doesn't go through any server of mine.
 - **What isn't there.** Clinkr has no accounts, makes no network requests, and uses no analytics, ads or third-party SDKs. It doesn't track you. It doesn't use Health, location, contacts, camera, microphone or notifications. It never estimates blood alcohol.
 - **Technical logs.** The app writes operating logs with Apple's tools (`os.Logger` and MetricKit). They stay on your device. They only leave if you send a diagnostic yourself, for example to someone helping you with a problem.
