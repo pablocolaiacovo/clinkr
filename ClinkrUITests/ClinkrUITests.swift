@@ -114,7 +114,12 @@ final class ClinkrUITests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 30) + "Karaoke")
-        app.alerts.buttons["Save"].tap()
+        // On a short screen the alert is still moving above the keyboard, so the first tap can land where Save was.
+        let save = app.alerts.buttons["Save"]
+        save.tap()
+        if !save.waitForNonExistence(timeout: 2) {
+            save.tap()
+        }
 
         XCTAssertTrue(app.buttons["Karaoke"].waitForExistence(timeout: 5))
         app.buttons["BackButton"].tap()
