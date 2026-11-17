@@ -15,7 +15,7 @@ Read the current values from `Clinkr.xcodeproj/project.pbxproj`:
 grep -E "MARKETING_VERSION|CURRENT_PROJECT_VERSION" Clinkr.xcodeproj/project.pbxproj | sort -u
 ```
 
-List the changes since the last tag with `git log --oneline $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD`. Propose the next version using the rules in CONTRIBUTING.md (patch for fixes, minor for features, stay on `0.x` before the first public release). The build number goes up by one. **Confirm both numbers with the user before changing anything.**
+List the changes since the last tag with `git log --oneline $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD`. Propose the next version using the rules in CONTRIBUTING.md (patch for fixes, minor for features). The build number goes up by one. **Confirm both numbers with the user before changing anything.**
 
 ## 2. Check the release is ready
 
