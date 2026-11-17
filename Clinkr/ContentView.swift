@@ -5,8 +5,12 @@ import os
 /// The History screen: every night received from the Watch, newest first, grouped by month.
 struct ContentView: View {
     /// UI tests ask for longer: on a slow test machine, finding Undo and tapping it can take more than 5 seconds.
-    static let undoDuration: Duration = .seconds(
-        ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #if DEBUG
+        static let undoDuration: Duration = .seconds(
+            ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #else
+        static let undoDuration: Duration = .seconds(5)
+    #endif
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
