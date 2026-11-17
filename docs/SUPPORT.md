@@ -9,7 +9,7 @@
 **Preguntas frecuentes**
 
 - **Mi noche no aparece en el iPhone.** Revisá que el Watch esté emparejado con ese iPhone y cerca, y abrí la app en los dos. El Watch no borra la noche hasta que el iPhone la confirma, así que no se pierde.
-- **¿Cómo renombro o borro una noche?** En el iPhone, abrí la noche desde el Historial. Ahí podés renombrarla o borrarla.
+- **¿Cómo renombro o borro una noche?** En el iPhone, tocá la noche y después su nombre para renombrarla. Para borrarla, deslizala hacia la izquierda en la lista. Tenés unos segundos para deshacer.
 - **Me equivoqué de toque.** Después de agregar algo, y de Terminar la noche, tenés 5 segundos para deshacer desde el aviso que aparece en el Watch.
 - **¿Dónde están mis datos?** Solo en tus dispositivos. Mirá la [política de privacidad](PRIVACY.md).
 
@@ -24,7 +24,7 @@
 **Common questions**
 
 - **My night isn't on the iPhone.** Check that the Watch is paired with that iPhone and nearby, and open the app on both. The Watch doesn't delete the night until the iPhone confirms it, so it isn't lost.
-- **How do I rename or delete a night?** On the iPhone, open the night from History. You can rename or delete it there.
+- **How do I rename or delete a night?** On the iPhone, tap the night and then its name to rename it. To delete it, swipe it left in the list. You get a few seconds to undo.
 - **I tapped the wrong thing.** After adding something, and after End night, you have 5 seconds to undo it from the toast on the Watch.
 - **Where is my data?** Only on your devices. See the [privacy policy](PRIVACY.md).
 

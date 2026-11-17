@@ -36,7 +36,7 @@ To review the full flow you need an iPhone paired with an Apple Watch:
 2. Open Clinkr on the Watch. The Tonight screen shows an empty ring.
 3. Swipe to Add and tap a drink type or water. A toast with an Undo button shows for 5 seconds.
 4. Swipe to Night and tap End night. The Watch says "Night saved. Get home safe."
-5. After the 5-second undo window, open Clinkr on the iPhone. The night appears in History. Tap it to see the recap. A night can be renamed or deleted there.
+5. After the 5-second undo window, open Clinkr on the iPhone. The night appears in History. Tap it to see the recap, where tapping the name renames it. Swiping a night left in History deletes it, with Undo.
 
 A short screen recording of this flow: [LINK TO VIDEO: the owner adds it]
 
