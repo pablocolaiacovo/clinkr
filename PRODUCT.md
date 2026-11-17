@@ -50,7 +50,7 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 - Watch button labels and toast messages must fit one line, including in Spanish, which runs longer than English. Cut words before cutting size. Longer messages, like the water break nudge, may wrap.
 
 **Undecided:**
-- The privacy position. Today's data lives on the Watch, and there is no account or backend, but iCloud backup (#34) and Apple Health (#35) are open ideas. Don't claim anything about privacy yet.
+- Whether the privacy position changes. Today data stays on the user's Watch and iPhone, nothing is collected, and there is no account or backend (`docs/PRIVACY.md`). iCloud backup (#34) and Apple Health (#35) are open ideas that would mean revisiting the policy first.
 - The App Store age rating and listing (#29, #30).
 
 ## Brand Commitments

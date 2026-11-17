@@ -17,6 +17,8 @@ An iPhone app with a companion Apple Watch app, written in SwiftUI. It's a hobby
 | `scripts/test.sh` | | Lint and tests, used by CI too |
 | `docs/ARCHITECTURE.md` | | Mermaid diagrams of how the apps fit together |
 | `docs/DEBUGGING.md` | | How to read the apps' logs in Console.app, find crash reports and get a sysdiagnose from a tester |
+| `docs/PRIVACY.md`, `docs/SUPPORT.md` | | Privacy policy and support page, in Spanish and English. Their GitHub URLs go in App Store Connect. Update the policy if what the apps store or send changes |
+| `docs/APP-STORE-REVIEW.md` | | App Store Connect answers, App Review notes and the owner's submission checklist |
 | `docs/decisions/` | | Decisions and the reasons behind them, one dated file each. Read the relevant ones before changing something that looks deliberate |
 | `PRODUCT.md` | | Who the app is for, what it's for, and its voice and principles. Read it before designing a screen or writing copy |
 | `DESIGN.md` | | The look of the apps as built: tokens, components and visual rules. `.impeccable/design.json` is its generated sidecar |
