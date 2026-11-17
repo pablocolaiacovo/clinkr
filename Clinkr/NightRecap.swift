@@ -42,10 +42,16 @@ struct NightRecap: View {
                 draftName = night.displayName
                 isRenaming = true
             } label: {
-                Text(night.displayName)
-                    .typeStyle(.display)
-                    .foregroundStyle(.ink)
-                    .multilineTextAlignment(.leading)
+                HStack(alignment: .firstTextBaseline, spacing: Space.s2) {
+                    Text(night.displayName)
+                        .typeStyle(.display)
+                        .foregroundStyle(.ink)
+                        .multilineTextAlignment(.leading)
+                    Image(systemName: "pencil")
+                        .typeStyle(.label)
+                        .foregroundStyle(.inkMuted)
+                        .accessibilityHidden(true)
+                }
             }
             .buttonStyle(.plain)
             .accessibilityHint(Text("Cambia el nombre de la noche", comment: "VoiceOver hint on the night's name"))
@@ -353,7 +359,7 @@ extension View {
 #if DEBUG
     #Preview("Recap") {
         let container = try! ModelContainer(
-            for: SavedNight.self,
+            for: SavedNight.self, DeletedNight.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         let night = SavedNight(SavedNight.sampleNights()[0])

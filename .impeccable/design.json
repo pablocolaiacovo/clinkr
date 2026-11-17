@@ -425,7 +425,7 @@
       "kind": "custom",
       "refersTo": "toast",
       "description": "Shown for 5 seconds after every add, with one-tap Undo.",
-      "html": "<div class=\"ds-toast\"><span>Cheers! That's 4.</span><button class=\"ds-undo\">Undo</button></div>",
+      "html": "<div class=\"ds-toast\"><span>That's 4.</span><button class=\"ds-undo\">Undo</button></div>",
       "css": ".ds-toast{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:8px;padding:4px 4px 4px 12px;border-radius:999px;background:#2A2735;color:#FFF7EC}.ds-undo{font-family:ui-rounded,\"SF Pro Rounded\",system-ui,sans-serif;font-weight:600;font-size:16px;border:none;border-radius:999px;cursor:pointer;transition:transform .08s;min-height:44px;padding:0 12px;background:#FFF7EC;color:#000000}.ds-undo:hover{filter:brightness(.92)}.ds-undo:active{transform:scale(.92)}.ds-undo:focus-visible{outline:2px solid #4FD8FF;outline-offset:2px}"
     },
     {

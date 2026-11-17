@@ -4,7 +4,12 @@ import SwiftUI
 /// confirmation: Undo removes the entry straight away.
 struct UndoToast: View {
     /// UI tests ask for longer: on a slow test machine, finding Undo and tapping it can take more than 5 seconds.
-    static let duration: Duration = .seconds(ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #if DEBUG
+        static let duration: Duration = .seconds(
+            ProcessInfo.processInfo.environment["UNDO_SECONDS"].flatMap(Int.init) ?? 5)
+    #else
+        static let duration: Duration = .seconds(5)
+    #endif
     static let animation = Motion.standard
 
     let type: DrinkType
@@ -23,7 +28,7 @@ struct UndoToast: View {
 
     static func message(for type: DrinkType, count: Int) -> LocalizedStringResource {
         if type.countsAsDrink {
-            LocalizedStringResource("¡Salud! Van \(count).", comment: "Undo toast after adding a drink")
+            LocalizedStringResource("Van \(count).", comment: "Undo toast after adding a drink")
         } else {
             LocalizedStringResource("¡Agüita! Van \(count).", comment: "Undo toast after adding a water")
         }
@@ -72,6 +77,8 @@ struct UndoButton: View {
         Button(action: action) {
             undoLabel
                 .typeStyle(.watchBody)
+                .lineLimit(1)
+                .fixedSize()
                 .foregroundStyle(.bg)
                 .padding(.horizontal, Space.s3)
                 .frame(minWidth: Size.minTarget, maxWidth: fillsWidth ? .infinity : nil, minHeight: Size.minTarget)

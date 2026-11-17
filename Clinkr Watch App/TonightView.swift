@@ -47,7 +47,7 @@ struct TonightView: View {
                 if nightStore.saveFailed {
                     Text(Self.notSaved)
                 }
-                Text("Deslizá para arrancar la noche", comment: "Tonight screen before the first drink")
+                Text("Deslizá para anotar", comment: "Tonight screen before the first drink")
             }
             .typeStyle(.watchCaption)
             .foregroundStyle(.inkMuted)
@@ -65,6 +65,7 @@ struct TonightView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
                 .accessibilityLabel(Text("\(night.drinkCount) tragos"))
+                .privacySensitive()
             Text(Self.caption(forNightStartingAt: night.startTime, saveFailed: nightStore.saveFailed))
                 .typeStyle(.watchCaption)
                 .foregroundStyle(.inkMuted)

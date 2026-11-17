@@ -38,7 +38,7 @@ struct ClinkrApp: App {
         #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("-SampleNights") {
                 let container = try ModelContainer(
-                    for: SavedNight.self,
+                    for: SavedNight.self, DeletedNight.self,
                     configurations: ModelConfiguration(isStoredInMemoryOnly: true)
                 )
                 for night in SavedNight.sampleNights() {
@@ -48,7 +48,7 @@ struct ClinkrApp: App {
                 return container
             }
         #endif
-        return try ModelContainer(for: SavedNight.self)
+        return try ModelContainer(for: SavedNight.self, DeletedNight.self)
     }
 
     var body: some Scene {
@@ -56,6 +56,7 @@ struct ClinkrApp: App {
             if let container {
                 ContentView()
                     .modelContainer(container)
+                    .environment(nightReceiver)
             } else {
                 Text(
                     "No pudimos abrir tus noches. Probá abrir Clinkr de nuevo.",

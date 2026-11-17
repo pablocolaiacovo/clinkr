@@ -89,7 +89,7 @@ final class ClinkrWatchAppUITests: XCTestCase {
         tapOnceStill(failedMessage)
         XCTAssertTrue(waitToDisappear(failedMessage), "Tapping the message closes it")
 
-        let emptyTonight = notSaved.matching(NSPredicate(format: "label CONTAINS 'Swipe up to start the night'"))
+        let emptyTonight = notSaved.matching(NSPredicate(format: "label CONTAINS 'Swipe up to log'"))
         XCTAssertTrue(emptyTonight.firstMatch.waitForExistence(timeout: 5), "The empty Tonight keeps its hint")
     }
 
@@ -116,7 +116,7 @@ final class ClinkrWatchAppUITests: XCTestCase {
 
     /// The simulator keeps saved nights between runs, so each run starts from an empty Tonight.
     private func endAnyNightLeftOver() {
-        let emptyTonight = app.descendants(matching: .any)["Swipe up to start the night"]
+        let emptyTonight = app.descendants(matching: .any)["Swipe up to log"]
         guard !emptyTonight.waitForExistence(timeout: 10) else { return }
         swipeUp(to: app.buttons["End night"])
         tapOnceStill(app.buttons["End night"])

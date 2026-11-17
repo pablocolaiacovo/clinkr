@@ -30,7 +30,7 @@ struct SavedNightTests {
 
     init() throws {
         container = try ModelContainer(
-            for: SavedNight.self,
+            for: SavedNight.self, DeletedNight.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
     }
@@ -46,11 +46,11 @@ struct SavedNightTests {
         let original = night()
 
         do {
-            let firstRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            let firstRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
             try SavedNight.insertIfNew(original, into: firstRun.mainContext)
         }
 
-        let secondRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+        let secondRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
         #expect(try savedNights(in: secondRun.mainContext).map(\.night) == [original])
     }
 
@@ -81,13 +81,13 @@ struct SavedNightTests {
         let configuration = ModelConfiguration(url: folderURL.appending(path: "test.store"))
 
         do {
-            let firstRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            let firstRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
             try SavedNight.insertIfNew(night(), into: firstRun.mainContext)
             try savedNights(in: firstRun.mainContext).first?.rename(to: "  Birthday ")
             try firstRun.mainContext.save()
         }
 
-        let secondRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+        let secondRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
         #expect(try savedNights(in: secondRun.mainContext).map(\.displayName) == ["Birthday"])
     }
 
@@ -109,15 +109,94 @@ struct SavedNightTests {
         let kept = night()
 
         do {
-            let firstRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            let firstRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
             try SavedNight.insertIfNew(night(), into: firstRun.mainContext)
             try SavedNight.insertIfNew(kept, into: firstRun.mainContext)
             let deleted = try savedNights(in: firstRun.mainContext).filter { $0.id != kept.id }
             try SavedNight.delete(deleted, from: firstRun.mainContext)
         }
 
-        let secondRun = try ModelContainer(for: SavedNight.self, configurations: configuration)
+        let secondRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
         #expect(try savedNights(in: secondRun.mainContext).map(\.id) == [kept.id])
+    }
+
+    @Test func aDeletedNightIsNotSavedAgainWhenResentAfterAnAppRestart() throws {
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folderURL) }
+        let configuration = ModelConfiguration(url: folderURL.appending(path: "test.store"))
+        let deleted = night()
+
+        do {
+            let firstRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
+            try SavedNight.insertIfNew(deleted, into: firstRun.mainContext)
+            try SavedNight.delete(savedNights(in: firstRun.mainContext), from: firstRun.mainContext)
+        }
+
+        let secondRun = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
+        #expect(try !SavedNight.insertIfNew(deleted, into: secondRun.mainContext))
+        #expect(try savedNights(in: secondRun.mainContext).isEmpty)
+    }
+
+    @Test func undoRestoresTheNightWithItsName() throws {
+        let context = container.mainContext
+        let original = night()
+        try SavedNight.insertIfNew(original, into: context)
+        try savedNights(in: context).first?.rename(to: "Birthday")
+
+        let copies = try SavedNight.delete(savedNights(in: context), from: context)
+        try SavedNight.restore(copies, into: context)
+
+        #expect(try savedNights(in: context).map(\.night) == [original])
+        #expect(try savedNights(in: context).map(\.displayName) == ["Birthday"])
+        #expect(try context.fetchCount(FetchDescriptor<DeletedNight>()) == 0)
+    }
+
+    @Test func aRestoredNightIsADuplicateAgainAndCanBeDeletedAgain() throws {
+        let context = container.mainContext
+        let original = night()
+        try SavedNight.insertIfNew(original, into: context)
+        try SavedNight.restore(SavedNight.delete(savedNights(in: context), from: context), into: context)
+
+        #expect(try !SavedNight.insertIfNew(original, into: context))
+        #expect(try savedNights(in: context).count == 1)
+
+        try SavedNight.delete(savedNights(in: context), from: context)
+        #expect(try !SavedNight.insertIfNew(original, into: context))
+        #expect(try savedNights(in: context).isEmpty)
+    }
+
+    @Test func undoingTheLastDeleteLeavesAnEarlierOneDeleted() throws {
+        let context = container.mainContext
+        let first = night()
+        let second = night()
+        try SavedNight.insertIfNew(first, into: context)
+        try SavedNight.insertIfNew(second, into: context)
+
+        try SavedNight.delete(savedNights(in: context).filter { $0.id == first.id }, from: context)
+        let copies = try SavedNight.delete(savedNights(in: context), from: context)
+        try SavedNight.restore(copies, into: context)
+
+        #expect(try savedNights(in: context).map(\.id) == [second.id])
+        #expect(try !SavedNight.insertIfNew(first, into: context))
+    }
+
+    /// The database from before deleted ids were remembered had only `SavedNight`.
+    @Test func aDatabaseWithoutDeletedNightsStillOpens() throws {
+        try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folderURL) }
+        let configuration = ModelConfiguration(url: folderURL.appending(path: "test.store"))
+        let original = night()
+
+        do {
+            let oldVersion = try ModelContainer(for: SavedNight.self, configurations: configuration)
+            try SavedNight.insertIfNew(original, into: oldVersion.mainContext)
+        }
+
+        let newVersion = try ModelContainer(for: SavedNight.self, DeletedNight.self, configurations: configuration)
+        let context = newVersion.mainContext
+        #expect(try savedNights(in: context).map(\.night) == [original])
+        try SavedNight.delete(savedNights(in: context), from: context)
+        #expect(try !SavedNight.insertIfNew(original, into: context))
     }
 
     @Test func nightsAreGroupedByMonthNewestFirst() {
@@ -152,7 +231,7 @@ struct NightReceiverTests {
 
     init() throws {
         container = try ModelContainer(
-            for: SavedNight.self,
+            for: SavedNight.self, DeletedNight.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
     }
@@ -181,12 +260,47 @@ struct NightReceiverTests {
         #expect(try await savedCount() == 1)
     }
 
+    @Test func aDeletedNightResentByTheWatchIsAcknowledgedButNotSavedAgain() async throws {
+        let receiver = await MainActor.run { NightReceiver(context: container.mainContext) }
+        let night = Night(name: "Oct 29", startTime: .now)
+        receiver.session(.default, didReceiveUserInfo: try night.transferUserInfo())
+        try await MainActor.run {
+            let context = container.mainContext
+            try SavedNight.delete(context.fetch(FetchDescriptor<SavedNight>()), from: context)
+        }
+
+        receiver.session(.default, didReceiveUserInfo: try night.transferUserInfo())
+
+        #expect(try await savedCount() == 0)
+        #expect(await MainActor.run { receiver.save(night) })
+        #expect(try await savedCount() == 0)
+    }
+
     @Test func aMessageWithNoNightSavesNothing() async throws {
         let receiver = await MainActor.run { NightReceiver(context: container.mainContext) }
 
         receiver.session(.default, didReceiveUserInfo: ["something": "else"])
 
         #expect(try await savedCount() == 0)
+    }
+}
+
+struct WatchSetupTests {
+    @Test(arguments: [(true, true), (true, false), (false, true), (false, false)])
+    func nothingIsKnownBeforeActivation(isPaired: Bool, isWatchAppInstalled: Bool) {
+        #expect(WatchSetup(isActivated: false, isPaired: isPaired, isWatchAppInstalled: isWatchAppInstalled) == nil)
+    }
+
+    @Test func noPairedWatchAsksForOne() {
+        #expect(WatchSetup(isActivated: true, isPaired: false, isWatchAppInstalled: false) == .noWatch)
+    }
+
+    @Test func aPairedWatchWithoutTheAppAsksToInstallIt() {
+        #expect(WatchSetup(isActivated: true, isPaired: true, isWatchAppInstalled: false) == .appNotInstalled)
+    }
+
+    @Test func theInstalledAppIsReadyForTheFirstNight() {
+        #expect(WatchSetup(isActivated: true, isPaired: true, isWatchAppInstalled: true) == .ready)
     }
 }
 

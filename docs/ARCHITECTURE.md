@@ -29,18 +29,19 @@ flowchart LR
 
 ## 2. Inside each app
 
-Both apps are SwiftUI apps with the same shape. Each one starts at an `@main` App struct, which shows a `ContentView`. Both compile `Shared/`: the data model (`DrinkType`, `DrinkEntry`, `Night`) and the design system (colors, text styles, spacing, radii and drink glyphs). The Watch's screens are vertical pages: Tonight, with the `TallyRing`, then Add, then Night, which lists tonight's entries (a swipe removes one) and ends the night. The Watch keeps tonight in `NightStore`, which the Add screen's drink buttons and a tap or double tap on the ring write to. The store remembers the last entry added, and `ContentView` shows an `UndoToast` for it under the screen for 5 seconds; Undo removes that entry. After 4 drinks in a row with no water, `ContentView` also slides up a `WaterNudgeView` once that drink's toast has had its 5 seconds, at most once an hour and never within 30 minutes of a "Later". A night ends with End night, or when the next drink comes after a 12-hour gap (End night that late also counts from the last entry), and then moves to `pendingNights`, a queue waiting for the iPhone sync. For 5 seconds after End night, Undo takes the night back out of the queue with `reopenNight(id:)`, as long as it's still the last night there and no new one has started. Once Undo is over, `NightSender` sends the night to the iPhone. On the iPhone, `NightReceiver` starts at launch and saves each night it receives as a `SavedNight` in SwiftData, Apple's on-device database, skipping any id it already has. It then sends a receipt back, and only that removes the night from the Watch's queue. Until then, the Watch sends the night again whenever the app comes and goes, and a background refresh about every 15 minutes does the same. If the database won't open, the iPhone shows a message instead of the list and receives nothing, so the Watch keeps its nights. `ContentView` is the History screen: the nights grouped by month (`SavedNight.byMonth`), each named from its weekday unless the user renamed it, with swipe-to-delete. A row opens `NightRecap`, the night's numbers and a Swift Charts timeline, where tapping the name renames it. In Debug builds, launching with `-SampleNights` (off by default in the Clinkr scheme) fills an in-memory database with sample nights instead, since the simulators can't send real ones. Both apps log what happens to Apple's on-device log through the `Logger` categories in `Shared/Log.swift` (`sync`, `persistence`, `nudge`, `lifecycle`), and the iPhone also logs MetricKit's daily reports under `metrics`. How to read them is in [DEBUGGING.md](DEBUGGING.md).
+Both apps are SwiftUI apps with the same shape. Each one starts at an `@main` App struct, which shows a `ContentView`. Both compile `Shared/`: the data model (`DrinkType`, `DrinkEntry`, `Night`) and the design system (colors, text styles, spacing, radii and drink glyphs). The Watch's screens are vertical pages: Tonight, with the `TallyRing`, then Add, then Night, which lists tonight's entries (a swipe removes one) and ends the night. The Watch keeps tonight in `NightStore`, which the Add screen's drink buttons and a tap or double tap on the ring write to. The store remembers the last entry added, and `ContentView` shows an `UndoToast` for it under the screen for 5 seconds; Undo removes that entry. After 4 drinks in a row with no water, `ContentView` also slides up a `WaterNudgeView` once that drink's toast has had its 5 seconds, at most once an hour and never within 30 minutes of a "Later". A night ends with End night, or when the next drink comes after a 12-hour gap (End night that late also counts from the last entry), and then moves to `pendingNights`, a queue waiting for the iPhone sync. For 5 seconds after End night, Undo takes the night back out of the queue with `reopenNight(id:)`, as long as it's still the last night there and no new one has started. Once Undo is over, `NightSender` sends the night to the iPhone. On the iPhone, `NightReceiver` starts at launch and saves each night it receives as a `SavedNight` in SwiftData, Apple's on-device database, skipping any id it already has. It then sends a receipt back, and only that removes the night from the Watch's queue. Until then, the Watch sends the night again whenever the app comes and goes, and a background refresh about every 15 minutes does the same. If the database won't open, the iPhone shows a message instead of the list and receives nothing, so the Watch keeps its nights. `ContentView` is the History screen: the nights grouped by month (`SavedNight.byMonth`), each named from its weekday unless the user renamed it, with swipe-to-delete. A delete is saved straight away together with the night's id as a `DeletedNight`, so a resend from the Watch is skipped like a duplicate and still gets its receipt. For 5 seconds (until the next delete or an undo with VoiceOver on, and never past going to the background), a bar at the bottom offers Undo, which saves the night again with its name and forgets the id. With no nights yet, it shows `EmptyHistory`, which explains that nights are logged on the Watch and gives the next step from the Watch's state: pair a Watch, install the Watch app, or log a night. `NightReceiver`, as the session's one delegate, keeps that state as `watchSetup` and updates it when the session activates and when the Watch's state changes. A row opens `NightRecap`, the night's numbers and a Swift Charts timeline, where tapping the name renames it. In Debug builds, launching with `-SampleNights` (off by default in the Clinkr scheme) fills an in-memory database with sample nights instead, since the simulators can't send real ones. Both apps log what happens to Apple's on-device log through the `Logger` categories in `Shared/Log.swift` (`sync`, `persistence`, `nudge`, `lifecycle`), and the iPhone also logs MetricKit's daily reports under `metrics`. How to read them is in [DEBUGGING.md](DEBUGGING.md).
 
 ```mermaid
 flowchart TB
     subgraph phone["iPhone app (Clinkr/)"]
         pApp["ClinkrApp<br/>@main entry point"] --> pView["ContentView<br/>History screen"]
         pView --> pRecap["NightRecap<br/>one night's numbers and timeline"]
-        pModel["SavedNight<br/>SwiftData database"]
+        pModel["SavedNight + DeletedNight ids<br/>SwiftData database"]
         pSync["NightReceiver<br/>(WCSession)"]
-        pView -- "reads, deletes" --> pModel
+        pView -- "reads, deletes, restores" --> pModel
         pRecap -- "renames" --> pModel
         pSync -- "insertIfNew(night)" --> pModel
+        pSync -- "watchSetup" --> pView
     end
 
     subgraph watch["Watch app (Clinkr Watch App/)"]
@@ -74,7 +75,7 @@ flowchart TB
 
 ## 3. How a night travels from the Watch to the iPhone
 
-Apple's WatchConnectivity framework queues the night and delivers it when it can, even if the iPhone app isn't running. The system wakes the iPhone app in the background to receive it. The Watch keeps the night until the iPhone's receipt arrives and sends it again if it can, so a night can arrive more than once. The iPhone matches by id and sends a receipt each time.
+Apple's WatchConnectivity framework queues the night and delivers it when it can, even if the iPhone app isn't running. The system wakes the iPhone app in the background to receive it. The Watch keeps the night until the iPhone's receipt arrives and sends it again if it can, so a night can arrive more than once. The iPhone matches by id, including the ids of nights the user deleted, and sends a receipt each time.
 
 ```mermaid
 sequenceDiagram
@@ -88,7 +89,7 @@ sequenceDiagram
     Note over W: Held back for 5 seconds, while Undo shows
     W->>WC: transferUserInfo(night)
     WC->>P: didReceiveUserInfo, when the system decides
-    P->>P: Save it unless the id is already there
+    P->>P: Save it unless the id is already there or was deleted
     P->>WC: transferUserInfo(saved receipt)
     WC->>W: didReceiveUserInfo
     W->>W: Remove the night from the queue

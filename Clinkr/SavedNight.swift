@@ -25,13 +25,15 @@ final class SavedNight {
         Night(id: id, name: name, startTime: startTime, endTime: endTime, entries: entries)
     }
 
-    /// Adds a night unless it's already saved, so a resend from the Watch makes no duplicate and doesn't undo a rename.
-    /// Saves either way, which also retries a night whose earlier save failed. Returns whether it was new.
+    /// Adds a night unless it's already saved or the user deleted it, so a resend from the Watch makes no duplicate,
+    /// doesn't undo a rename and doesn't bring a deleted night back. Saves either way, which also retries a night whose
+    /// earlier save failed. Returns whether it was added.
     @discardableResult
     static func insertIfNew(_ night: Night, into context: ModelContext) throws -> Bool {
         let id = night.id
-        let matching = FetchDescriptor<SavedNight>(predicate: #Predicate { $0.id == id })
-        let isNew = try context.fetchCount(matching) == 0
+        let saved = FetchDescriptor<SavedNight>(predicate: #Predicate { $0.id == id })
+        let deleted = FetchDescriptor<DeletedNight>(predicate: #Predicate { $0.id == id })
+        let isNew = try context.fetchCount(saved) == 0 && context.fetchCount(deleted) == 0
         if isNew {
             context.insert(SavedNight(night))
         }
@@ -40,10 +42,47 @@ final class SavedNight {
     }
 }
 
+/// The id of a night the user deleted, so a resend from the Watch is skipped instead of saved again. Kept for good:
+/// a UUID per deleted night.
+@Model
+final class DeletedNight {
+    var id: UUID
+
+    init(id: UUID) {
+        self.id = id
+    }
+}
+
 extension SavedNight {
-    static func delete(_ nights: [SavedNight], from context: ModelContext) throws {
+    /// A deleted night as it was, so Undo can put it back with its name.
+    struct Copy: Equatable {
+        let night: Night
+        let customName: String?
+    }
+
+    /// Deletes the nights and remembers their ids in the same save. Returns what `restore` needs to undo it.
+    @discardableResult
+    static func delete(_ nights: [SavedNight], from context: ModelContext) throws -> [Copy] {
+        let copies = nights.map { Copy(night: $0.night, customName: $0.customName) }
         for night in nights {
+            context.insert(DeletedNight(id: night.id))
             context.delete(night)
+        }
+        try context.save()
+        return copies
+    }
+
+    /// Puts deleted nights back and forgets they were deleted, so a resend from the Watch is a duplicate again.
+    static func restore(_ copies: [Copy], into context: ModelContext) throws {
+        let ids = copies.map(\.night.id)
+        let deleted = FetchDescriptor<DeletedNight>(predicate: #Predicate { ids.contains($0.id) })
+        for deletedNight in try context.fetch(deleted) {
+            context.delete(deletedNight)
+        }
+        for copy in copies {
+            let night = SavedNight(copy.night)
+            night.customName = copy.customName
+            context.insert(night)
         }
         try context.save()
     }

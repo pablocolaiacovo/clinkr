@@ -127,6 +127,28 @@
         }
       }
     },
+    "Anotá cada trago y cada agua con un toque en el Apple Watch. Cuando terminás la noche, aparece acá." : {
+      "comment" : "Empty list of nights: how the Watch and the iPhone work together",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log every drink and every water with one tap on your Apple Watch. When you end the night, it shows up here."
+          }
+        }
+      }
+    },
+    "Así funciona Clinkr" : {
+      "comment" : "Title of the empty list of nights, before an explanation",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How Clinkr works"
+          }
+        }
+      }
+    },
     "Cambia el nombre de la noche" : {
       "comment" : "VoiceOver hint on the night's name",
       "localizations" : {
@@ -171,6 +193,17 @@
         }
       }
     },
+    "Deshacer" : {
+      "comment" : "Button that brings back the night just deleted",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
     "Guardar" : {
       "comment" : "Saves the night's new name",
       "localizations" : {
@@ -189,6 +222,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Time"
+          }
+        }
+      }
+    },
+    "Instalá Clinkr en tu reloj desde la app Watch de este iPhone." : {
+      "comment" : "Empty list of nights, when the Watch is paired but the Clinkr Watch app isn't installed",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Clinkr on your watch from the Watch app on this iPhone."
           }
         }
       }
@@ -226,6 +270,17 @@
         }
       }
     },
+    "Noche borrada" : {
+      "comment" : "Shown with Undo after deleting a night",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night deleted"
+          }
+        }
+      }
+    },
     "Noche del %@" : {
       "comment" : "Default night name. The value is the weekday it started, like \"viernes\"",
       "localizations" : {
@@ -248,6 +303,17 @@
         }
       }
     },
+    "Para usar Clinkr necesitás un Apple Watch vinculado a este iPhone." : {
+      "comment" : "Empty list of nights, when no Apple Watch is paired with the iPhone",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clinkr needs an Apple Watch paired with this iPhone."
+          }
+        }
+      }
+    },
     "Ritmo" : {
       "comment" : "Recap tile: drinks per hour",
       "localizations" : {
@@ -259,13 +325,13 @@
         }
       }
     },
-    "Todavía no hay noches. Arrancá una en tu reloj." : {
-      "comment" : "Empty state of the list of nights",
+    "Todavía no hay noches. Las que anotes en el reloj aparecen acá." : {
+      "comment" : "Empty list of nights, when the Clinkr Watch app is installed",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No nights yet. Start one on your watch."
+            "value" : "No nights yet. Nights you log on your watch show up here."
           }
         }
       }

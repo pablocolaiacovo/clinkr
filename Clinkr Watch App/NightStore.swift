@@ -50,9 +50,11 @@ final class NightStore {
     /// The file in Application Support where the Watch app keeps its nights. A UI test can name another, to make saving
     /// fail.
     nonisolated static var defaultFileURL: URL {
-        if let path = ProcessInfo.processInfo.environment["NIGHTS_FILE"] {
-            return URL(filePath: path)
-        }
+        #if DEBUG
+            if let path = ProcessInfo.processInfo.environment["NIGHTS_FILE"] {
+                return URL(filePath: path)
+            }
+        #endif
         return URL.applicationSupportDirectory.appending(path: "nights.json")
     }
 

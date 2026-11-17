@@ -21,6 +21,14 @@ final class ClinkrUITests: XCTestCase {
             launch(language: "en", locale: "en_US").navigationBars["Your nights"].waitForExistence(timeout: launchWait))
     }
 
+    /// The simulator never receives a night, so the list starts empty.
+    @MainActor
+    func testAnEmptyListExplainsTheWatch() throws {
+        XCTAssertTrue(
+            launch(language: "en", locale: "en_US").staticTexts["How Clinkr works"].waitForExistence(
+                timeout: launchWait))
+    }
+
     /// The newest sample night starts 6 hours ago, so its month leads the list.
     @MainActor
     func testSampleNightsAreGroupedByMonthInSpanish() throws {
@@ -51,6 +59,23 @@ final class ClinkrUITests: XCTestCase {
         app.buttons["Delete"].tap()
 
         XCTAssertTrue(app.staticTexts[label].waitForNonExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Night deleted"].exists)
+    }
+
+    @MainActor
+    func testUndoBringsADeletedNightBack() throws {
+        let app = launch(language: "es-AR", locale: "es_AR", sampleNights: true)
+        let first = night(containing: "Noche del ", in: app)
+        XCTAssertTrue(first.waitForExistence(timeout: launchWait))
+        let label = first.label
+
+        first.swipeLeft()
+        app.buttons["Eliminar"].tap()
+        XCTAssertTrue(app.staticTexts[label].waitForNonExistence(timeout: 5))
+        app.buttons["Deshacer"].tap()
+
+        XCTAssertTrue(app.staticTexts[label].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Deshacer"].waitForNonExistence(timeout: 5))
     }
 
     /// The newest sample night: beer, beer, water, cocktail, shot, shot, beer over 4 hours.
@@ -89,7 +114,12 @@ final class ClinkrUITests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 30) + "Karaoke")
-        app.alerts.buttons["Save"].tap()
+        // On a short screen the alert is still moving above the keyboard, so the first tap can land where Save was.
+        let save = app.alerts.buttons["Save"]
+        save.tap()
+        if !save.waitForNonExistence(timeout: 2) {
+            save.tap()
+        }
 
         XCTAssertTrue(app.buttons["Karaoke"].waitForExistence(timeout: 5))
         app.buttons["BackButton"].tap()
@@ -111,6 +141,8 @@ final class ClinkrUITests: XCTestCase {
     private func launch(language: String, locale: String, sampleNights: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", locale]
+        // Undo outlasts the time a slow test machine takes to find and tap it.
+        app.launchEnvironment["UNDO_SECONDS"] = "30"
         if sampleNights {
             app.launchArguments.append("-SampleNights")
         }

@@ -8,13 +8,13 @@ ios
 
 ## Users
 
-Adults of legal drinking age on a night out with friends, starting in Argentina. They want to keep track of the night, and nothing assumes they want to cut down. People actively trying to moderate are not the primary audience.
+Adults of legal drinking age on a night out with friends, starting in Argentina. They want to keep track of the night so they stay in control of how much they drink. The app is for adults only, rated 18+.
 
 During the night, the user has a drink in the other hand, is often in the dark, and may be a little tipsy. The morning after, they're on their iPhone, wanting to know what happened.
 
 ## Product Purpose
 
-Clinkr is a wrist-first drink counter for a night out. It has two jobs of equal weight:
+Clinkr is a wrist-first drink counter for a night out, there to help you keep your drinking under control. It's fun, but for a good cause, and it never encourages drinking. It has two jobs of equal weight:
 
 - **During the night:** log with one tap on the Watch, and get a rare nudge to drink water.
 - **The morning after:** see what happened through the recap and history on the iPhone.
@@ -50,22 +50,22 @@ A buddy, not a judge. Logging happens in one tap on the wrist, without taking ou
 - Watch button labels and toast messages must fit one line, including in Spanish, which runs longer than English. Cut words before cutting size. Longer messages, like the water break nudge, may wrap.
 
 **Undecided:**
-- The privacy position. Today's data lives on the Watch, and there is no account or backend, but iCloud backup (#34) and Apple Health (#35) are open ideas. Don't claim anything about privacy yet.
-- The App Store age rating and listing (#29, #30).
+- Whether the privacy position changes. Today data stays on the user's Watch and iPhone, nothing is collected, and there is no account or backend (`docs/PRIVACY.md`). iCloud backup (#34) and Apple Health (#35) are open ideas that would mean revisiting the policy first.
+- The App Store listing (#30). The age rating is decided: 18+.
 
 ## Brand Commitments
 
 - **Name:** Clinkr.
 - **Voice:** a friend at the bar. Short, warm and a bit cheeky, in second person and sentence case.
 - **Language:** Spanish first, written in Argentine Spanish with voseo and local words, such as Birra and Trago. English comes second, as an adaptation in the same tone rather than a literal translation. Example: "Noche guardada. Volvé bien." becomes "Night saved. Get home safe."
-- **Counts are friendly facts, not praise.** "Cheers! That's 4." acknowledges a tap and states a number, and the tone is the same at 1 or at 12.- **Never:** comment on body weight or blood alcohol, use guilt, or judge amounts. Safety copy is direct and kind. A week with no drinks reads "Night off", not a zero.
+- **Counts are friendly facts, not praise.** "That's 4." acknowledges a tap and states a number, and the tone is the same at 1 or at 12.- **Never:** comment on body weight or blood alcohol, use guilt, or judge amounts. Safety copy is direct and kind. A week with no drinks reads "Night off", not a zero.
 - **Design system:** the visual authority lives at https://claude.ai/artifact/MUR9q8zqsWysfgui8mdNsh and in `Shared/`.
 
 ## Evidence on Hand
 
 - Real product copy is in `Clinkr Watch App/Localizable.xcstrings` and `Shared/Shared.xcstrings`.
 - The reasons behind past decisions are in `docs/decisions/`, and the planned features are in the GitHub issues.
-- The app is pre-release, on `0.x`, and not yet on TestFlight or the App Store. There are no users, testimonials, reviews, press or usage data. Don't fabricate any.
+- The app is pre-release (version `1.0.0` is set but not shipped) and not yet on TestFlight or the App Store. There are no users, testimonials, reviews, press or usage data. Don't fabricate any.
 
 ## Product Principles
 

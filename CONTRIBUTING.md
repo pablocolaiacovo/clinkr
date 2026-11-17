@@ -71,12 +71,12 @@ Apple apps have two numbers. Both are set at the project level in Xcode, so the 
 
 | Setting in Xcode | Example | Rule |
 |---|---|---|
-| **Version** (`MARKETING_VERSION`) | `0.1.0` | What users see. Uses [semantic versioning](https://semver.org): `MAJOR.MINOR.PATCH`. |
+| **Version** (`MARKETING_VERSION`) | `1.0.0` | What users see. Uses [semantic versioning](https://semver.org): `MAJOR.MINOR.PATCH`. |
 | **Build** (`CURRENT_PROJECT_VERSION`) | `7` | A whole number that goes up by one for every build you upload to TestFlight or the App Store. Never reused. |
 
 For the version number:
 
-- Stay on `0.x` until the first public release. Then go to `1.0.0`.
+- `1.0.0` is the first public release.
 - Bump **PATCH** (`1.0.1`) for bug fixes only.
 - Bump **MINOR** (`1.1.0`) for new features.
 - Bump **MAJOR** (`2.0.0`) for big redesigns or breaking changes, e.g. dropping support for an iOS version.

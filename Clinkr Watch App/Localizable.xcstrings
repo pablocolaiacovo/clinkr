@@ -123,13 +123,13 @@
         }
       }
     },
-    "¡Salud! Van %lld." : {
+    "Van %lld." : {
       "comment" : "Undo toast after adding a drink",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cheers! That's %lld."
+            "value" : "That's %lld."
           }
         },
         "es" : {
@@ -138,13 +138,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "¡Salud! Va %lld."
+                  "value" : "Va %lld."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "¡Salud! Van %lld."
+                  "value" : "Van %lld."
                 }
               }
             }
@@ -185,13 +185,13 @@
         }
       }
     },
-    "Deslizá para arrancar la noche" : {
+    "Deslizá para anotar" : {
       "comment" : "Tonight screen before the first drink",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swipe up to start the night"
+            "value" : "Swipe up to log"
           }
         }
       }
