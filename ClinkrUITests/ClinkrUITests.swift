@@ -51,6 +51,23 @@ final class ClinkrUITests: XCTestCase {
         app.buttons["Delete"].tap()
 
         XCTAssertTrue(app.staticTexts[label].waitForNonExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Night deleted"].exists)
+    }
+
+    @MainActor
+    func testUndoBringsADeletedNightBack() throws {
+        let app = launch(language: "es-AR", locale: "es_AR", sampleNights: true)
+        let first = night(containing: "Noche del ", in: app)
+        XCTAssertTrue(first.waitForExistence(timeout: launchWait))
+        let label = first.label
+
+        first.swipeLeft()
+        app.buttons["Eliminar"].tap()
+        XCTAssertTrue(app.staticTexts[label].waitForNonExistence(timeout: 5))
+        app.buttons["Deshacer"].tap()
+
+        XCTAssertTrue(app.staticTexts[label].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Deshacer"].waitForNonExistence(timeout: 5))
     }
 
     /// The newest sample night: beer, beer, water, cocktail, shot, shot, beer over 4 hours.
@@ -111,6 +128,8 @@ final class ClinkrUITests: XCTestCase {
     private func launch(language: String, locale: String, sampleNights: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", locale]
+        // Undo outlasts the time a slow test machine takes to find and tap it.
+        app.launchEnvironment["UNDO_SECONDS"] = "30"
         if sampleNights {
             app.launchArguments.append("-SampleNights")
         }

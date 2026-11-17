@@ -353,7 +353,7 @@ extension View {
 #if DEBUG
     #Preview("Recap") {
         let container = try! ModelContainer(
-            for: SavedNight.self,
+            for: SavedNight.self, DeletedNight.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         let night = SavedNight(SavedNight.sampleNights()[0])
