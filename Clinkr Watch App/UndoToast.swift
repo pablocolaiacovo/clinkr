@@ -23,7 +23,7 @@ struct UndoToast: View {
 
     static func message(for type: DrinkType, count: Int) -> LocalizedStringResource {
         if type.countsAsDrink {
-            LocalizedStringResource("¡Salud! Van \(count).", comment: "Undo toast after adding a drink")
+            LocalizedStringResource("Van \(count).", comment: "Undo toast after adding a drink")
         } else {
             LocalizedStringResource("¡Agüita! Van \(count).", comment: "Undo toast after adding a water")
         }

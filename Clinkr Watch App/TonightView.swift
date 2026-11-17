@@ -47,7 +47,7 @@ struct TonightView: View {
                 if nightStore.saveFailed {
                     Text(Self.notSaved)
                 }
-                Text("Deslizá para arrancar la noche", comment: "Tonight screen before the first drink")
+                Text("Deslizá para anotar", comment: "Tonight screen before the first drink")
             }
             .typeStyle(.watchCaption)
             .foregroundStyle(.inkMuted)

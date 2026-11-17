@@ -12,8 +12,8 @@ struct UndoToastTests {
     }
 
     @Test func drinkMessageIsPluralizedInSpanish() {
-        #expect(message(.beer, count: 1) == "¡Salud! Va 1.")
-        #expect(message(.shot, count: 4) == "¡Salud! Van 4.")
+        #expect(message(.beer, count: 1) == "Va 1.")
+        #expect(message(.shot, count: 4) == "Van 4.")
     }
 
     @Test func waterHasItsOwnMessage() {
@@ -21,7 +21,7 @@ struct UndoToastTests {
     }
 
     @Test func englishIsAnAdaptation() {
-        #expect(message(.beer, count: 4, in: "en_US") == "Cheers! That's 4.")
+        #expect(message(.beer, count: 4, in: "en_US") == "That's 4.")
         #expect(message(.water, count: 1, in: "en_US") == "Water! That's 1.")
     }
 }

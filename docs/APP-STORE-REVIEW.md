@@ -19,17 +19,17 @@ The app has no encryption of its own and makes no network requests, so it uses n
 
 ## Age rating
 
-Apple computes the rating from the questionnaire, so answer honestly rather than aiming for a rating.
+The rating is 18+ (`docs/decisions/2026-11-16-rated-18-and-never-encouraging-drinking.md`). Apple computes it from the questionnaire.
 
-- **Applies:** "Alcohol, Tobacco, or Drug Use or References". Logging alcoholic drinks is the core of the app. Pick the frequency that honestly describes it.
+- **Applies:** "Alcohol, Tobacco, or Drug Use or References". Logging alcoholic drinks is the core of the app, so answer **Frequent**.
 - **Doesn't apply:** violence, sexual content or nudity, profanity, horror, gambling, medical or health information, mature themes, user-generated content, messaging, social features, ads, web access, loot boxes.
 
-Apple's current definitions (https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions) put infrequent alcohol references at 13+ and frequent ones at 18+, and leave the frequency judgment to the questionnaire. Checked on 2026-11-16. The final rating is whatever App Store Connect computes, so confirm it there. Set availability only to countries where that rating is fine.
+Apple's current definitions (https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions) put infrequent alcohol references at 13+ and frequent ones at 18+, and leave the frequency judgment to the questionnaire. Checked on 2026-11-16. Confirm App Store Connect shows 18+ after answering. Set availability only to countries where that rating is fine.
 
 ## App Review notes (paste this)
 
 ```
-Clinkr is a drink counter for adults of legal drinking age. The iPhone app shows history only. Nights are created on the Apple Watch app, which is embedded in the iPhone app.
+Clinkr is a drink counter that helps adults keep their drinking under control on a night out. It is rated 18+. The iPhone app shows history only. Nights are created on the Apple Watch app, which is embedded in the iPhone app.
 
 To review the full flow you need an iPhone paired with an Apple Watch:
 1. Install the app on the iPhone. The Watch app installs on the paired Watch.
@@ -46,7 +46,7 @@ Guideline 1.4.3: Clinkr does not encourage excessive drinking.
 - It never estimates blood alcohol and never comments on amounts. It has no sharing, leaderboards, streaks or scores. A count is a neutral fact, in the same tone at 1 or at 12.
 - It logs water, and after 4 drinks in a row with no water it suggests a water break, at most once an hour.
 - When a night ends it says "Get home safe".
-- It is for adults of legal drinking age.
+- It is rated 18+ and is for adults of legal drinking age.
 - All data stays on the user's devices. Nothing is collected or shared.
 ```
 
